@@ -38,7 +38,7 @@
 
 
 ## B0.1.9 — Subpack Reorganization, Atmospheric Profiles & Performance
-**Status: implementation branch; build and in-game verification still required.**
+**Status: merged into main; later in-game testing found the overall visual result underwhelming. B0.2.2 supersedes this direction.**
 
 ### Subpacks and clouds
 - Reorganized the player-facing choices into Default, Soft Sunlight, Misty Mornings, Golden Hour, and Lite, with descriptive labels for every option.
