@@ -36,34 +36,24 @@ Variant creator: RoheadOfficial
 [[subpack]]
 define = "DEFAULT"
 materials = []
-description = '''
-Default — Realistic Clouds · Balanced Visuals
-'''
+description = "Default — Realistic Clouds · Balanced Visuals"
 
 [[subpack]]
 define = "SOFT_SUNLIGHT"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = '''
-Soft Sunlight — Warm Light, Soft Nights & Rain
-'''
+description = "Soft Sunlight — Warm Light, Soft Nights & Rain"
 
 [[subpack]]
 define = "MISTY_MORNINGS"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = '''
-Misty Mornings — Visible Mist, Rain & Cool Nights
-'''
+description = "Misty Mornings — Visible Mist, Rain & Cool Nights"
 
 [[subpack]]
 define = "GOLDEN_HOUR"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = '''
-Golden Hour — Amber Light, Rain & Cool Nights
-'''
+description = "Golden Hour — Amber Light, Rain & Cool Nights"
 
 [[subpack]]
 define = "LITE"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = '''
-Lite — Rounded Clouds & Reduced Effects
-'''
+description = "Lite — Rounded Clouds & Reduced Effects"
