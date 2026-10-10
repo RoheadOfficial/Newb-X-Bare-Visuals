@@ -115,7 +115,8 @@
 #define NL_WATER_TINT vec3(0.72,0.88,0.96)
 #define NL_WATER_STYLE_STRENGTH 0.16
 #define NL_GROUND_REFL 0.22         // Always-on subtle sky reflection for horizontal terrain
-#define NL_GROUND_REFL_DISTANCE 0.40 // Limit reflection work to nearer terrain\n#define NL_GROUND_REFL_MAX_DISTANCE 56.0 // Absolute cap avoids scaling reflection cost with huge render distances
+#define NL_GROUND_REFL_DISTANCE 0.40 // Limit reflection work to nearer terrain
+#define NL_GROUND_REFL_MAX_DISTANCE 56.0 // Absolute cap avoids scaling reflection cost with huge render distances
 #define NL_CLOUD_AURORA_REFLECTION  // Legacy-inspired aurora detail in water and wet-ground reflections
 
 /* Underwater */
@@ -235,6 +236,8 @@
   #define NL_GROUND_REFL 0.16
   #undef NL_GROUND_REFL_DISTANCE
   #define NL_GROUND_REFL_DISTANCE 0.22
+  #undef NL_GROUND_REFL_MAX_DISTANCE
+  #define NL_GROUND_REFL_MAX_DISTANCE 32.0
   #undef NL_CLOUD_AURORA_REFLECTION
   #undef NL_GLOW_SHIMMER
   #undef NL_LAVA_NOISE
