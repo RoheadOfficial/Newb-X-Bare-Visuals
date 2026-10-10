@@ -6,6 +6,33 @@ $input v_color0, v_color1, v_fog, v_refl, v_texcoord0, v_lightmapUV, v_extra
 SAMPLER2D_AUTOREG(s_MatTexture);
 SAMPLER2D_AUTOREG(s_SeasonsTexture);
 SAMPLER2D_AUTOREG(s_LightMapTexture);
+ // B0.2.2 terrain shading correction. This is only compiled into RenderChunk;
+ // Actor materials use a separate shader and receive no custom player/mob shadows.
+float nlBareTerrainShade(vec4 vertexColor) {
+  float shade = 1.0;
+
+  if (vertexColor.a > 0.0) {
+    // Smoothly map the community snippet's green-channel range into one bounded ramp.
+    // Replacing cumulative threshold multipliers prevents black bands on distant terrain.
+    float shadeRange = clamp((0.640 - vertexColor.g) / 0.010, 0.0, 1.0);
+    shadeRange = shadeRange * shadeRange * (3.0 - 2.0 * shadeRange);
+    shade = 1.0 - 0.12 * shadeRange;
+  } else {
+    // Retain the original alpha-zero branch's color correction, but cap its influence.
+    shade = clamp(vertexColor.g * 1.55 * 1.3, 0.88, 1.12);
+  }
+
+  float c = vertexColor.r;
+  if (vertexColor.a <= 0.1) {
+    c = vertexColor.g * 1.999;
+  }
+  if (c < 0.638) {
+    shade *= 0.97;
+  }
+
+  return clamp(shade, 0.84, 1.12);
+}
+
 
 void main() {
   #if defined(DEPTH_ONLY_OPAQUE) || defined(DEPTH_ONLY) || defined(INSTANCING)
@@ -16,20 +43,6 @@ void main() {
   vec4 diffuse = texture2D(s_MatTexture, v_texcoord0);
   vec4 color = v_color0;
 
-  #if defined(NL_VANILLA_WATER) && defined(TRANSPARENT) && !(defined(SEASONS) || defined(RENDER_AS_BILLBOARDS))
-    if (v_extra.b > 0.9) {
-      // Vanilla-style water: retain the water texture and engine transparency without shader-added waves/reflections.
-      diffuse.rgb *= color.rgb;
-      // Deluxe water styling: restrained cool tint, preserving engine alpha and fog.
-      // The vanilla texture remains; no custom waves, displacement, or reflections are added.
-      diffuse.rgb = mix(diffuse.rgb, diffuse.rgb * NL_WATER_TINT, NL_WATER_STYLE_STRENGTH);
-      diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);
-      diffuse.rgb = colorCorrection(diffuse.rgb);
-      diffuse.a = color.a;
-      gl_FragColor = diffuse;
-      return;
-    }
-  #endif
 
   #ifdef ALPHA_TEST
     if (diffuse.a < 0.6) {
@@ -60,6 +73,13 @@ void main() {
   #endif
 
   diffuse.rgb *= color.rgb;
+
+  // Apply only to RenderChunk terrain; skip water and glass.
+  // Smooth bounded shading avoids cumulative dark stripes from repeated g-thresholds.
+  #if !defined(TRANSPARENT) && !defined(SEASONS)
+    diffuse.rgb *= nlBareTerrainShade(v_color1);
+  #endif
+
   diffuse.rgb += glow;
 
   if (v_extra.b > 0.9) {
