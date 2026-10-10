@@ -1,20 +1,21 @@
-name = "Newb Classic"
+name = "Newb X Bare Visuals"
 version = [0, 16, 56]
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
-§7- An enchanced vanilla shader for Minecraft!
+§7- A modified version of Newb X Legacy focused on a clean, lightweight visual style.
+§7- Newb X Bare Visuals is a community-made Newb Shader variant by RoheadOfficial.
 %v
-§3https://newb-shader.devendrn.com/
-''' # %w = patch warning, %v = version
-authors = ["devendrn"]
-url = "https://newb-shader.devendrn.com/"
-uuid = "95f774cf-4afa-73e7-a21a-72146307b1d2" # Use https://www.uuidgenerator.net/version4
-materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk","Sky", "Stars", "SunMoon", "Weather"]
+§3https://github.com/RoheadOfficial/Newb-X-Bare-Visuals
+''' # %w = patch warning (required), %v = generated pack version
+authors = ["RoheadOfficial", "devendrn"]
+url = "https://github.com/RoheadOfficial/Newb-X-Bare-Visuals"
+uuid = "b6a1e84c-2d73-4f09-9c52-6e8a13d7f240" # Unique Newb X Bare Visuals UUID
+materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
 
-[info] 
+[info]
 copyright = '''
-Copyright © 2026 %a, and "Newb Shader" Contributors
+Copyright © 2026 RoheadOfficial, and "Newb Shader" Contributors
 
 This compiled "Newb Shader" resource pack (source code: https://github.com/devendrn/newb-x-mcbe under MIT License) is licensed under CC BY-ND 4.0 (https://creativecommons.org/licenses/by-nd/4.0/). Redistribute only unmodified copies with proper attribution to "Newb Shader" and variant creators (if any). Do not distribute derivatives.
 
@@ -23,10 +24,12 @@ You can compile the shader from source and distribute the result under your own 
 Contact (Discord Server): https://discord.gg/newb-community-844591537430069279
 ''' # %a = authors
 credits = '''
+Newb X Bare Visuals is a community-made modified version of Newb X Legacy.
+Original Newb Shader source and upstream project: https://github.com/devendrn/newb-x-mcbe
+Variant creator: RoheadOfficial
 '''
 
-# subpacks are arranged in left to right order
-# right-most subpack is enabled by default
+# Subpacks are arranged left to right; the right-most subpack is enabled by default.
 [[subpack]]
 define = "REALISTIC_CLOUDS"
 materials = ["Clouds", "RenderChunk"]
@@ -38,14 +41,14 @@ Realistic clouds
 define = "ROUNDED_CLOUDS"
 materials = ["Clouds"]
 description = '''
-Rounded Clouds
+Rounded clouds
 '''
 
 [[subpack]]
 define = "BOX_CLOUDS"
 materials = ["Clouds", "RenderChunk"]
 description = '''
-Box Clouds
+Box clouds
 '''
 
 [[subpack]]
@@ -76,12 +79,12 @@ description = '''
 No wave effects
 '''
 
-#[[subpack]]
-#define = "LITE"
-#materials = ["Sky", "RenderChunk", "Actor", "ActorGlint", "EndSky", "Clouds", "SunMoon", "Weather", "ItemInHandTextured", "ItemInHandColor", "ItemInHandColorGlint", "Stars"]
-#description = '''
-#Many effects disabled. A bit lighter!
-#'''
+# [[subpack]]
+# define = "LITE"
+# materials = ["Sky", "RenderChunk", "Actor", "ActorGlint", "EndSky", "Clouds", "SunMoon", "Weather", "ItemInHandTextured", "ItemInHandColor", "ItemInHandColorGlint", "Stars"]
+# description = '''
+# Many effects disabled. A bit lighter!
+# '''
 
 [[subpack]]
 define = "DEFAULT"
