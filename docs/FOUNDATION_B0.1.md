@@ -63,10 +63,19 @@ B0.1.7 restores the original Newb X Legacy sky implementation and begins establi
 - Direct sunlight softened to `3.20`; noon tint is warm-neutral and dawn/dusk tint is restrained amber.
 - `NL_MIST_DENSITY` is `0.22`; rain-mist opacity is `0.12` to keep weather fog restrained.
 - The existing vanilla-water path receives a subtle cool tint while retaining engine alpha and fog. Custom water waves and reflections remain disabled.
-- Existing fake godrays are enabled at `0.12` for a restrained dawn/dusk effect. This is not a new volumetric rendering pass, but it adds shader calculations and must be FPS-tested on the target phone.
-- Numeric manifest version sub-version is `58`; display version is `B0.1.7 Deluxe`.
-- This work is on `b0.1.7-deluxe`, not `main`.
+- The existing fake-godray hook was part of B0.1.7 Deluxe, but is removed from the active shader path in B0.1.9.
+- Numeric manifest version sub-version was `58`; display version was `B0.1.7 Deluxe`.
+- B0.1.7 Deluxe was merged into `main` at commit `3130ae86053ab1fa456b44ae1e186bef10f2af02`. The user reported that the saturation reduction was visible but the other atmosphere changes were too subtle.
+
+## B0.1.9 implementation addendum
+
+- The five player-facing profiles are Default (realistic clouds), Soft Sunlight, Misty Mornings, Golden Hour, and Lite (rounded clouds).
+- Render Anim is shelved; its macro/source is retained for possible future use.
+- Atmospheric profiles coordinate day, dawn/dusk, night, rain, fog, and water color.
+- Godrays are excluded from the active B0.1.9 path.
+- Dense-terrain performance is a release priority. Lite omits the extra glow texture sample and disables optional effects; plant/lantern movement is limited to a shorter range. Device FPS is not inferred from compilation.
+- See [B0.1.9 implementation notes](B0.1.9_IMPLEMENTATION.md) for the full scope and verification matrix.
 
 ## Status
 
-Source and documentation changes are being assembled on the B0.1.7 implementation branch. Build success, artifact correctness, Android compatibility, in-game visuals, and performance remain **unverified** until actual build and device tests complete.
+B0.1.9 source changes are being assembled on `b0.1.9-implementation`. Compilation, artifact correctness, Android compatibility, visual appearance, subpack switching, and performance remain unverified until CI and in-game testing complete.
