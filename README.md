@@ -16,13 +16,20 @@
 
 ## Current development stage
 
-### B0.1.9 — implementation branch
+### B0.2.2 — implementation in progress
 
-B0.1.9 reorganizes the pack around five selectable profiles: **Default** (realistic clouds), **Soft Sunlight**, **Misty Mornings**, **Golden Hour**, and **Lite** (rounded clouds and reduced effects). The three atmospheric profiles coordinate daylight, sunrise/sunset, nighttime, rain, fog, and water tint instead of changing only one daytime value. Godrays are excluded.
+B0.2.2 is a visual foundation rework following the underwhelming B0.1.9 in-game test. The Overworld lighting direction is inspired by the warm, semi-realistic approach of Newb Tropisphere, while keeping this project’s code and visual identity independent.
 
-Performance work targets dense forests, complex terrain, and scenes with many visible blocks. Lite disables several optional effects and skips the additional glow texture sample on terrain fragments; the shared plant/lantern movement range is reduced to keep that work closer to the player. These are source-level optimizations, not a guarantee of zero lag. Build success, visual differences, and FPS must be verified separately, with device testing on the vivo Y22s where possible.
+The planned source changes include:
 
-The B0.1.9 display label uses numeric manifest sub-version 59. The numeric Minecraft manifest version and the B-series display label are separate values.
+- **Two subpacks only:** Lite first, Default second/right-most. Both use the parent Newb `BOX_CLOUDS` implementation. Default should be the initial selection; this must be checked in the generated pack and in Minecraft.
+- **Always Reflection tribute:** restore sky reflections on water, restrained always-on horizontal terrain reflections, rain-wet ground, and night aurora effects. Reflection range is capped for performance; Lite reduces the range and omits cloud/aurora reflection details.
+- **No water waves or displacement:** water uses a flat reflection normal; plant and lantern movement remain the only intended world waving effects.
+- **Selective terrain shading:** a bounded, smooth RenderChunk-only correction based on the community snippet, intended to avoid cumulative dark stripes on distant terrain. Actor materials are not changed, so this does not add custom player or mob shadows.
+- **Warm, natural Overworld colors:** restrained saturation, warmer daylight and dawn, cooler night tones, and atmospheric fog/rain.
+- **Build identity:** display label B0.2.2 and numeric manifest sub-version 60.
+
+The shader source has been updated on the B0.2.2 implementation branch. Build success, generated subpack order, reflection behavior, distant-terrain shading, Android import, and device performance still require verification. Source changes are not proof of a successful build or a confirmed visual result.
 
 ## Credits and licensing
 
@@ -101,16 +108,13 @@ The build tool reports the output location for the selected profile. A successfu
 
 ## Available subpacks
 
-B0.1.9 exposes five options, in the requested order:
+B0.2.2 has exactly two selectable options:
 
-1. **Default — Realistic Clouds · Balanced Visuals**
-2. **Soft Sunlight — Warm Light, Soft Nights & Rain**
-3. **Misty Mornings — Visible Mist, Rain & Cool Nights**
-4. **Golden Hour — Amber Light, Rain & Cool Nights**
-5. **Lite — Rounded Clouds & Reduced Effects**
+1. **Lite — Box Clouds, Legacy Reflections & Reduced Effects**
+2. **Default — Box Clouds, Always Reflection & Full Atmosphere**
 
-The old **Render Anim** subpack is shelved, not deleted from source history. Rounded Clouds is assigned to Lite. Default uses the realistic-cloud renderer. The subpack labels include a short description because Minecraft's subpack manifest does not provide a separate descriptive-text field for each option. See [the B0.1.9 implementation notes](docs/B0.1.9_IMPLEMENTATION.md).
+Both use the parent repository’s `BOX_CLOUDS` implementation. Rounded Clouds, Realistic Clouds, Render Anim, Soft Sunlight, Misty Mornings, and Golden Hour are not selectable in this version. Lite keeps the core reflection identity while reducing reflection distance and selected secondary effects. The subpack labels include short descriptions because Minecraft's subpack manifest does not provide a separate descriptive-text field. See [the B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
 
 ## Verification status
 
-Build results, generated artifacts, visual differences, Android performance, and compatibility will be documented as they are confirmed. Android is the only target platform for the current development phase; support for other platforms is outside the present scope. Documentation reflects the current development state rather than treating configuration entries as proof of completed or tested behavior.
+B0.2.2 build results, generated artifacts, visual differences, Android performance, and compatibility will be documented as they are confirmed. The target remains Minecraft Bedrock on Android; device testing is required before claiming visual or performance success. Android is the only target platform for the current development phase; support for other platforms is outside the present scope. Documentation reflects the current development state rather than treating configuration entries as proof of completed or tested behavior.
