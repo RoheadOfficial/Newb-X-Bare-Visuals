@@ -126,7 +126,8 @@
 #define NL_UNDERWATER_TINT vec3(0.9,1.0,0.9) // fog tint color when underwater
 
 /* Cloud type */
-#define BOX_CLOUDS              // Parent Newb box-cloud implementation is used by both subpacks\n#define NL_CLOUD_TYPE 0          // Box clouds are the only active cloud style in B0.2.2
+#define BOX_CLOUDS              // Parent Newb box-cloud implementation is used by both subpacks
+#define NL_CLOUD_TYPE 0          // Box clouds are the only active cloud style in B0.2.2
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
 #define NL_CLOUD0_THICKNESS 2.1      // 0.5 slim ~ 8.0 fat
