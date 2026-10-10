@@ -16,6 +16,18 @@ void main() {
   vec4 diffuse = texture2D(s_MatTexture, v_texcoord0);
   vec4 color = v_color0;
 
+  #if defined(NL_VANILLA_WATER) && defined(TRANSPARENT) && !(defined(SEASONS) || defined(RENDER_AS_BILLBOARDS))
+    if (v_extra.b > 0.9) {
+      // Vanilla-style water: retain the water texture and engine transparency without shader-added waves/reflections.
+      diffuse.rgb *= color.rgb;
+      diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);
+      diffuse.rgb = colorCorrection(diffuse.rgb);
+      diffuse.a = color.a;
+      gl_FragColor = diffuse;
+      return;
+    }
+  #endif
+
   #ifdef ALPHA_TEST
     if (diffuse.a < 0.6) {
       discard;
@@ -57,6 +69,52 @@ void main() {
   diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);
 
   diffuse.rgb = colorCorrection(diffuse.rgb);
+
+  // Community-provided Newb showcase shadow-shading snippet; appended without replacing existing logic.
+  if (v_color1.a != 0.0) {
+    if (v_color1.g < 0.64) {
+        diffuse.rgb *= vec3(0.96,0.96,0.96);
+    }
+    if (v_color1.g < 0.639) {
+        diffuse.rgb *= vec3(0.95,0.95,0.95);
+    }
+    if (v_color1.g < 0.638) {
+        diffuse.rgb *= vec3(0.95,0.95,0.95);
+    }
+    if (v_color1.g < 0.637) {
+        diffuse.rgb *= vec3(0.95,0.95,0.95);
+    }
+    if (v_color1.g < 0.636) {
+        diffuse.rgb *= vec3(0.95,0.95,0.95);
+    }
+    if (v_color1.g < 0.635) {
+        diffuse.rgb *= vec3(0.89,0.89,0.89);
+    }
+    if (v_color1.g < 0.634) {
+        diffuse.rgb *= vec3(0.89,0.89,0.89);
+    }
+    if (v_color1.g < 0.633) {
+        diffuse.rgb *= vec3(0.883,0.883,0.883);
+    }
+    if (v_color1.g < 0.632) {
+        diffuse.rgb *= vec3(0.88,0.88,0.88);
+    }
+    if (v_color1.g < 0.631) {
+        diffuse.rgb *= vec3(0.88,0.88,0.88);
+    }
+    if (v_color1.g < 0.63) {
+        diffuse.rgb *= vec3(0.887,0.887,0.887);
+    }
+  }
+
+  if (v_color1.a == 0.0) {
+    diffuse.rgb *= 1.55;
+    diffuse.rgb *= v_color1.g*1.3;
+  }
+
+  float c = v_color1.r;
+  if (v_color1.a <= 0.1) { c = v_color1.g*1.999; }
+  if (c < 0.638) { diffuse.rgb *= 0.9; }
 
   gl_FragColor = diffuse;
 }
