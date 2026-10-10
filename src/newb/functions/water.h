@@ -20,7 +20,7 @@ vec4 nlWater(
   float fractCposY, float camDist, highp float t
 ) {
 
-  vec2 bump = vec2_splat(movingNoise2D(gPos.xz + gPos.yy, NL_WATER_WAVE_SPEED*t, 0.6));
+  vec2 bump = vec2_splat(0.0);\n  #ifdef NL_WATER_WAVE\n    bump = vec2_splat(movingNoise2D(gPos.xz + gPos.yy, NL_WATER_WAVE_SPEED*t, 0.6));\n  #endif
 
   vec3 nrm;
   if (fractCposY > 0.0) { // top plane
