@@ -27,7 +27,7 @@ vec4 nlRefl(
     float wetness = lit.y*lit.y;
 
     // clip reflection when far (better performance)
-    float endDist = renderDist*NL_GROUND_REFL_DISTANCE; // Profile-specific reflection range for mobile performance
+    float endDist = min(renderDist*NL_GROUND_REFL_DISTANCE, NL_GROUND_REFL_MAX_DISTANCE); // Fractional and absolute caps for mobile performance
     if (camDist < endDist) {
       float cosR = max(viewDir.y, 0.0);
       float puddles = max(1.0 - NL_GROUND_RAIN_PUDDLES*fastRand(tiledCpos.xz), 0.0);
