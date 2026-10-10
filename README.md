@@ -16,7 +16,7 @@
 
 ## Current development stage
 
-The repository's variant identity and attribution configuration have been established. Development is currently focused on Android devices, with visual changes and performance evaluated around the Android experience. Visual changes, pack artwork, automated builds, generated artifacts, and in-game compatibility remain part of ongoing development. The project is not yet presented as a verified release.
+The B0.1 foundation source pass now establishes the Android-focused visual direction: rounded clouds, subtle atmospheric depth, a lightly enhanced saturation level, softer warm daylight, restrained plant and lantern motion, vanilla-style water without shader-added surface waves or reflections, lightweight rain styling, a reduced-range wet-ground effect, and the community-provided RenderChunk shadow-shading addition. The source changes have been committed, but a fresh artifact build and Android in-game validation are still pending. B0.1 is not yet presented as a verified release.
 
 ## Credits and licensing
 
@@ -95,18 +95,13 @@ The build tool reports the output location for the selected profile. A successfu
 
 ## Available subpacks
 
-The current configuration retains these options inherited from upstream:
+The B0.1 configuration exposes these options:
 
-- Realistic clouds
-- Rounded clouds
-- Box clouds
-- Chunk loading animation
-- No wave and no fog
-- No fog
-- No wave
-- Default settings
+- **Rounded Clouds** — the only cloud style retained for this foundation
+- **Chunk Loading Animation** — optional inherited animation
+- **Default** — the standard B0.1 configuration, with rounded clouds selected in the base shader settings
 
-The listed options reflect the current configuration; their behavior in the finished variant will be established through build and in-game testing.
+Wave-disabled and fog-disabled subpacks are not exposed in B0.1 because the foundation keeps plant/lantern movement and atmospheric fog enabled. Realistic and box-cloud variants are shelved. See [the B0.1 foundation notes](docs/FOUNDATION_B0.1.md) for the implementation scope and test status.
 
 ## Verification status
 
