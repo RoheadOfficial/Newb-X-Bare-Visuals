@@ -1,5 +1,31 @@
 # Changelog
 
+## B0.1.9 — Subpack Reorganization, Atmospheric Profiles & Performance
+**Status: implementation branch; build and in-game verification still required.**
+
+### Subpacks and clouds
+- Reorganized the player-facing choices into Default, Soft Sunlight, Misty Mornings, Golden Hour, and Lite, with descriptive labels for every option.
+- Restored the realistic cloud renderer as the base/Default cloud style.
+- Shelved the Render Anim subpack without deleting its source implementation.
+- Moved Rounded Clouds into Lite; Lite also disables optional aurora, rainbow, shimmer, lava, and weather styling effects where applicable.
+
+### Complete atmosphere profiles
+- Added separate compile-time profiles for Soft Sunlight, Misty Mornings, and Golden Hour.
+- Each profile coordinates sun/moon light, sky colors for day/night/dawn, rainy-sky colors, fog/mist, and water tint instead of only adjusting daytime light.
+- Godrays are excluded from B0.1.9; the old hook and its active call were removed.
+
+### Performance and maintenance
+- Reduced the shared plant/lantern movement range from 13 to 9 blocks to limit distance movement work.
+- Lite skips the extra glow texture sample on terrain fragments and disables several optional effects.
+- Updated the display label to B0.1.9 and the numeric manifest sub-version to 59.
+- Updated build workflow defaults and current subpack documentation.
+- Added implementation notes and an in-game/performance verification checklist.
+
+### Validation status
+- Source changes are on b0.1.9-implementation.
+- CI compilation, artifact inspection, in-game appearance, and vivo Y22s performance remain to be verified. No zero-lag or in-game visual result is claimed.
+
+
 ## B0.1.7 Deluxe — Natural Light, Mist, Water & Godrays
 
 ### Visual identity
@@ -22,8 +48,9 @@
 - Updated the artifact filename slug and build workflows; corrected the build-check artifact directory to match the builder output.
 
 ### Validation status
-- Changes are isolated on `b0.1.7-deluxe`; `main` is not changed.
-- Compilation, artifact inspection, import, visual comparison, and mobile FPS testing remain pending.
+- GitHub Actions Android and multiplatform artifact-generation workflows completed successfully for the tested Deluxe branch.
+- PR #2 was merged into main at commit 3130ae86053ab1fa456b44ae1e186bef10f2af02.
+- The user reported that the saturation reduction was visible but the sunlight, mist, and Golden Hour differences were too subtle. In-game visual acceptance was therefore not achieved for those changes; FPS testing remains unverified.
 
 
 ## B0.1.7 — Original Sky Restoration & Visual Identity
