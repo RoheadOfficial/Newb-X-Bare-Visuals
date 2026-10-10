@@ -1,6 +1,6 @@
 name = "Newb X Bare Visuals"
-version = [0, 16, 59]
-development_version = "B0.1.9"
+version = [0, 16, 60]
+development_version = "B0.2.2"
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
@@ -31,29 +31,14 @@ Original Newb Shader source and upstream project: https://github.com/devendrn/ne
 Variant creator: RoheadOfficial
 '''
 
-# Subpacks are presented in the requested order. The right-most option is the engine's initial selection.
-# Default uses the base build; profile subpacks compile every material they override.
-[[subpack]]
-define = "DEFAULT"
-materials = []
-description = "Default — Realistic Clouds · Balanced Visuals"
-
-[[subpack]]
-define = "SOFT_SUNLIGHT"
-materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Soft Sunlight — Warm Light, Soft Nights & Rain"
-
-[[subpack]]
-define = "MISTY_MORNINGS"
-materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Misty Mornings — Visible Mist, Rain & Cool Nights"
-
-[[subpack]]
-define = "GOLDEN_HOUR"
-materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Golden Hour — Amber Light, Rain & Cool Nights"
-
+# Lite is listed first; Default is right-most and should be Minecraft's initial selection.
+# Both use the parent's BOX_CLOUDS implementation from config.h.
 [[subpack]]
 define = "LITE"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Lite — Rounded Clouds & Reduced Effects"
+description = "Lite — Box Clouds, Legacy Reflections & Reduced Effects"
+
+[[subpack]]
+define = "DEFAULT"
+materials = []
+description = "Default — Box Clouds, Always Reflection & Full Atmosphere"
