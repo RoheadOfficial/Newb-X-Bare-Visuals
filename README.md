@@ -16,7 +16,7 @@
 
 ## Current development stage
 
-The B0.1 foundation source pass now establishes the Android-focused visual direction: rounded clouds, subtle atmospheric depth, a lightly enhanced saturation level, softer warm daylight, restrained plant and lantern motion, vanilla-style water without shader-added surface waves or reflections, lightweight rain styling, a reduced-range wet-ground effect, and the community-provided RenderChunk shadow-shading addition. The source changes have been committed, but a fresh artifact build and Android in-game validation are still pending. B0.1 is not yet presented as a verified release.
+B0.1.1 is a foundation-fix source pass for Android-focused Newb X Bare Visuals. It removes the added community shadow snippet, corrects the saturation value against Newb's original baseline, refines day/night and dawn/dusk sky colors, smooths the time-driven sky transition, improves horizon blending, and passes detected rain intensity into the existing fog system so rainy weather can bring in denser, nearer mist. Rounded clouds, vanilla-style water, plant and lantern motion, and the broader upstream rendering pipeline are retained. The source changes have been committed, but a fresh artifact build and Android in-game validation are still pending. B0.1.1 is not yet presented as a verified release.
 
 ## Credits and licensing
 
@@ -95,13 +95,13 @@ The build tool reports the output location for the selected profile. A successfu
 
 ## Available subpacks
 
-The B0.1 configuration exposes these options:
+The B0.1.1 foundation configuration exposes these options:
 
 - **Rounded Clouds** — the only cloud style retained for this foundation
 - **Chunk Loading Animation** — optional inherited animation
 - **Default** — the standard B0.1 configuration, with rounded clouds selected in the base shader settings
 
-Wave-disabled and fog-disabled subpacks are not exposed in B0.1 because the foundation keeps plant/lantern movement and atmospheric fog enabled. Realistic and box-cloud variants are shelved. See [the B0.1 foundation notes](docs/FOUNDATION_B0.1.md) for the implementation scope and test status.
+Wave-disabled and fog-disabled subpacks are not exposed in B0.1 because the foundation keeps plant/lantern movement and atmospheric fog enabled. Realistic and box-cloud variants are shelved. See [the B0.1.1 foundation notes](docs/FOUNDATION_B0.1.md) for the implementation scope and test status.
 
 ## Verification status
 
