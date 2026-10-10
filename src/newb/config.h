@@ -31,15 +31,15 @@
 #define NL_TONEMAP_TYPE 3              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
 #define NL_GAMMA 1.33                  // 0.3 low ~ 2.0 high
 //#define NL_EXPOSURE 1.3              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.442           // +3% over Newb's original 1.4 saturation baseline
+#define NL_SATURATION 1.4             // B0.1.7: restrained starting point; verify in-game
 //#define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.3,0.5,1.4) // color tint for dark tone
 #define NL_TINT_HIGH vec3(1.4,0.7,0.3) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.4  // Bright, cinematic daylight
+#define NL_SUNLIGHT_INTENSITY   3.35 // Soft Sunlight: gentle daylight without relying on saturation
 #define NL_TORCHLIGHT_INTENSITY 1.0  // 0.5 weak ~ 3.0 bright
-#define NL_SHADOW_INTENSITY     0.68 // Defined shadows with slightly softer contrast
+#define NL_SHADOW_INTENSITY     0.70 // Preserve defined, natural shadow contrast
 #define NL_MIN_LIGHTING_BOOST   1.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // Disabled for the Android performance target
@@ -50,7 +50,7 @@
 
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.4,0.1)
-#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.80,0.66) // Soft warm daylight
+#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.77,0.60) // Soft Sunlight: restrained warmth
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.01,0.03,0.2)
 
 /* Torch colors */
@@ -61,27 +61,27 @@
 
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
-#define NL_MIST_DENSITY 0.24      // Atmospheric depth, increased further during rain
-#define NL_RAIN_MIST_OPACITY 0.16 // Rain mist remains restrained and performance-conscious
+#define NL_MIST_DENSITY 0.20      // Gentle atmospheric depth; rain fog is handled separately
+#define NL_RAIN_MIST_OPACITY 0.14 // Restrained rain mist for mobile performance
 #define NL_CLOUDY_FOG 0.1         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
 /* Sky */
 #define NL_SKY_VOID_FACTOR     0.5
 #define NL_SKY_VOID_DARKNESS   0.3
-#define NL_SKY_RAIN_MIX_FACTOR 0.96
+#define NL_SKY_RAIN_MIX_FACTOR 0.9
 
 /* Sky colors - zenith=top, horizon=bottom */
-#define NL_DAWN_ZENITH_COL   vec3(0.16,0.30,0.48)
-#define NL_DAWN_HORIZON_COL  vec3(1.10,0.46,0.30)
-#define NL_DAWN_EDGE_COL     vec3(1.18,0.68,0.46)
-#define NL_DAY_ZENITH_COL    vec3(0.22,0.48,0.88) // Clear, natural blue at noon
-#define NL_DAY_HORIZON_COL   vec3(0.70,0.82,0.91) // Bright atmospheric blue horizon
-#define NL_DAY_EDGE_COL      vec3(0.94,0.91,0.84) // Soft neutral sunlight at the horizon
+#define NL_DAWN_ZENITH_COL   vec3(0.1,0.4,0.7)
+#define NL_DAWN_HORIZON_COL  vec3(3.0,0.4,0.4)
+#define NL_DAWN_EDGE_COL     vec3(2.0,0.8,0.8)
+#define NL_DAY_ZENITH_COL    vec3(0.3,0.9,2.0)
+#define NL_DAY_HORIZON_COL   vec3(1.0,1.6,1.8)
+#define NL_DAY_EDGE_COL      vec3(1.44,1.56,1.62)
 #define NL_NIGHT_ZENITH_COL  vec3(0.008,0.048,0.08)
 #define NL_NIGHT_HORIZON_COL vec3(0.02,0.06,0.1)
 #define NL_NIGHT_EDGE_COL    vec3(0.04,0.08,0.1)
-#define NL_RAIN_ZENITH_COL   vec3(0.43,0.47,0.52)
-#define NL_RAIN_HORIZON_COL  vec3(0.57,0.59,0.61)
+#define NL_RAIN_ZENITH_COL   vec3(0.47,0.51,0.56)
+#define NL_RAIN_HORIZON_COL  vec3(0.6,0.6,0.6)
 
 #define NL_END_ZENITH_COL    vec3(0.08,0.001,0.1)
 #define NL_END_HORIZON_COL   vec3(0.6,0.02,0.6)
