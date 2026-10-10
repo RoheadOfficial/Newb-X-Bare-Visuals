@@ -61,6 +61,9 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
   s.horizon = mix(s.horizon, NL_RAIN_HORIZON_COL*rainBrightness, rainMix);
   s.horizonEdge = mix(s.horizonEdge, s.horizon, rainMix);
 
+  float zh = dot(s.zenith, vec3_splat(0.33));
+  float hh = dot(s.horizon, vec3_splat(0.33));
+
   if (env.underwater) {
     vec3 underwaterFog = env.fogCol*env.fogCol*NL_UNDERWATER_TINT;
     s.zenith = mix(2.0*underwaterFog, underwaterFog*zh, 0.8);
