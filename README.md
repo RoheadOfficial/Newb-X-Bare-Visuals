@@ -23,7 +23,7 @@ B0.2.2 is a visual foundation rework following the underwhelming B0.1.9 in-game 
 The planned source changes include:
 
 - **Two subpacks only:** Lite first, Default second/right-most. Both use the parent Newb `BOX_CLOUDS` implementation. Default should be the initial selection; this must be checked in the generated pack and in Minecraft.
-- **Always Reflection tribute:** restore sky reflections on water, restrained always-on horizontal terrain reflections, rain-wet ground, and night aurora effects. Reflection range is capped for performance; Lite reduces the range and omits cloud/aurora reflection details.
+- **Always Reflection tribute:** restore sky reflections on water, restrained always-on horizontal terrain reflections, rain-wet ground, and night aurora effects. Reflection range is capped for performance; Lite reduces the range and omits aurora reflection details.
 - **No water waves or displacement:** water uses a flat reflection normal; plant and lantern movement remain the only intended world waving effects.
 - **Selective terrain shading:** a bounded, smooth RenderChunk-only correction based on the community snippet, intended to avoid cumulative dark stripes on distant terrain. Actor materials are not changed, so this does not add custom player or mob shadows.
 - **Warm, natural Overworld colors:** restrained saturation, warmer daylight and dawn, cooler night tones, and atmospheric fog/rain.
