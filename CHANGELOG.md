@@ -11,7 +11,7 @@
 ### Always Reflection tribute
 - Re-enable the existing sky-reflection path for water and use a flat water normal; no animated water waves or displacement are added.
 - Enable restrained always-on reflection for horizontal terrain, with stronger wet-ground response in rain and puddle variation.
-- Enable aurora visuals and their reflection detail in Default; Lite retains a reduced-cost reflection path and the aurora itself at lower intensity, but disables aurora reflection detail.
+- Enable aurora visuals and their reflection detail in Default; Lite retains a reduced-cost reflection path and the aurora itself at lower intensity, but disables aurora reflection detail. Rainbows, shooting stars, galaxy stars, and godrays remain excluded; the original Newb sky pipeline is retained.
 - Bound terrain-reflection range, with a shorter range in Lite to reduce fragment work on mobile.
 
 ### Terrain shading and subpacks
