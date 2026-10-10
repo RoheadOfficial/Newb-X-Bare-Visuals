@@ -16,7 +16,7 @@
 
 ## Current development stage
 
-B0.1.1 is a foundation-fix source pass for Android-focused Newb X Bare Visuals. It removes the added community shadow snippet, corrects the saturation value against Newb's original baseline, refines day/night and dawn/dusk sky colors, smooths the time-driven sky transition, improves horizon blending, and passes detected rain intensity into the existing fog system so rainy weather can bring in denser, nearer mist. Rounded clouds, vanilla-style water, plant and lantern motion, and the broader upstream rendering pipeline are retained. The source changes have been committed, but a fresh artifact build and Android in-game validation are still pending. B0.1.1 is not yet presented as a verified release.
+B0.1.7 restores the upstream Newb sky implementation and its sky-color configuration, removes custom sky blending/horizon overrides, reduces saturation to the upstream 1.4 baseline, and refines rain-aware fog and restrained daylight tuning. The visual identity is based on natural lighting and atmosphere—not saturation alone. The pack builder labels builds as `B0.1.7` while keeping Minecraft's manifest version numeric. Manifest description styling uses Minecraft formatting colors and a Unicode small-caps easter egg. Build and in-game validation remain pending until a real artifact is generated and tested.
 
 ## Credits and licensing
 
@@ -101,7 +101,7 @@ The B0.1.1 foundation configuration exposes these options:
 - **Chunk Loading Animation** — optional inherited animation
 - **Default** — the standard B0.1 configuration, with rounded clouds selected in the base shader settings
 
-Wave-disabled and fog-disabled subpacks are not exposed in B0.1 because the foundation keeps plant/lantern movement and atmospheric fog enabled. Realistic and box-cloud variants are shelved. See [the B0.1.1 foundation notes](docs/FOUNDATION_B0.1.md) for the implementation scope and test status.
+Wave-disabled and fog-disabled subpacks are not exposed in B0.1 because the foundation keeps plant/lantern movement and atmospheric fog enabled. Realistic and box-cloud variants are shelved. See [the B0.1 foundation notes](docs/FOUNDATION_B0.1.md) for the implementation scope and test status.
 
 ## Verification status
 
