@@ -20,7 +20,7 @@
 
 B0.2.2 is a visual foundation rework following the underwhelming B0.1.9 in-game test. The Overworld lighting direction is inspired by the warm, semi-realistic approach of Newb Tropisphere, while keeping this project’s code and visual identity independent.
 
-The planned source changes include:
+The B0.2.2 implementation branch currently contains these source changes:
 
 - **Two subpacks only:** Lite first, Default second/right-most. Both use the parent Newb `BOX_CLOUDS` implementation. Default should be the initial selection; this must be checked in the generated pack and in Minecraft.
 - **Always Reflection tribute:** restore sky reflections on water, restrained always-on horizontal terrain reflections, rain-wet ground, and night aurora effects. Reflection range is capped for performance; Lite reduces the range and omits aurora reflection details.
