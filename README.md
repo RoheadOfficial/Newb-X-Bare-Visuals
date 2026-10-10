@@ -1,52 +1,56 @@
 # Newb X Bare Visuals
 
-**Newb X Bare Visuals** is a community-made variant of **Newb X Legacy**, the RenderDragon shader project maintained by devendrn and the Newb Shader contributors. This repository is based on the upstream source and is intended to develop a distinct visual variant while respecting the upstream project's code license and Newb Variant requirements.
+**Newb X Bare Visuals** is a community-made visual variant of **Newb X Legacy**, the RenderDragon shader project maintained by devendrn and the Newb Shader contributors. The project builds on the upstream source and aims to establish its own visual identity.
 
-> **Patch warning:** Minecraft Bedrock shader loading is unofficial and may depend on external loaders, game versions, and platform-specific patches. Compatibility must be tested for each version and platform claimed by a release. A successful build alone does not prove in-game compatibility.
+> **Patch notice:** Minecraft Bedrock shader loading is unofficial and may depend on external loaders, game versions, and platform-specific patches. Compatibility can vary by version and platform.
 
-## Project status
+## Project overview
 
-This repository has been freshly forked and its variant configuration is being established. Do not treat the shader as a verified release yet. Visual distinction, pack identity, compatibility, subpack behavior, and release artifacts must be checked before publication.
-
-- **Variant name:** Newb X Bare Visuals
+- **Variant:** Newb X Bare Visuals
 - **Upstream project:** [devendrn/newb-x-mcbe](https://github.com/devendrn/newb-x-mcbe)
-- **Variant repository:** [RoheadOfficial/Newb-X-Bare-Visuals](https://github.com/RoheadOfficial/Newb-X-Bare-Visuals)
-- **Variant creator:** RoheadOfficial
-- **Version scheme:** B-series for project development versions
-- **Build system:** Upstream Newb build tool and GitHub Actions workflow
+- **Repository:** [RoheadOfficial/Newb-X-Bare-Visuals](https://github.com/RoheadOfficial/Newb-X-Bare-Visuals)
+- **Creator:** RoheadOfficial
+- **Development versions:** B-series
+- **Build system:** Upstream Newb build tools and GitHub Actions
+
+## Current development stage
+
+The repository's variant identity and attribution configuration have been established. Visual changes, pack artwork, automated builds, generated artifacts, and in-game compatibility remain part of ongoing development. The project is not yet presented as a verified release.
 
 ## Credits and licensing
 
-The upstream Newb X Legacy source code is distributed under the MIT License. See [LICENSE](LICENSE) and retain its required notice.
+Newb X Legacy source code is distributed under the MIT License. The upstream license and its notice are retained in [LICENSE](LICENSE).
 
-Compiled Newb Shader resource packs have separate copyright and redistribution terms. The generated pack's copyright notice identifies the compiled pack as CC BY-ND 4.0. Under that license, redistribution of a compiled pack is limited to unmodified copies with appropriate attribution. Do not distribute a modified compiled pack as though the CC BY-ND license grants permission to do so. See [COPYRIGHT.txt](COPYRIGHT.txt) and the generated pack's own notice.
+The upstream project also provides a copyright notice for compiled Newb Shader resource packs that identifies those packs under CC BY-ND 4.0. That license permits redistribution of unmodified material under its terms; it does not grant permission to distribute modified compiled packs. Source-code licensing and compiled-pack licensing are separate considerations. See [COPYRIGHT.txt](COPYRIGHT.txt) and the notice included with the generated pack.
 
-Newb X Bare Visuals is intended to be built from the licensed source and distributed only in accordance with the applicable upstream license, Newb Variant rules, and the terms stated in the final compiled pack. Credit both **Newb Shader** and the variant creator when sharing an eligible pack. This repository does not claim endorsement or verification by the Newb Shader team.
+Newb X Bare Visuals is an independent community variant and is not represented as officially verified or endorsed by the Newb Shader team. Eligible pack distributions should retain the applicable attribution to **Newb Shader** and the variant creator.
 
-## Requirements for publishing a variant
+## Variant profile
 
-The project must satisfy the Newb Variant requirements before a release is submitted:
+The project follows the Newb Variant guidelines shared by the Newb Shader community. Its current configuration includes the variant name, a distinct UUID, creator-first author attribution, a project URL, and the patch notice in the pack description.
 
-- Use original assets or assets used with explicit permission. Record permitted asset credits in `credit` within `src/newb/pack_config.toml`.
-- Demonstrate a clear visual difference from Newb X Legacy.
-- Use a unique pack name, UUID, and original icon.
-- Include the word **Newb** in the variant title and clearly identify it as a modified Newb Shader in the description.
-- Retain the patch warning in the pack description.
-- Put the variant creator before `devendrn` in the authors list.
-- Distribute only the pack generated by the prescribed build tool; label material files through the build process.
-- Maintain no more than two variants.
-- Do not use AI-generated or AI-enhanced pack icons or screenshots.
-- Test every Minecraft version and platform claimed to be supported.
+The remaining publication profile covers:
+
+- A distinct visual identity compared with Newb X Legacy
+- Original artwork and assets, or assets used with explicit permission
+- Accurate asset credits where permission-based assets are used
+- A pack title containing **Newb** and a description identifying the project as a modified Newb Shader
+- Material-file labeling through the prescribed build process
+- Resource packs generated by the project's build tool
+- Compatibility checks for each Minecraft version and platform listed as supported
+- Review by the Newb Shader team before publication as a verified variant
+
+AI-generated or AI-enhanced images are not part of the variant artwork or screenshots. The project is intended to remain within the community guideline of maintaining no more than two variants.
 
 ## Building
 
-The project uses the upstream build tooling. The commands below describe the existing upstream workflow and should be run in a compatible development environment.
+The project uses the upstream build tooling. The commands below reflect the existing upstream workflow and require a compatible development environment.
 
-### Install dependencies
+### Dependencies
 
 - Git
 - Python 3.11 or newer
-- Python dependencies listed in `requirements.txt`
+- Python packages listed in `requirements.txt`
 
 Install the declared packages:
 
@@ -54,21 +58,21 @@ Install the declared packages:
 python -m pip install -r requirements.txt
 ```
 
-### Set up the build environment
+### Prepare the build environment
 
-On Linux or Android-compatible shell environments:
+Linux or Android-compatible shell:
 
 ```sh
 ./build.sh setup
 ```
 
-On Windows, use:
+Windows:
 
 ```bat
 build.bat setup
 ```
 
-This setup step downloads the compiler and material data required by the upstream build tool.
+The setup step downloads the compiler and material data required by the upstream build tool.
 
 ### Build the resource pack
 
@@ -84,13 +88,13 @@ Windows:
 build.bat pack
 ```
 
-The build tool supports platform profiles and a numeric internal version argument. The repository's B-series project version and the compiled pack's internal version are separate concepts; workflow integration must preserve the builder's expected input format.
+The build tool supports platform profiles and a numeric internal version argument. The repository's B-series development version and the compiled pack's internal version are separate concepts, so workflow changes need to preserve the builder's expected input format.
 
-The expected output location is reported by the build tool and may vary by selected platform/profile. A build is not considered verified until the workflow succeeds and the resulting artifact is inspected.
+The build tool reports the output location for the selected platform/profile. A successful build and an inspected artifact are separate from in-game compatibility verification.
 
-## Subpacks inherited from upstream
+## Available subpacks
 
-The current pack configuration retains these upstream options while the variant is being developed:
+The current configuration retains these options inherited from upstream:
 
 - Realistic clouds
 - Rounded clouds
@@ -101,16 +105,8 @@ The current pack configuration retains these upstream options while the variant 
 - No wave
 - Default settings
 
-Their presence in the configuration does not by itself prove that each option works correctly in the final pack. Each option must be checked against the compiled materials and tested in-game.
+The listed options reflect the current configuration; their behavior in the finished variant will be established through build and in-game testing.
 
-## Development and verification
+## Verification status
 
-Before a version is marked complete:
-
-1. Review the changed files and confirm required source and material files remain present.
-2. Validate the pack configuration and unique pack identity.
-3. Run the applicable build workflow and inspect the generated artifact.
-4. Test the pack on the exact Minecraft version and platform being claimed.
-5. Update documentation to match what is actually implemented and verified.
-
-Do not report a feature as implemented solely because it appears in this README or in a configuration file.
+Build results, generated artifacts, visual differences, and compatibility will be documented as they are confirmed. Documentation reflects the current development state rather than treating configuration entries as proof of completed or tested behavior.
