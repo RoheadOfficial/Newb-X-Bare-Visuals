@@ -116,7 +116,7 @@
 #define NL_WATER_STYLE_STRENGTH 0.16
 #define NL_GROUND_REFL 0.22         // Always-on subtle sky reflection for horizontal terrain
 #define NL_GROUND_REFL_DISTANCE 0.40 // Limit reflection work to nearer terrain
-#define NL_CLOUD_AURORA_REFLECTION  // Legacy-inspired sky detail in water and wet-ground reflections
+#define NL_CLOUD_AURORA_REFLECTION  // Legacy-inspired aurora detail in water and wet-ground reflections
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 0.8         // 0.0 dark ~ 3.0 bright
