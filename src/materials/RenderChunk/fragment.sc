@@ -41,7 +41,12 @@ void main() {
     diffuse.rgb *= mix(vec3(1.0,1.0,1.0), texture2D(s_SeasonsTexture, v_color1.xy).rgb * 2.0, v_color1.z);
   #endif
 
-  vec3 glow = nlGlow(s_MatTexture, v_texcoord0, v_extra.a);
+  #ifdef LITE
+    // Lite skips the extra glow texture sample on every terrain fragment.
+    vec3 glow = vec3_splat(0.0);
+  #else
+    vec3 glow = nlGlow(s_MatTexture, v_texcoord0, v_extra.a);
+  #endif
 
   diffuse.rgb *= diffuse.rgb;
 
