@@ -148,7 +148,7 @@ void nlWave(
       extraPlantsFlag(shouldWave, uv0, isTop);
     #endif
 
-    if (shouldWave) {
+    if (shouldWave && !isTreeLeaves) {
 
       float wave = NL_PLANTS_WAVE*windStrength;
 
