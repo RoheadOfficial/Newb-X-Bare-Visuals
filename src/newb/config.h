@@ -174,7 +174,6 @@
 #define NL_AURORA_COL1 vec3(0.1,1.0,0.0)
 #define NL_AURORA_COL2 vec3(0.1,0.0,1.0)
 
-//#define NL_CLOUD_AURORA_REFLECTION // Omitted to keep wet-ground rendering lightweight
 
 /* Shooting star */
 #define NL_SHOOTING_STAR 1.0        // [toggle] 0.2 dim ~ 1.0 bright
