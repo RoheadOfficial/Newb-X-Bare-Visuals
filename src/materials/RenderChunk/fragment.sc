@@ -14,9 +14,9 @@ float nlBareTerrainShade(vec4 vertexColor) {
   if (vertexColor.a > 0.0) {
     // Smoothly map the community snippet's green-channel range into one bounded ramp.
     // Replacing cumulative threshold multipliers prevents black bands on distant terrain.
-    float shadeRange = clamp((0.640 - vertexColor.g) / 0.010, 0.0, 1.0);
+    float shadeRange = clamp((0.640 - vertexColor.g) / 0.012, 0.0, 1.0);
     shadeRange = shadeRange * shadeRange * (3.0 - 2.0 * shadeRange);
-    shade = 1.0 - 0.12 * shadeRange;
+    shade = 1.0 - 0.18 * shadeRange;
   } else {
     // Retain the original alpha-zero branch's color correction, but cap its influence.
     shade = clamp(vertexColor.g * 1.55 * 1.3, 0.88, 1.12);
