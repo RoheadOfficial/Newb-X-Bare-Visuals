@@ -136,11 +136,17 @@ void main() {
   float water = 0.0;
   vec4 refl = vec4(0.0,0.0,0.0,0.0);
   #if defined(TRANSPARENT) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS))
-    color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
     if (a_color0.b > 0.3 && a_color0.a < 0.95) {
       water = 1.0;
-      refl = nlWater(color, worldPos, skycol, env, a_color0, viewDir, cPos, tiledCpos, gPos, CameraPosition.xyz, light, torchColor, lit, bPos.y, camDis, t);
+      #ifdef NL_VANILLA_WATER
+        // Keep vanilla water texture/color and skip custom water reflections and displacement.
+        refl = vec4(0.0,0.0,0.0,0.0);
+      #else
+        color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
+        refl = nlWater(color, worldPos, skycol, env, a_color0, viewDir, cPos, tiledCpos, gPos, CameraPosition.xyz, light, torchColor, lit, bPos.y, camDis, t);
+      #endif
     } else {
+      color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
       refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
     }
   #else
