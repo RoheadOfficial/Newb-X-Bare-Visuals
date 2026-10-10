@@ -116,6 +116,11 @@ void nlWave(
     return;
   }
 
+  // Tree leaves remain still and skip the remaining per-vertex wave calculations.
+  if (isTreeLeaves) {
+    return;
+  }
+
   float waveFade = 2.0*max((camDist/NL_WAVE_RANGE) - 0.5, 0.0);
   waveFade *= waveFade;
 
