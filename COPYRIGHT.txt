@@ -1,0 +1,15 @@
+Copyright © 2026 RoheadOfficial
+
+Newb X Bare Visuals is a community-made variant based on the Newb X Legacy source code:
+https://github.com/devendrn/newb-x-mcbe
+
+The upstream source code is licensed under the MIT License. The upstream MIT license notice is retained in LICENSE. This source-code license does not remove separate terms that may apply to compiled Newb Shader resource packs.
+
+The compiled pack's copyright notice is generated from src/newb/pack_config.toml and identifies the compiled pack under CC BY-ND 4.0:
+https://creativecommons.org/licenses/by-nd/4.0/
+
+Redistribute only unmodified compiled packs where permitted by that license, with proper attribution to Newb Shader and the relevant variant creator(s). Do not distribute derivatives of a compiled pack under CC BY-ND 4.0. A variant must be compiled from source and distributed only under terms compatible with the upstream MIT license and all applicable Newb Variant rules.
+
+Newb X Bare Visuals is not represented as officially verified or endorsed by the Newb Shader team unless and until that status is confirmed by them.
+
+Newb Shader community: https://discord.gg/newb-community-844591537430069279
