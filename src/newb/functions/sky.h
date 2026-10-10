@@ -54,8 +54,8 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
   s.horizonEdge = mix(s.horizonEdge, NL_DAWN_EDGE_COL, dawnFactor);
 
   // Rain clouds the sky without turning rainy nights brighter than the surrounding world.
-  float rainDaylight = smoothstep(-0.25, 0.75, env.dayFactor);
-  float rainBrightness = mix(0.34, 0.82, rainDaylight);
+  float rainDaylight = smoothstep(-0.35, 0.65, env.dayFactor);
+  float rainBrightness = mix(0.08, 0.82, rainDaylight);
   float rainMix = clamp(env.rainFactor*NL_SKY_RAIN_MIX_FACTOR, 0.0, 1.0);
   s.zenith = mix(s.zenith, NL_RAIN_ZENITH_COL*rainBrightness, rainMix);
   s.horizon = mix(s.horizon, NL_RAIN_HORIZON_COL*rainBrightness, rainMix);
