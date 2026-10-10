@@ -1,6 +1,6 @@
 name = "Newb X Bare Visuals"
-version = [0, 16, 58]
-development_version = "B0.1.7 Deluxe"
+version = [0, 16, 59]
+development_version = "B0.1.9"
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
@@ -31,31 +31,39 @@ Original Newb Shader source and upstream project: https://github.com/devendrn/ne
 Variant creator: RoheadOfficial
 '''
 
-# Subpacks are arranged left to right; the right-most subpack is enabled by default.
-[[subpack]]
-define = "ROUNDED_CLOUDS"
-materials = ["Clouds"]
-description = '''
-Rounded clouds
-'''
-
-[[subpack]]
-define = "CHUNK_ANIM"
-materials = ["RenderChunk"]
-description = '''
-Chunk loading animation
-'''
-
-# [[subpack]]
-# define = "LITE"
-# materials = ["Sky", "RenderChunk", "Actor", "ActorGlint", "EndSky", "Clouds", "SunMoon", "Weather", "ItemInHandTextured", "ItemInHandColor", "ItemInHandColorGlint", "Stars"]
-# description = '''
-# Many effects disabled. A bit lighter!
-# '''
-
+# Subpacks are presented in the requested order. The right-most option is the engine's initial selection.
+# Default uses the base build; profile subpacks compile every material they override.
 [[subpack]]
 define = "DEFAULT"
 materials = []
 description = '''
-Default
+Default — Realistic Clouds · Balanced Visuals
+'''
+
+[[subpack]]
+define = "SOFT_SUNLIGHT"
+materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
+description = '''
+Soft Sunlight — Warm Light, Soft Nights & Rain
+'''
+
+[[subpack]]
+define = "MISTY_MORNINGS"
+materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
+description = '''
+Misty Mornings — Visible Mist, Rain & Cool Nights
+'''
+
+[[subpack]]
+define = "GOLDEN_HOUR"
+materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
+description = '''
+Golden Hour — Amber Light, Rain & Cool Nights
+'''
+
+[[subpack]]
+define = "LITE"
+materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
+description = '''
+Lite — Rounded Clouds & Reduced Effects
 '''
