@@ -16,9 +16,13 @@
 
 ## Current development stage
 
-### B0.1.7 Deluxe (testing branch)
+### B0.1.9 — implementation branch
 
-B0.1.7 restored the upstream Newb sky implementation, but its configured sky-color values remain custom; the sky-color configuration was not fully restored to upstream. **B0.1.7 Deluxe** lowers saturation to 1.25, softens direct sunlight, introduces restrained golden-hour lighting and distance mist, gently tints the existing vanilla water path, and enables the existing lightweight dawn/dusk fake-godray hook. Water waves and custom reflections remain disabled. The new numeric manifest sub-version is 58, while the display label is `B0.1.7 Deluxe`. Build and in-game validation are still pending until the artifact is generated and inspected.
+B0.1.9 reorganizes the pack around five selectable profiles: **Default** (realistic clouds), **Soft Sunlight**, **Misty Mornings**, **Golden Hour**, and **Lite** (rounded clouds and reduced effects). The three atmospheric profiles coordinate daylight, sunrise/sunset, nighttime, rain, fog, and water tint instead of changing only one daytime value. Godrays are excluded.
+
+Performance work targets dense forests, complex terrain, and scenes with many visible blocks. Lite disables several optional effects and skips the additional glow texture sample on terrain fragments; the shared plant/lantern movement range is reduced to keep that work closer to the player. These are source-level optimizations, not a guarantee of zero lag. Build success, visual differences, and FPS must be verified separately, with device testing on the vivo Y22s where possible.
+
+The B0.1.9 display label uses numeric manifest sub-version 59. The numeric Minecraft manifest version and the B-series display label are separate values.
 
 ## Credits and licensing
 
@@ -97,13 +101,15 @@ The build tool reports the output location for the selected profile. A successfu
 
 ## Available subpacks
 
-The B0.1.1 foundation configuration exposes these options:
+B0.1.9 exposes five options, in the requested order:
 
-- **Rounded Clouds** — the only cloud style retained for this foundation
-- **Chunk Loading Animation** — optional inherited animation
-- **Default** — the standard B0.1 configuration, with rounded clouds selected in the base shader settings
+1. **Default — Realistic Clouds · Balanced Visuals**
+2. **Soft Sunlight — Warm Light, Soft Nights & Rain**
+3. **Misty Mornings — Visible Mist, Rain & Cool Nights**
+4. **Golden Hour — Amber Light, Rain & Cool Nights**
+5. **Lite — Rounded Clouds & Reduced Effects**
 
-Wave-disabled and fog-disabled subpacks are not exposed in B0.1 because the foundation keeps plant/lantern movement and atmospheric fog enabled. Realistic and box-cloud variants are shelved. See [the B0.1 foundation notes](docs/FOUNDATION_B0.1.md) for the implementation scope and test status.
+The old **Render Anim** subpack is shelved, not deleted from source history. Rounded Clouds is assigned to Lite. Default uses the realistic-cloud renderer. The subpack labels include a short description because Minecraft's subpack manifest does not provide a separate descriptive-text field for each option. See [the B0.1.9 implementation notes](docs/B0.1.9_IMPLEMENTATION.md).
 
 ## Verification status
 
