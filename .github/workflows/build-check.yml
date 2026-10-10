@@ -27,3 +27,25 @@ jobs:
       with:
         name: newb-x-multiplatform-pr
         path: ./build/pack-multiplatform
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-python@v7
+      with:
+        python-version: '3.14'
+        cache: 'pip'
+    - uses: actions/cache@v6
+      with:
+        key: env-files-linux-laz
+        path: |
+          ${{ github.workspace }}/tool/data
+    - run: pip install -r requirements.txt
+    - run: |
+        ./build.sh setup
+        ./build.sh pack -p android -v 60 --no-zip
+    - uses: actions/upload-artifact@v4
+      with:
+        name: newb-x-android-pr
+        path: ./build/pack-android
