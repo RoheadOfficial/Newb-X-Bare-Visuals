@@ -31,13 +31,13 @@
 #define NL_TONEMAP_TYPE 3              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
 #define NL_GAMMA 1.33                  // 0.3 low ~ 2.0 high
 //#define NL_EXPOSURE 1.3              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.4             // B0.1.7: restrained starting point; verify in-game
+#define NL_SATURATION 1.25            // Deluxe: natural color without washing out block identity
 //#define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.3,0.5,1.4) // color tint for dark tone
 #define NL_TINT_HIGH vec3(1.4,0.7,0.3) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.35 // Soft Sunlight: gentle daylight without relying on saturation
+#define NL_SUNLIGHT_INTENSITY   3.20 // Deluxe Soft Sunlight: softer direct light for balanced contrast
 #define NL_TORCHLIGHT_INTENSITY 1.0  // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     0.70 // Preserve defined, natural shadow contrast
 #define NL_MIN_LIGHTING_BOOST   1.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
@@ -49,8 +49,8 @@
 #define NL_END_AMBIENT    vec3(1.98,1.25,2.3)
 
 /* Sun/moon light color */
-#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.4,0.1)
-#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.77,0.60) // Soft Sunlight: restrained warmth
+#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.58,0.32) // Golden Hour: warm amber, not orange-red
+#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.89,0.78) // Soft Sunlight: warm-neutral daylight
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.01,0.03,0.2)
 
 /* Torch colors */
@@ -61,8 +61,8 @@
 
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
-#define NL_MIST_DENSITY 0.20      // Gentle atmospheric depth; rain fog is handled separately
-#define NL_RAIN_MIST_OPACITY 0.14 // Restrained rain mist for mobile performance
+#define NL_MIST_DENSITY 0.22      // Misty Mornings: a small, all-weather distance haze
+#define NL_RAIN_MIST_OPACITY 0.12 // Keep rain mist restrained for mobile performance
 #define NL_CLOUDY_FOG 0.1         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
 /* Sky */
@@ -113,7 +113,8 @@
 #define NL_WATER_TEX_OPACITY 0.3  // 0.0 plain water ~ 1.0 vanilla water texture
 //#define NL_WATER_WAVE             // Disabled for vanilla water
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
-#define NL_WATER_TINT vec3(0.52,0.9,0.45)
+#define NL_WATER_TINT vec3(0.72,0.91,0.98) // Muted clear-water tint: cool, not neon
+#define NL_WATER_STYLE_STRENGTH 0.22 // Subtle tint applied only to the existing vanilla water path
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 0.8         // 0.0 dark ~ 3.0 bright
@@ -196,8 +197,8 @@
 #define NL_SUN_TILT        45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 #define NL_MOON_TILT       45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
-/* Fake godrays during sunrise/sunset */
-//#define NL_GODRAY 0.3 // [toggle] 0.1 subtle ~ 0.8 strong
+/* Existing lightweight fake godrays during sunrise/sunset; no new render pass */
+#define NL_GODRAY 0.12 // Deluxe: very subtle dawn/dusk rays; monitor mobile performance
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.4       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky

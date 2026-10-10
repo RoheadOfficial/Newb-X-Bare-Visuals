@@ -130,7 +130,8 @@ def run(args):
 
     pack_name: str = pack_config['name']
     pack_version = f"{pack_config['version'][1]}.{pack_config['version'][2]}"
-    display_version = pack_config.get("development_version", "B0.1.7")
+    display_version = pack_config.get("development_version", "B0.1.7 Deluxe")
+    display_version_slug = display_version.lower().replace(" ", "-")
     pack_authors = ', '.join(pack_config['authors'])
     profile: str = args.p
 
@@ -143,7 +144,7 @@ def run(args):
     console.print("  [dim]profile :", "[cyan]" + args.p)
 
     pack_acr_name = "".join(filter(str.isupper, pack_name)).lower()
-    pack_acr_name = f"{pack_acr_name}-{display_version.lower()}-{profile}"
+    pack_acr_name = f"{pack_acr_name}-{display_version_slug}-{profile}"
     pack_dir = os.path.join('build', 'pack-' + args.p)
     mats_dir = os.path.join(pack_dir, 'renderer', 'materials')
 

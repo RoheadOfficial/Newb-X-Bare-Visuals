@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       subversion:
-        description: 'Numeric manifest sub-version (B-Series display label is B0.1.7)'
+        description: 'Numeric manifest sub-version (B0.1.7 Deluxe uses 58)'
         required: true
-        default: '57'
+        default: '58'
         type: string
       platform:
         description: 'Target platform to build for'

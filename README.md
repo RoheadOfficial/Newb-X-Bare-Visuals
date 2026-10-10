@@ -16,7 +16,9 @@
 
 ## Current development stage
 
-B0.1.7 restores the upstream Newb sky implementation and its sky-color configuration, removes custom sky blending/horizon overrides, reduces saturation to the upstream 1.4 baseline, and refines rain-aware fog and restrained daylight tuning. The visual identity is based on natural lighting and atmosphere—not saturation alone. The pack builder labels builds as `B0.1.7` while keeping Minecraft's manifest version numeric. Manifest description styling uses Minecraft formatting colors and a Unicode small-caps easter egg. Build and in-game validation remain pending until a real artifact is generated and tested.
+### B0.1.7 Deluxe (testing branch)
+
+B0.1.7 restored the upstream Newb sky implementation, but its configured sky-color values remain custom; the sky-color configuration was not fully restored to upstream. **B0.1.7 Deluxe** lowers saturation to 1.25, softens direct sunlight, introduces restrained golden-hour lighting and distance mist, gently tints the existing vanilla water path, and enables the existing lightweight dawn/dusk fake-godray hook. Water waves and custom reflections remain disabled. The new numeric manifest sub-version is 58, while the display label is `B0.1.7 Deluxe`. Build and in-game validation are still pending until the artifact is generated and inspected.
 
 ## Credits and licensing
 

@@ -1,4 +1,4 @@
-# B0.1.7 — Original Sky Restoration & Visual Identity
+# B0.1.7 / B0.1.7 Deluxe — Foundation and Deluxe Addendum
 
 ## Purpose
 
@@ -8,7 +8,7 @@ B0.1.7 restores the original Newb X Legacy sky implementation and begins establi
 
 - Sky implementation restored from upstream Newb X Legacy commit `c57aefa9309ec76c2e9bb500492b6b389321878a`.
 - Restores original day/night behavior, dawn/dusk colors, rain-sky blending, and horizon rendering.
-- The sky configuration block in `src/newb/config.h` uses upstream values.
+- The sky-color configuration in `src/newb/config.h` still contains custom values; only `src/newb/functions/sky.h` was restored byte-for-byte from upstream. Do not describe the sky-color configuration as fully restored.
 - Custom sky interpolation, custom rainy-night palette blending, and the extra horizon overlay are removed.
 - Keep the existing Newb sky, sun/moon, clouds, and rendering pipeline as the source of truth.
 
@@ -56,6 +56,16 @@ B0.1.7 restores the original Newb X Legacy sky implementation and begins establi
 - [ ] Confirm fog is gradual and not excessively grey or dense.
 - [ ] Check clouds, vanilla-style water, plant/lantern motion, and existing shading for regressions.
 - [ ] Compare performance on the vivo Y22s in open terrain, dense forests, mob-heavy scenes, rain, and thunderstorms.
+
+## B0.1.7 Deluxe addendum
+
+- Saturation reduced to `1.25`.
+- Direct sunlight softened to `3.20`; noon tint is warm-neutral and dawn/dusk tint is restrained amber.
+- `NL_MIST_DENSITY` is `0.22`; rain-mist opacity is `0.12` to keep weather fog restrained.
+- The existing vanilla-water path receives a subtle cool tint while retaining engine alpha and fog. Custom water waves and reflections remain disabled.
+- Existing fake godrays are enabled at `0.12` for a restrained dawn/dusk effect. This is not a new volumetric rendering pass, but it adds shader calculations and must be FPS-tested on the target phone.
+- Numeric manifest version sub-version is `58`; display version is `B0.1.7 Deluxe`.
+- This work is on `b0.1.7-deluxe`, not `main`.
 
 ## Status
 
