@@ -1,143 +1,116 @@
-# Newb X Legacy
+# Newb X Bare Visuals
 
-**Newb X Legacy** is a RenderDragon successor to the legacy GLSL shader, [Newb Shader](https://github.com/devendrn/newb-shader-mcbe). It is an enhanced vanilla shader that focuses on being lightweight and having soft aesthetics. It supports Minecraft Bedrock 1.26+ (Windows/Android/iOS).
+**Newb X Bare Visuals** is a community-made variant of **Newb X Legacy**, the RenderDragon shader project maintained by devendrn and the Newb Shader contributors. This repository is based on the upstream source and is intended to develop a distinct visual variant while respecting the upstream project's code license and Newb Variant requirements.
 
-<br>
+> **Patch warning:** Minecraft Bedrock shader loading is unofficial and may depend on external loaders, game versions, and platform-specific patches. Compatibility must be tested for each version and platform claimed by a release. A successful build alone does not prove in-game compatibility.
 
-![Screenshots](docs/screenshots.jpg "Newb X Legacy 15.47, MCBE 1.21.0")
+## Project status
 
-## Downloads
+This repository has been freshly forked and its variant configuration is being established. Do not treat the shader as a verified release yet. Visual distinction, pack identity, compatibility, subpack behavior, and release artifacts must be checked before publication.
 
-You can download the shader pack from [release page](https://github.com/devendrn/newb-x-mcbe/releases/latest).
+- **Variant name:** Newb X Bare Visuals
+- **Upstream project:** [devendrn/newb-x-mcbe](https://github.com/devendrn/newb-x-mcbe)
+- **Variant repository:** [RoheadOfficial/Newb-X-Bare-Visuals](https://github.com/RoheadOfficial/Newb-X-Bare-Visuals)
+- **Variant creator:** RoheadOfficial
+- **Version scheme:** B-series for project development versions
+- **Build system:** Upstream Newb build tool and GitHub Actions workflow
 
-## Installation
+## Credits and licensing
 
-> [!NOTE]
-> Shaders are not officially supported on Minecraft Bedrock. The following are unofficial ways to load shaders. There are multiple ways to get it working. Start with the recommended method. If that doesn't work try the other method.
+The upstream Newb X Legacy source code is distributed under the MIT License. See [LICENSE](LICENSE) and retain its required notice.
 
-### Android
+Compiled Newb Shader resource packs have separate copyright and redistribution terms. The generated pack's copyright notice identifies the compiled pack as CC BY-ND 4.0. Under that license, redistribution of a compiled pack is limited to unmodified copies with appropriate attribution. Do not distribute a modified compiled pack as though the CC BY-ND license grants permission to do so. See [COPYRIGHT.txt](COPYRIGHT.txt) and the generated pack's own notice.
 
-| **Using MB Loader App** |
-|:-|
-| 1. Install [MB Loader App](https://play.google.com/store/apps/details?id=io.github.bambosan.mbloader) |
-| 2. Launch Minecraft from MB Loader. |
-| 2. Import the resource pack and activate it in global resources. |
+Newb X Bare Visuals is intended to be built from the licensed source and distributed only in accordance with the applicable upstream license, Newb Variant rules, and the terms stated in the final compiled pack. Credit both **Newb Shader** and the variant creator when sharing an eligible pack. This repository does not claim endorsement or verification by the Newb Shader team.
 
-### Windows
+## Requirements for publishing a variant
 
-| **Using Wyvern Loader** |
-|:-|
-| 1. Download and setup Wyvern from [here](https://github.com/mcbegamerxx954/wyvern_releases/releases/latest) |
-| 2. Open Minecraft then click 'Inject' in Wyvern |
-| 3. Import the resource pack and activate it in global resources. |
+The project must satisfy the Newb Variant requirements before a release is submitted:
 
-### Linux / Mac
-This method is for [mcpelauncher-manifest](https://minecraft-linux.github.io/).
-
-| **Using MaterialBinLoader mod (Recommended): x86_64 arch** |
-|:-|
-| 1. Install [mcpelauncher-materialbinloader-mod](https://github.com/CrackedMatter/mcpelauncher-materialbinloader/releases/latest). |
-| 2. Import the resource pack and activate it in global resources. |
-
-| **Using shaders mod: x86_64, x86, arm64, arm arch** |
-|:-|
-| 1. Download [mcpelauncher-shadersmod](https://github.com/GameParrot/mcpelauncher-shadersmod/releases/latest). |
-| 2. Follow this [guide](https://faizul726.github.io/guides/shadersmodinstallation) to setup. |
-
-
-### iOS
-Using shaders on iOS is not very straightforward and not recommended for beginners.
-
-| **Using Minecraft with Hynis** |
-|:-|
-| 1. Download Minecraft with Hynis IPA file from our [Discord server](https://discord.com/invite/newb-community-844591537430069279). |
-| 2. Sideload it with your preferred sideloading tool. |
-| 3. Import the resource pack and activate it in global resources. |
-
-<br>
+- Use original assets or assets used with explicit permission. Record permitted asset credits in `credit` within `src/newb/pack_config.toml`.
+- Demonstrate a clear visual difference from Newb X Legacy.
+- Use a unique pack name, UUID, and original icon.
+- Include the word **Newb** in the variant title and clearly identify it as a modified Newb Shader in the description.
+- Retain the patch warning in the pack description.
+- Put the variant creator before `devendrn` in the authors list.
+- Distribute only the pack generated by the prescribed build tool; label material files through the build process.
+- Maintain no more than two variants.
+- Do not use AI-generated or AI-enhanced pack icons or screenshots.
+- Test every Minecraft version and platform claimed to be supported.
 
 ## Building
 
+The project uses the upstream build tooling. The commands below describe the existing upstream workflow and should be run in a compatible development environment.
+
 ### Install dependencies
-- [Git](https://git-scm.com/)
-- [Python](https://www.python.org/) 3.11 or higher required
-- Python packages:
-  - [lazurite](https://veka0.github.io/lazurite/#installation) (Must be `v0.10.0`. Newer or older version may not be supported)
-  - [rich](https://rich.readthedocs.io/en/stable/introduction.html#installation) (Must be `v14+`)
 
-### Get source code
-```
-git clone https://github.com/devendrn/newb-x-mcbe/ -c core.symlinks=true
-cd newb-x-mcbe
-```
+- Git
+- Python 3.11 or newer
+- Python dependencies listed in `requirements.txt`
 
-### Install dependencies from requirements.txt
-*Skip if you already have installed those versions.*
-```
+Install the declared packages:
+
+```sh
 python -m pip install -r requirements.txt
 ```
 
-### Setup build environment
-> [!NOTE]
-> On Windows, run `.\build.bat` instead of `./build.sh` for all following commands.
-```
+### Set up the build environment
+
+On Linux or Android-compatible shell environments:
+
+```sh
 ./build.sh setup
 ```
-This will download shaderc binary and material data required to build shader.
 
-<br>
+On Windows, use:
 
-### Compile specific shader materials
-```
-./build.sh mats
-```
-Compiled material.bin files will be inside `build/<platform>/`
-
-**Command usage:**
-```
-usage: build mats [-h] [-p {android,windows,ios,multiplatform}] [-m M [M ...]] [-s S]
-
-options:
-  -h, --help            show this help message and exit
-  -p {android,windows,multiplatform,ios}
-                        build profile
-  -m M [M ...]          build materials (eg: Sky)
-  -s S                  subpack config to use (eg: NO_WAVE)
+```bat
+build.bat setup
 ```
 
-### Compile and build full shader pack
-```
+This setup step downloads the compiler and material data required by the upstream build tool.
+
+### Build the resource pack
+
+Linux:
+
+```sh
 ./build.sh pack
 ```
 
-The final mcpack will be inside `build/`.
+Windows:
 
-**Command usage:**
-```
-usage: build pack [-h] [-p {android,windows,ios,multiplatform}] [--no-zip] [--no-label] [-v V]
-
-options:
-  -h, --help            show this help message and exit
-  -p {android,windows,multiplatform,ios}
-                        build profile
-  --no-zip              don't make archive
-  --no-label            don't label materials
-  -v V                  version number eg: 17
+```bat
+build.bat pack
 ```
 
-> [!TIP]
-> If you want to customize pack name, author, version and other details, you can do so in `src/newb/pack_config.toml`.
+The build tool supports platform profiles and a numeric internal version argument. The repository's B-series project version and the compiled pack's internal version are separate concepts; workflow integration must preserve the builder's expected input format.
 
-<br>
+The expected output location is reported by the build tool and may vary by selected platform/profile. A build is not considered verified until the workflow succeeds and the resulting artifact is inspected.
 
-## Development
+## Subpacks inherited from upstream
 
-Clangd can be used to get code completion and error checks for source files inside include/newb. Fake bgfx header and clangd config are provided for the same.
-- **Neovim**: Install clangd LSP.
-- **VSCode**: Install [vscode-clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd) extension.
+The current pack configuration retains these upstream options while the variant is being developed:
 
-## License
+- Realistic clouds
+- Rounded clouds
+- Box clouds
+- Chunk loading animation
+- No wave and no fog
+- No fog
+- No wave
+- Default settings
 
-**Source Code:** The "Newb Shader" source code is licensed under the MIT License. You are free to modify, distribute, and create derivative works based on the source code.
+Their presence in the configuration does not by itself prove that each option works correctly in the final pack. Each option must be checked against the compiled materials and tested in-game.
 
-**Compiled Resource Packs (`.mcpack` files):** The compiled resource packs distributed by the "Newb Shader" project and its variant creators are copyrighted works with restrictions. See the `COPYRIGHT.txt` file within each resource pack for more information.
+## Development and verification
+
+Before a version is marked complete:
+
+1. Review the changed files and confirm required source and material files remain present.
+2. Validate the pack configuration and unique pack identity.
+3. Run the applicable build workflow and inspect the generated artifact.
+4. Test the pack on the exact Minecraft version and platform being claimed.
+5. Update documentation to match what is actually implemented and verified.
+
+Do not report a feature as implemented solely because it appears in this README or in a configuration file.
