@@ -1,5 +1,59 @@
 # Changelog
 
+## B0.1.7 Deluxe — Natural Light, Mist, Water & Godrays
+
+### Visual identity
+- Reduced `NL_SATURATION` from 1.4 to 1.25 to let lighting and atmosphere carry the look.
+- Softened direct sunlight intensity to 3.20 and adjusted noon light toward a warm-neutral tone.
+- Tuned dawn/dusk sunlight to a restrained amber for the Golden Hour identity.
+- Increased baseline mist slightly to 0.22; rain-mist opacity is reduced to 0.12 to avoid heavy weather fog.
+
+### Water
+- Added a restrained cool water tint in the existing vanilla water fragment path.
+- Preserved engine-provided transparency and fog blending. No custom water waves, displacement, or reflection pass was added.
+
+### Godrays and performance
+- Enabled the existing lightweight fake-godray hook at strength 0.12. It is designed for sunrise/sunset and adds no separate render pass or texture.
+- It still adds shader calculations and needs FPS testing on the vivo Y22s; performance is not assumed from source inspection alone.
+- Kept the current Newb lighting pipeline, rounded clouds, and existing materials.
+
+### Build identity
+- Bumped the numeric manifest sub-version to 58 and the display label to `B0.1.7 Deluxe`.
+- Updated the artifact filename slug and build workflows; corrected the build-check artifact directory to match the builder output.
+
+### Validation status
+- Changes are isolated on `b0.1.7-deluxe`; `main` is not changed.
+- Compilation, artifact inspection, import, visual comparison, and mobile FPS testing remain pending.
+
+
+## B0.1.7 — Original Sky Restoration & Visual Identity
+
+### Sky restoration
+- Restored `src/newb/functions/sky.h` byte-for-byte from upstream Newb X Legacy commit `c57aefa9309ec76c2e9bb500492b6b389321878a`.
+- Restored the upstream sky implementation, but the sky-color configuration in `src/newb/config.h` remained custom and was not fully restored to upstream. The earlier description overstated the scope of the configuration restoration.
+- Removed the custom sky interpolation and horizon overlay by returning to the upstream sky implementation.
+
+### Natural color and lighting
+- Set `NL_SATURATION` to `1.4` as the starting baseline; in-game comparison is still required before deciding whether to reduce it further.
+- Tuned daylight intensity, shadow intensity, and noon light color subtly without adding a new bloom/glare pass.
+- Kept the upstream tonemapping and existing vanilla-style water path. Saturation is not the project's differentiator.
+
+### Weather Improvements 2.0
+- Retained rain-aware fog integration across the existing material vertex shaders.
+- Made the rain-driven fog-start/end shift more restrained, reduced the rain-density multiplier, and softened the additional rain fade blend.
+- Reduced baseline mist density and rain-mist opacity to avoid heavy grey fog and protect mobile performance.
+- Shelved Misty Mornings and a separate Golden Hour sky tint unless real tests show they can be added without breaking original sky behavior.
+
+### Pack identity and B-Series versioning
+- Added `development_version = "B0.1.7"` to the pack configuration.
+- Updated build output, compiled material labels, generated description, and artifact filename to use B-Series labels while preserving the numeric Minecraft manifest version.
+- Added subtle Minecraft formatting-color accents and Unicode small-caps lettering to the generated manifest description; no unsupported manifest fields or fake font settings were added.
+- Set the workflow's default numeric manifest sub-version to `57` and documented its relationship to the B-Series display label.
+
+### Validation status
+- Source and documentation updates are staged on the B0.1.7 implementation branch.
+- GitHub Actions build, artifact inspection, Android import, weather/sky checks, compatibility, and vivo Y22s performance testing are pending. No successful build or in-game result is claimed.
+
 ## B0.1.1 — Foundation Fix
 
 ### Sky and time

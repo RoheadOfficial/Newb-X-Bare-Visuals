@@ -1,10 +1,12 @@
 name = "Newb X Bare Visuals"
-version = [0, 16, 56]
+version = [0, 16, 58]
+development_version = "B0.1.7 Deluxe"
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
-§7- A modified version of Newb X Legacy focused on a clean, lightweight visual style.
+§7- A modified version of Newb X Legacy focused on a natural, lightweight visual style.
 §7- Newb X Bare Visuals is a community-made Newb Shader variant by RoheadOfficial.
+§8[§2MOSS §8· §6COFFEE §8· §fSTONE§8] §rᴠᴀɴɪʟʟᴀ ᴍɪɴᴇᴄʀᴀғᴛ, ɴᴀᴛᴜʀᴀʟʟʏ ᴇɴʜᴀɴᴄᴇᴅ.
 %v
 §3https://github.com/RoheadOfficial/Newb-X-Bare-Visuals
 ''' # %w = patch warning (required), %v = generated pack version

@@ -130,19 +130,21 @@ def run(args):
 
     pack_name: str = pack_config['name']
     pack_version = f"{pack_config['version'][1]}.{pack_config['version'][2]}"
+    display_version = pack_config.get("development_version", "B0.1.7 Deluxe")
+    display_version_slug = display_version.lower().replace(" ", "-")
     pack_authors = ', '.join(pack_config['authors'])
     profile: str = args.p
 
     console.print("~ Pack info", style="bold")
     console.print("  [dim]name    :", "[cyan]" + pack_name)
     console.print("  [dim]authors :", "[cyan]" + pack_authors)
-    console.print("  [dim]version :", "[cyan]" + pack_version + "\n")
+    console.print("  [dim]version :", "[cyan]" + display_version + " (manifest " + pack_version + ")\n")
 
     console.print("~ Build target", style="bold")
     console.print("  [dim]profile :", "[cyan]" + args.p)
 
     pack_acr_name = "".join(filter(str.isupper, pack_name)).lower()
-    pack_acr_name = f"{pack_acr_name}-{pack_version}-{profile}"
+    pack_acr_name = f"{pack_acr_name}-{display_version_slug}-{profile}"
     pack_dir = os.path.join('build', 'pack-' + args.p)
     mats_dir = os.path.join(pack_dir, 'renderer', 'materials')
 
@@ -162,7 +164,7 @@ def run(args):
     elif profile == 'multiplatform':
         patch_warning += "MB Loader (Android) or Wyvern Loader (Windows) or Minecraft with Hynis (iOS)"
 
-    pack_description = pack_description.replace("%w", patch_warning).replace("%v", "v" + pack_version + "-" + args.p)
+    pack_description = pack_description.replace("%w", patch_warning).replace("%v", display_version + " · " + args.p)
     pack_config['description'] = pack_description
     pack_manifest = create_pack_manifest(pack_config)
 
@@ -171,7 +173,7 @@ def run(args):
     status.start()
 
     if not args.no_label:
-        _name = pack_name + " v" + pack_version
+        _name = pack_name + " " + display_version
         lp.Material.write = mwrite
 
     _build(status, args.p, "default", pack_config['materials'], mats_dir)

@@ -20,6 +20,9 @@ void main() {
     if (v_extra.b > 0.9) {
       // Vanilla-style water: retain the water texture and engine transparency without shader-added waves/reflections.
       diffuse.rgb *= color.rgb;
+      // Deluxe water styling: restrained cool tint, preserving engine alpha and fog.
+      // The vanilla texture remains; no custom waves, displacement, or reflections are added.
+      diffuse.rgb = mix(diffuse.rgb, diffuse.rgb * NL_WATER_TINT, NL_WATER_STYLE_STRENGTH);
       diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);
       diffuse.rgb = colorCorrection(diffuse.rgb);
       diffuse.a = color.a;
