@@ -88,7 +88,7 @@
 
 
 /* Rainbow */
-#define NL_RAINBOW           // [toggle] enable rainbow in sky
+//#define NL_RAINBOW           // Shelved: avoid additional dramatic sky events
 #define NL_RAINBOW_CLEAR 0.0 // 0.3 subtle ~ 1.0 bright during clear weather
 #define NL_RAINBOW_RAIN  0.4 // 0.3 subtle ~ 1.0 bright during rain weather
 
@@ -176,7 +176,7 @@
 
 
 /* Shooting star */
-#define NL_SHOOTING_STAR 1.0        // [toggle] 0.2 dim ~ 1.0 bright
+//#define NL_SHOOTING_STAR 1.0      // Shelved: Always Reflection keeps aurora as the Legacy sky tribute
 #define NL_SHOOTING_STAR_PERIOD 6.0 // 0.4 fast ~ 12.0 slow (12 secs)
 #define NL_SHOOTING_STAR_DELAY 64.0 // 0.0 no delay ~ 100.0 long time (100 secs)
 
