@@ -39,11 +39,12 @@ nl_skycolor nlEndSkyColors(nl_environment env) {
 
 nl_skycolor nlOverworldSkyColors(nl_environment env) {
   nl_skycolor s;
-  float f = 1.0 + 2.0*(1.0-max(-env.dayFactor, 0.0));
-  float nightFactor = step(env.dayFactor, 0.0);
-  s.zenith = mix(NL_DAY_ZENITH_COL, NL_NIGHT_ZENITH_COL*f, nightFactor);
-  s.horizon = mix(NL_DAY_HORIZON_COL, NL_NIGHT_HORIZON_COL*f, nightFactor);
-  s.horizonEdge = mix(NL_DAY_EDGE_COL, NL_NIGHT_EDGE_COL*f, nightFactor);
+  // Blend day and night around the horizon instead of hard-switching at one time.
+  float nightBrightness = 1.0 + 2.0*(1.0-max(-env.dayFactor, 0.0));
+  float nightFactor = 1.0 - smoothstep(-0.12, 0.12, env.dayFactor);
+  s.zenith = mix(NL_DAY_ZENITH_COL, NL_NIGHT_ZENITH_COL*nightBrightness, nightFactor);
+  s.horizon = mix(NL_DAY_HORIZON_COL, NL_NIGHT_HORIZON_COL*nightBrightness, nightFactor);
+  s.horizonEdge = mix(NL_DAY_EDGE_COL, NL_NIGHT_EDGE_COL*nightBrightness, nightFactor);
 
   float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
   dawnFactor *= dawnFactor*dawnFactor;
@@ -52,12 +53,13 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
   s.horizon = mix(s.horizon, NL_DAWN_HORIZON_COL, dawnFactor);
   s.horizonEdge = mix(s.horizonEdge, NL_DAWN_EDGE_COL, dawnFactor);
 
-  float zh = dot(s.zenith, vec3_splat(0.33));
-  float hh = dot(s.horizon, vec3_splat(0.33));
-  float rainMix = env.rainFactor*NL_SKY_RAIN_MIX_FACTOR;
-  s.zenith = mix(s.zenith, NL_RAIN_ZENITH_COL*zh, rainMix);
-  s.horizon = mix(s.horizon, NL_RAIN_HORIZON_COL*hh, rainMix);
-  s.horizonEdge = mix(s.horizonEdge, s.horizon, env.rainFactor);
+  // Rain clouds the sky without turning rainy nights brighter than the surrounding world.
+  float rainDaylight = smoothstep(-0.25, 0.75, env.dayFactor);
+  float rainBrightness = mix(0.34, 0.82, rainDaylight);
+  float rainMix = clamp(env.rainFactor*NL_SKY_RAIN_MIX_FACTOR, 0.0, 1.0);
+  s.zenith = mix(s.zenith, NL_RAIN_ZENITH_COL*rainBrightness, rainMix);
+  s.horizon = mix(s.horizon, NL_RAIN_HORIZON_COL*rainBrightness, rainMix);
+  s.horizonEdge = mix(s.horizonEdge, s.horizon, rainMix);
 
   if (env.underwater) {
     vec3 underwaterFog = env.fogCol*env.fogCol*NL_UNDERWATER_TINT;
@@ -107,6 +109,10 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
   sky *= 0.5+0.5*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
+
+  // A restrained atmospheric band softens the join between sky and distant scenery.
+  float horizonBlend = pow(clamp(1.0-abs(viewDir.y), 0.0, 1.0), 5.0);
+  sky = mix(sky, skyCol.horizonEdge, horizonBlend*0.12*(1.0-env.rainFactor));
 
   if (!isSkyPlane) {
     float source = max(0.0, (mg8-0.22)/0.78);
