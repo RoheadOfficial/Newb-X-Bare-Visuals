@@ -1,17 +1,18 @@
-# B0.1 Foundation
+# B0.1.1 Foundation Fix
 
 ## Purpose
 
-B0.1 establishes the first Newb X Bare Visuals foundation for Minecraft Bedrock on Android. The visual target is vibrant, cinematic scenery with restrained atmosphere and animation, while prioritizing stable performance on the baseline Android device.
+B0.1.1 fixes the first Newb X Bare Visuals foundation for Minecraft Bedrock on Android. The visual target is vibrant, cinematic scenery with restrained atmosphere and animation, while prioritizing stable performance on the baseline Android device.
 
 ## Visual scope
 
-- A subtle saturation increase of approximately 3% through the existing color-correction pipeline.
-- Slightly warmer daylight and a balanced blue sky.
+- Saturation set to 1.442, exactly 3% above Newb's original 1.4 baseline through the existing color-correction pipeline.
+- A natural blue daytime zenith, bright atmospheric horizon, restrained neutral horizon edge, and warm peach/coral dawn and dusk colors.
+- Smooth day/night sky transitions driven by the existing Minecraft time-of-day calculation.
 - Existing Newb lighting retained, with a small increase in daylight intensity and slightly softer baseline shadow contrast.
-- Atmospheric fog retained with a modest increase in mist density.
+- Atmospheric fog retained and made rain-aware: rainy weather advances fog onset and increases mist density gradually.
 - Rounded Clouds is the only active cloud style. Realistic and box-cloud options are shelved.
-- The community-provided shadow-shading snippet is appended to src/materials/RenderChunk/fragment.sc after the existing color-correction step. Existing RenderChunk shading logic is preserved.
+- The added community-provided RenderChunk shadow-shading snippet has been removed. The existing upstream shading pipeline and the separate vanilla-style water path are preserved.
 
 ## Motion and water
 
@@ -24,7 +25,7 @@ B0.1 establishes the first Newb X Bare Visuals foundation for Minecraft Bedrock 
 ## Weather
 
 - Rain particles remain enabled; the shader's particle-speck styling and rain slant are reduced.
-- Rain mist remains enabled at a lower intensity.
+- Rain mist remains enabled; the fog fade function receives the detected rain factor so rainy conditions increase atmospheric depth.
 - The existing wet-ground effect remains active during rain and thunderstorms. Its reflection distance and puddle variation are reduced to limit overhead.
 
 ## Performance intent
@@ -38,10 +39,12 @@ The source changes aim to reduce avoidable rendering work while retaining the re
 - [ ] Confirm water has no shader-added waves or surface reflections.
 - [ ] Confirm grass/plants and lanterns move while tree leaves remain still.
 - [ ] Check rain particle visibility and rain/thunder wet-ground appearance.
-- [ ] Check rounded clouds, atmosphere, daylight, and the overall scenery.
-- [ ] Inspect the added RenderChunk shadow shading for artifacts or excessive darkening.
+- [ ] Check rounded clouds, noon sky color, dawn/dusk warmth, nighttime, horizon blending, and overall scenery.
+- [ ] Confirm rainy skies become overcast and rain fog advances the horizon naturally.
+- [ ] Confirm time and rain transitions change smoothly rather than abruptly.
+- [ ] Confirm the unwanted added shadow shading is gone and original Newb shading remains intact.
 - [ ] Compare FPS and frame stability against the original Newb demo in open terrain, dense forests, mob-heavy scenes, rain, and thunderstorms.
 
 ## Status
 
-The source-level implementation is committed. Build success, in-game appearance, compatibility, and performance have not yet been verified.
+B0.1.1 source-level changes are committed. Build success, in-game appearance, compatibility, and performance have not yet been verified. Target setup: Minecraft Bedrock 26.50, MB Loader 26.52, RenderDragon shader support on Android; baseline device: vivo Y22s.
