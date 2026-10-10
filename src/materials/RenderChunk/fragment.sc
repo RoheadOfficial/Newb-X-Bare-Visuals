@@ -6,8 +6,8 @@ $input v_color0, v_color1, v_fog, v_refl, v_texcoord0, v_lightmapUV, v_extra
 SAMPLER2D_AUTOREG(s_MatTexture);
 SAMPLER2D_AUTOREG(s_SeasonsTexture);
 SAMPLER2D_AUTOREG(s_LightMapTexture);
- // B0.2.2 terrain shading correction. This is only compiled into RenderChunk;
- // Actor materials use a separate shader and receive no custom player/mob shadows.
+// B0.2.2 terrain shading correction. This is only compiled into RenderChunk.
+// Actor materials use a separate shader and receive no custom player/mob shadows.
 float nlBareTerrainShade(vec4 vertexColor) {
   float shade = 1.0;
 
