@@ -206,7 +206,7 @@
 
 /* Entity (Actor, ItemInHand) */
 #define NL_ENTITY_BRIGHTNESS     0.65 // 0.1 dark ~ 1.6 bright
-#define NL_ENTITY_EDGE_HIGHLIGHT 0.41 // [toggle] 0.0 no highlight ~ 1.6 bright highlight
+//#define NL_ENTITY_EDGE_HIGHLIGHT 0.41 // Disabled for a lighter mob-heavy rendering path
 
 /* Weather particles */
 #define NL_WEATHER_SPECK 0.35        // Lightweight rain-particle styling; particles remain enabled
