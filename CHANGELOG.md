@@ -9,7 +9,8 @@
 
 ### Animation and water
 - Retained gentle plant movement and reduced lantern sway.
-- Disabled tree-leaf waving.
+- Disabled tree-leaf waving and skip remaining wave calculations for tree leaves.
+- Disabled optional entity edge highlighting to reduce shader work in mob-heavy scenes.
 - Added a vanilla-style water path that skips shader-added water waves, custom surface reflections, and water displacement.
 
 ### Weather and performance
