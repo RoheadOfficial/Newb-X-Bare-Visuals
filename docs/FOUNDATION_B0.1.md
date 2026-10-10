@@ -78,7 +78,7 @@ B0.1.7 restores the original Newb X Legacy sky implementation and begins establi
 
 ## Status
 
-B0.1.9 source changes are being assembled on `b0.1.9-implementation`. Compilation, artifact correctness, Android compatibility, visual appearance, subpack switching, and performance remain unverified until CI and in-game testing complete.
+B0.1.9 was merged into `main` and subsequently tested in-game by the project creator; the overall visual result felt underwhelming. B0.2.2 supersedes that direction. See [CHANGELOG.md](../CHANGELOG.md) for the historical build notes and [B0.2.2 implementation notes](B0.2.2_IMPLEMENTATION.md) for the current verification checklist.
 
 
 ## B0.2.2 successor direction
