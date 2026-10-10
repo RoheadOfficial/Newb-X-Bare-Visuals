@@ -17,7 +17,8 @@ B0.1 establishes the first Newb X Bare Visuals foundation for Minecraft Bedrock 
 
 - Plant movement remains enabled at reduced amplitude.
 - Lantern movement remains enabled at reduced amplitude.
-- Tree-leaf movement is excluded from the waving branch.
+- Tree-leaf movement is excluded from the waving branch, and tree leaves return before the remaining per-vertex wave calculations.
+- Optional entity edge highlighting is disabled to reduce shader work in mob-heavy scenes.
 - A vanilla-style water path skips shader-added surface waves, custom water reflections, and water displacement. Engine transparency, the water texture, scene lighting, and fog remain part of the rendering path.
 
 ## Weather
