@@ -1,7 +1,36 @@
 # Changelog
 
+## B0.2.5 — Visual Direction & Performance Corrections (planned)
+**Status: planned; not implemented yet.**
+
+### Visual direction
+- Replace box clouds with the existing `rounded_clouds` implementation in both Lite and Default.
+- Reduce rain particles in Default by 1% relative to its current setting; keep rain visible.
+- Rework lighting and overall shader style using the creator's supplied Minecraft screenshots as visual references: natural, lush, warm, cinematic, and atmospheric without harsh oversaturation.
+- Remove godrays from the active shader path.
+- Improve nighttime aurora appearance and make light clouds fade substantially at night/midnight instead of retaining daytime visibility.
+- Remove the Always Reflection treatment from water while evaluating terrain reflection separately.
+
+### Experimental Beta subpack
+- Add a selectable Beta profile for testing features before deciding whether to promote them to Lite or Default.
+- Planned experiments: dynamic lighting and indoor reflections/shadow behavior.
+- Keep experimental features isolated from stable subpacks until they compile, look correct, and pass performance testing. Dynamic lighting and indoor reflections/shadows are goals, not confirmed existing features.
+
+### Shadow-shading follow-up
+- B0.2.2's terrain shading change was not visibly effective in the creator's test. Inspect the actual rendering path and material inputs before adjusting thresholds again; do not assume that the current color ramp creates real shadows.
+- Keep terrain/block/foliage shading separate from actor materials. No player/mob shadow feature is requested by this correction.
+
+### Validation priorities
+- [ ] Compare rounded clouds in both subpacks in daytime and at night.
+- [ ] Confirm Default rain-particle change is exactly 1% relative to its prior configured value.
+- [ ] Verify day, dawn/dusk, night, midnight, rain, and aurora appearance against the supplied screenshots and intended style.
+- [ ] Confirm godrays are not active in any subpack.
+- [ ] Confirm water no longer receives Always Reflection while other intended reflection behavior is evaluated independently.
+- [ ] Profile Lite, Default, and Beta on Android in forests, mountains, villages, rain, and night scenes.
+- [ ] Validate dynamic lighting and indoor reflection/shadow experiments separately before considering promotion.
+
 ## B0.2.2 — Overworld Rework, Always Reflection & Terrain Shading
-**Status: implementation in progress; build and in-game verification pending.**
+**Status: merged into `main`; Android build/artifact passed, but creator's in-game test found major visual and performance improvements are needed. B0.2.5 is the planned follow-up.**
 
 ### Visual identity
 - Rework the Overworld palette toward warm, natural, semi-realistic vanilla lighting inspired by Newb Tropisphere's visual direction; no upstream shader code is copied as a substitute for original implementation.
@@ -17,7 +46,7 @@
 ### Terrain shading and subpacks
 - Replace cumulative green-channel threshold multipliers with a smooth, bounded RenderChunk terrain-shading ramp intended to avoid the black-striped distant-mountain artifact.
 - Do not modify Actor shaders; the custom terrain correction does not add player or mob shadows.
-- Replace five B0.1.9 profiles with exactly two options: Lite (first) and Default (second/right-most), both using the parent `BOX_CLOUDS` style.
+- Replace five B0.1.9 profiles with exactly two options: Lite and Default, both using the parent `BOX_CLOUDS` style. This was later identified for reversal in B0.2.5.
 - Shelve Soft Sunlight, Misty Mornings, Golden Hour, Rounded Clouds, Realistic Clouds, and Render Anim as selectable options.
 
 ### Build and documentation
@@ -26,7 +55,7 @@
 - Add a source and in-game verification checklist; do not claim build success, exact visual results, or zero lag before verification.
 
 ### Verification still required
-- [ ] CI build compiles all materials and produces the Android artifact.
+- [x] Android CI build compiled the current B0.2.2 branch and uploaded its Android artifact.
 - [ ] Generated manifest contains version 0.16.60 and exactly Lite then Default subpacks.
 - [ ] Both subpacks render box clouds; Default is the initial selection in Minecraft.
 - [ ] Water reflections work without visible wave animation or displacement.
@@ -34,7 +63,8 @@
 - [ ] Aurora/night effects remain visible; Lite has the intended reduced-cost behavior.
 - [ ] Nearby blocks, foliage, distant mountains and terrain transitions show no black stripes.
 - [ ] Confirm player/mob materials remain untouched by the custom terrain shading.
-- [ ] Import and compare in-game on the target Android device; record observed performance.
+- [x] Creator imported and tested B0.2.2 in-game; reported that the look needs major improvement and performance needs further optimization.
+- [ ] Repeat visual and performance checks after B0.2.5 changes.
 
 
 ## B0.1.9 — Subpack Reorganization, Atmospheric Profiles & Performance
