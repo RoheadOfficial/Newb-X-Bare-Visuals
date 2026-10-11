@@ -114,7 +114,7 @@ B0.2.6 keeps three selectable options in this exact order:
 2. **Default — Box Clouds, Always Reflection & Full Atmosphere**
 
 - Lite (#1): performance-focused rounded-cloud profile.
-- Beta (#2): experimental lightmap-response and terrain contact-shading prototypes.
+- Beta (#2): intentionally empty experiment slot.
 - Default (#3): main visual profile with rounded clouds and refined atmosphere.
 
 B0.2.6 sets display version B0.2.6 and manifest version 0.2.6. Beta is an intentionally empty experiment slot. Water reflection and vegetation/lantern waving are disabled; the subtle bloom-like glow is a lightweight material approximation, not screen-space bloom. See [the changelog](CHANGELOG.md) and [B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
