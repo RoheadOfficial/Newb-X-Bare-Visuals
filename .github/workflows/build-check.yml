@@ -22,7 +22,7 @@ jobs:
     - run: pip install -r requirements.txt
     - run: |
         .\build.bat setup
-        .\build.bat pack -p multiplatform -v 61 --no-zip
+        .\build.bat pack -p multiplatform -v 5 --no-zip
     - uses: actions/upload-artifact@v4
       with:
         name: newb-x-bare-visuals-b0.2.5-multiplatform-pr
@@ -44,7 +44,7 @@ jobs:
     - run: pip install -r requirements.txt
     - run: |
         ./build.sh setup
-        ./build.sh pack -p android -v 61 --no-zip
+        ./build.sh pack -p android -v 5 --no-zip
     - uses: actions/upload-artifact@v4
       with:
         name: newb-x-bare-visuals-b0.2.5-android-pr
