@@ -1,7 +1,44 @@
 # Changelog
 
+## B0.2.2 — Overworld Rework, Always Reflection & Terrain Shading
+**Status: implementation in progress; build and in-game verification pending.**
+
+### Visual identity
+- Rework the Overworld palette toward warm, natural, semi-realistic vanilla lighting inspired by Newb Tropisphere's visual direction; no upstream shader code is copied as a substitute for original implementation.
+- Reduce saturation and tame the earlier overly bright sky colors; coordinate dawn, daytime, night, rain and atmospheric fog.
+- Restore more perceptible terrain depth while keeping block colors recognizable.
+
+### Always Reflection tribute
+- Re-enable the existing sky-reflection path for water and use a flat water normal; no animated water waves or displacement are added.
+- Enable restrained always-on reflection for horizontal terrain, with stronger wet-ground response in rain and puddle variation.
+- Enable aurora visuals and their reflection detail in Default; Lite retains a reduced-cost reflection path and the aurora itself at lower intensity, but disables aurora reflection detail. Rainbows, shooting stars, galaxy stars, and godrays remain excluded; the original Newb sky pipeline is retained.
+- Bound terrain-reflection range, with a shorter range in Lite to reduce fragment work on mobile.
+
+### Terrain shading and subpacks
+- Replace cumulative green-channel threshold multipliers with a smooth, bounded RenderChunk terrain-shading ramp intended to avoid the black-striped distant-mountain artifact.
+- Do not modify Actor shaders; the custom terrain correction does not add player or mob shadows.
+- Replace five B0.1.9 profiles with exactly two options: Lite (first) and Default (second/right-most), both using the parent `BOX_CLOUDS` style.
+- Shelve Soft Sunlight, Misty Mornings, Golden Hour, Rounded Clouds, Realistic Clouds, and Render Anim as selectable options.
+
+### Build and documentation
+- Set the display label to B0.2.2 and numeric manifest sub-version to 60.
+- Update the pack-builder fallback and GitHub Actions workflow defaults.
+- Add a source and in-game verification checklist; do not claim build success, exact visual results, or zero lag before verification.
+
+### Verification still required
+- [ ] CI build compiles all materials and produces the Android artifact.
+- [ ] Generated manifest contains version 0.16.60 and exactly Lite then Default subpacks.
+- [ ] Both subpacks render box clouds; Default is the initial selection in Minecraft.
+- [ ] Water reflections work without visible wave animation or displacement.
+- [ ] Horizontal terrain reflection and rainy wet-ground response are visible without unacceptable performance cost.
+- [ ] Aurora/night effects remain visible; Lite has the intended reduced-cost behavior.
+- [ ] Nearby blocks, foliage, distant mountains and terrain transitions show no black stripes.
+- [ ] Confirm player/mob materials remain untouched by the custom terrain shading.
+- [ ] Import and compare in-game on the target Android device; record observed performance.
+
+
 ## B0.1.9 — Subpack Reorganization, Atmospheric Profiles & Performance
-**Status: implementation branch; build and in-game verification still required.**
+**Status: merged into main; later in-game testing found the overall visual result underwhelming. B0.2.2 supersedes this direction.**
 
 ### Subpacks and clouds
 - Reorganized the player-facing choices into Default, Soft Sunlight, Misty Mornings, Golden Hour, and Lite, with descriptive labels for every option.
