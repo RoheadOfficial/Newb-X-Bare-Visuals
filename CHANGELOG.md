@@ -1,3 +1,32 @@
+## B0.2.6 — Natural Lighting, Performance & Effects
+**Status: implementation branch; build and in-game verification pending. B0.2.5 was accepted by the creator after testing.**
+
+### Lighting
+- Slightly enrich sunlight and color while preserving natural vanilla colors and avoiding oversaturation.
+- Keep the existing sky/lighting architecture and use restrained tuning rather than a dramatic visual overhaul.
+
+### Performance
+- Disable plant and lantern waving to remove their per-vertex wave calculations from the active path.
+- Reduce rounded-cloud ray steps from 5 to 4.
+- Shorten the terrain-reflection distance and hard cap to reduce fragment work in large terrain views.
+- Keep Lite's reflection range shorter and disable its glow-bleed samples.
+
+### Water and glow
+- Enable the existing vanilla-water path so custom water reflection and tinting are bypassed. Terrain-only reflection remains separate.
+- Add a faint four-direction, texture-local bloom-like emissive halo. This is not screen-space bloom and avoids a separate render pass.
+
+### Beta
+- Remove the Beta-only dynamic-lighting and indoor contact-shading prototypes.
+- Leave Beta as an empty experimental slot for future tests.
+
+### Validation still required
+- [ ] Android and multiplatform build checks pass.
+- [ ] Generated manifest confirms version 0.2.6 and subpack order Lite, Beta, Default.
+- [ ] Confirm water has no custom sky reflection in-game.
+- [ ] Compare lighting with the creator's supplied natural-lighting references at noon, dawn/dusk, rain, and night.
+- [ ] Test performance facing forests, mountains, dense villages, and distant terrain on the target Android device.
+- [ ] Check the subtle glow on emissive textures and ensure it does not wash out nearby blocks.
+
 # Changelog
 
 ## B0.2.5 — Visual Refinement, Performance & Beta Experiments
