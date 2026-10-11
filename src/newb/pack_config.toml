@@ -1,6 +1,6 @@
 name = "Newb X Bare Visuals"
-version = [0, 16, 60]
-development_version = "B0.2.2"
+version = [0, 16, 61]
+development_version = "B0.2.5"
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
@@ -31,14 +31,18 @@ Original Newb Shader source and upstream project: https://github.com/devendrn/ne
 Variant creator: RoheadOfficial
 '''
 
-# Lite is listed first; Default is right-most and should be Minecraft's initial selection.
-# Both use the parent's BOX_CLOUDS implementation from config.h.
+# Required MCpack order: Lite #1, Beta #2, Default #3. Rounded clouds are shared.
 [[subpack]]
 define = "LITE"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Lite — Box Clouds, Legacy Reflections & Reduced Effects"
+description = "Lite — Rounded Clouds, Reduced Effects & Performance"
+
+[[subpack]]
+define = "BETA"
+materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
+description = "Beta — Experimental Lighting & Indoor Shading"
 
 [[subpack]]
 define = "DEFAULT"
 materials = []
-description = "Default — Box Clouds, Always Reflection & Full Atmosphere"
+description = "Default — Rounded Clouds, Refined Lighting & Atmosphere"
