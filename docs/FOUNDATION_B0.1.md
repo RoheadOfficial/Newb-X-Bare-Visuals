@@ -78,13 +78,13 @@ B0.1.7 restores the original Newb X Legacy sky implementation and begins establi
 
 ## Status
 
-B0.1.9 was merged into `main` and subsequently tested in-game by the project creator; the overall visual result felt underwhelming. B0.2.2 supersedes that direction. See [CHANGELOG.md](../CHANGELOG.md) for the historical build notes and [B0.2.2 implementation notes](B0.2.2_IMPLEMENTATION.md) for the current verification checklist.
+B0.1.9 was merged into `main` and tested in-game; its overall visual result felt underwhelming. B0.2.2 has since been pushed to `main` and tested in-game. The creator reports that its look needs major improvement, performance needs further work, and the terrain-shading change was not visibly effective. B0.2.5 is planned to address these findings. See [CHANGELOG.md](../CHANGELOG.md) and [B0.2.2 implementation notes](B0.2.2_IMPLEMENTATION.md).
 
 
 ## B0.2.2 successor direction
 
 B0.2.2 supersedes the earlier B0.1.x visual-profile plan after the B0.1.9 in-game test felt underwhelming. The current direction is a warm, natural Overworld lighting rework, a broader Newb X Legacy Always Reflection tribute, and a selective RenderChunk terrain-shading correction. Water remains free of animated waves and displacement; plant and lantern movement remain the only intended world waving effects.
 
-The selectable pack list is reduced to Lite (first) and Default (second/right-most), both using the parent Newb `BOX_CLOUDS` implementation. Soft Sunlight, Misty Mornings, Golden Hour, Rounded Clouds, Realistic Clouds, and Render Anim are shelved as selectable options. The custom terrain correction must not be added to Actor shaders, and it must be checked against distant mountain banding before visual success is claimed.
+B0.2.2 currently has Lite and Default, both using the parent Newb `BOX_CLOUDS` implementation. The creator's in-game test found the result visually underwhelming and the terrain-shading correction not noticeable. B0.2.5 is planned to restore `rounded_clouds` in both subpacks, remove Always Reflection from water and godrays, improve night clouds/aurora, and introduce a Beta subpack for dynamic-lighting and indoor reflection/shadow experiments. These are plans, not completed features.
 
-See [B0.2.2 implementation notes](B0.2.2_IMPLEMENTATION.md) for the implementation checklist. Build and in-game verification remain pending until their results are recorded.
+See [B0.2.2 implementation notes](B0.2.2_IMPLEMENTATION.md) and [CHANGELOG.md](../CHANGELOG.md) for status and validation priorities.
