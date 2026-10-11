@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       subversion:
-        description: 'Numeric manifest version component (B0.2.6 uses 5)'
+        description: 'Numeric manifest version component (B0.2.6 uses 6)'
         required: true
-        default: '5'
+        default: '6'
         type: string
       platform:
         description: 'Target platform to build for'
