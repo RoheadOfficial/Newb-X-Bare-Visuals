@@ -35,6 +35,10 @@ vec3 nlLighting(
   }
 
   float torchAttenuation = (NL_TORCHLIGHT_INTENSITY*uv1.x)/(0.5-0.45*lit.x);
+  #ifdef NL_BETA_DYNAMIC_LIGHTING
+    // Experimental boost to existing lightmap-driven torch response; not a new light injection pass.
+    torchAttenuation *= mix(1.0, 1.12, clamp(uv1.x, 0.0, 1.0));
+  #endif
 
   #ifdef NL_BLINKING_TORCH
     torchAttenuation *= 1.0 - 0.19*noise1D(t*8.0);
