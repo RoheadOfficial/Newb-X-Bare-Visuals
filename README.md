@@ -117,7 +117,7 @@ B0.2.5 is being configured with three selectable options in this exact order:
 - Beta (#2): experimental lightmap-response and terrain contact-shading prototypes.
 - Default (#3): main visual profile with rounded clouds and refined atmosphere.
 
-B0.2.5 sets display version B0.2.5 and manifest version 0.16.61. The generated manifest and subpack order must be verified in CI. Beta's current source work does not yet establish full dynamic-light injection or true indoor reflections. See [the changelog](CHANGELOG.md) and [B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
+B0.2.5 sets display version B0.2.5 and manifest version 0.2.5. The generated manifest and subpack order must be verified in CI. Beta's current source work does not yet establish full dynamic-light injection or true indoor reflections. See [the changelog](CHANGELOG.md) and [B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
 
 ## Verification status
 
