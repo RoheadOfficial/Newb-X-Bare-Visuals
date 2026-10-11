@@ -34,10 +34,7 @@ float nlBareTerrainShade(vec4 vertexColor) {
     // Experimental contact response from existing vertex data; not a shadow map or true indoor reflection.
     shade *= mix(0.985, 1.0, smoothstep(0.50, 0.68, vertexColor.g));
   #endif
-  #ifdef NL_BETA_INDOOR_RESPONSE
-    // Experimental contact response from existing vertex data; not a shadow map or true indoor reflection.
-    shade *= mix(0.985, 1.0, smoothstep(0.50, 0.68, vertexColor.g));
-  #endif
+
   return clamp(shade, 0.84, 1.12);
 }
 
