@@ -31,16 +31,16 @@
 #define NL_TONEMAP_TYPE 3              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
 #define NL_GAMMA 1.33                  // 0.3 low ~ 2.0 high
 //#define NL_EXPOSURE 1.3              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.04            // B0.2.2: natural warm-vanilla color without oversaturation
+#define NL_SATURATION 1.06            // B0.2.6: slightly richer natural color, still restrained
 //#define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.3,0.5,1.4) // color tint for dark tone
 #define NL_TINT_HIGH vec3(1.4,0.7,0.3) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.00 // Warm, balanced direct sunlight
+#define NL_SUNLIGHT_INTENSITY   3.08 // Slightly richer direct sunlight without harsh highlights
 #define NL_TORCHLIGHT_INTENSITY 1.0  // 0.5 weak ~ 3.0 bright
-#define NL_SHADOW_INTENSITY     0.78 // Preserve visible terrain depth without crushing shadows
-#define NL_MIN_LIGHTING_BOOST   1.20 // Keep dark areas readable while restoring lighting contrast
+#define NL_SHADOW_INTENSITY     0.80 // Add gentle depth while keeping shadow detail readable
+#define NL_MIN_LIGHTING_BOOST   1.16 // Preserve natural contrast rather than lifting every dark surface
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // Disabled for the Android performance target
 
@@ -92,21 +92,23 @@
 #define NL_RAINBOW_CLEAR 0.0 // 0.3 subtle ~ 1.0 bright during clear weather
 #define NL_RAINBOW_RAIN  0.4 // 0.3 subtle ~ 1.0 bright during rain weather
 
-/* Ore glow intensity */
-#define NL_GLOW_TEX 2.3           // 0.4 weak ~ 8.0 bright
+/* Light bloom / emissive glow */
+#define NL_GLOW_TEX 2.3           // Existing emissive texture glow
+#define NL_GLOW_LEAK 0.08         // B0.2.6: subtle, local bloom-like bleed (not screen-space bloom)
 #define NL_GLOW_SHIMMER 0.8       // [toggle] 0.1 subtle ~ 1.0 100% shimmer
 #define NL_GLOW_SHIMMER_SPEED 0.9 // 0.5 slow - 2.0 fast
 //#define NL_GLOW_LEAK 0.6        // [toggle] 0.08 subtle ~ 1.0 100% brightness of NL_GLOW_TEX
 
-/* Waving */
-#define NL_PLANTS_WAVE 0.030   // Gentle plant movement
-#define NL_LANTERN_WAVE 0.080  // Subtle lantern movement
+/* Waving — disabled in B0.2.6 for a still, lower-cost world */
+//#define NL_PLANTS_WAVE 0.030   // Shelved: vegetation waving disabled
+//#define NL_LANTERN_WAVE 0.080  // Shelved: lantern waving disabled
 #define NL_WAVE_SPEED 2.8      // 0.5 slow wave ~ 5.0 very fast wave
 //#define NL_EXTRA_PLANTS_WAVE // [toggle] !dont use! wave using texture coords (1.21.0 vanilla 2048x1024)
 #define NL_WAVE_RANGE 9.0      // Keep plant/lantern movement close to the player for dense-scene performance
 
 /* Water and Always Reflection */
-#define NL_WATER_TRANSPARENCY 0.90 // Keep water clear while reflecting the sky
+#define NL_VANILLA_WATER             // B0.2.6: bypass custom water reflection/tint path
+#define NL_WATER_TRANSPARENCY 0.90 // Retained for compatibility; custom water path is disabled
 #define NL_WATER_BUMP 0.0           // Flat surface: no water-wave distortion
 #define NL_WATER_WAVE_SPEED  0.8    // Also used by underwater effects
 #define NL_WATER_TEX_OPACITY 0.3    // Retain recognizable vanilla water texture
@@ -114,9 +116,9 @@
 //#define NL_WATER_REFL_MASK        // Keep sky reflections broad and natural
 #define NL_WATER_TINT vec3(0.72,0.88,0.96)
 #define NL_WATER_STYLE_STRENGTH 0.16
-#define NL_GROUND_REFL 0.22         // Always-on subtle sky reflection for horizontal terrain
-#define NL_GROUND_REFL_DISTANCE 0.40 // Limit reflection work to nearer terrain
-#define NL_GROUND_REFL_MAX_DISTANCE 56.0 // Absolute cap avoids scaling reflection cost with huge render distances
+#define NL_GROUND_REFL 0.18         // Restrained terrain-only reflection; water reflection is disabled
+#define NL_GROUND_REFL_DISTANCE 0.32 // Shorter range reduces distant-terrain shader cost
+#define NL_GROUND_REFL_MAX_DISTANCE 40.0 // Hard cap for mobile terrain-reflection cost
 //#define NL_CLOUD_AURORA_REFLECTION // B0.2.5: remove Always Reflection treatment from water
 
 /* Underwater */
@@ -146,7 +148,7 @@
 /* Rounded cloud settings */
 #define NL_CLOUD2_THICKNESS 2.1            // 0.5 slim ~ 5.0 fat
 #define NL_CLOUD2_RAIN_THICKNESS 2.5       // 0.5 slim ~ 5.0 fat
-#define NL_CLOUD2_STEPS 5                  // 3 low quality ~ 16 high quality
+#define NL_CLOUD2_STEPS 4                  // B0.2.6: fewer rounded-cloud ray steps for mobile performance
 #define NL_CLOUD2_SCALE vec2(0.033, 0.033) // 0.003 large ~ 0.3 tiny
 #define NL_CLOUD2_SHAPE vec2(0.5, 0.4)     // 0.0 round ~ 1.0 box vec2(horizontal shape, vertical shape)
 #define NL_CLOUD2_DENSITY 25.0             // 1.0 blurry ~ 100.0 sharp
@@ -237,7 +239,8 @@
   #undef NL_GROUND_REFL_DISTANCE
   #define NL_GROUND_REFL_DISTANCE 0.18
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 28.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 24.0
+  #undef NL_GLOW_LEAK
   #undef NL_CLOUD_AURORA_REFLECTION
   #undef NL_GLOW_SHIMMER
   #undef NL_LAVA_NOISE
@@ -252,9 +255,7 @@
   #undef NL_AURORA
   #define NL_AURORA 0.45
   #undef NL_PLANTS_WAVE
-  #define NL_PLANTS_WAVE 0.020
   #undef NL_LANTERN_WAVE
-  #define NL_LANTERN_WAVE 0.050
   #undef NL_ENTITY_EDGE_HIGHLIGHT
 #endif
 
@@ -266,14 +267,16 @@
 
 #ifdef BETA
   // Experimental profile: isolate prototype effects from Lite and Default.
-  #define NL_BETA_DYNAMIC_LIGHTING
-  #define NL_BETA_INDOOR_RESPONSE
+  // B0.2.6: Beta is intentionally empty until a new experiment is approved.
+  #undef NL_BETA_DYNAMIC_LIGHTING
+  #undef NL_BETA_INDOOR_RESPONSE
   #undef NL_AURORA
   #define NL_AURORA 0.95
   #undef NL_GROUND_REFL_DISTANCE
   #define NL_GROUND_REFL_DISTANCE 0.28
   #undef NL_GROUND_REFL_MAX_DISTANCE
   #define NL_GROUND_REFL_MAX_DISTANCE 40.0
+  #undef NL_GLOW_LEAK
 #endif
 
 #ifdef NO_WAVE_NO_FOG
