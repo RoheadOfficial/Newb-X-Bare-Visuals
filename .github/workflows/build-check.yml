@@ -22,10 +22,10 @@ jobs:
     - run: pip install -r requirements.txt
     - run: |
         .\build.bat setup
-        .\build.bat pack -p multiplatform -v 60 --no-zip
+        .\build.bat pack -p multiplatform -v 61 --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-multiplatform-pr
+        name: newb-x-bare-visuals-b0.2.5-multiplatform-pr
         path: ./build/pack-multiplatform
 
   android:
@@ -47,5 +47,5 @@ jobs:
         ./build.sh pack -p android -v 60 --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-android-pr
+        name: newb-x-bare-visuals-b0.2.5-android-pr
         path: ./build/pack-android
