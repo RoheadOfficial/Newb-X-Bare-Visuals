@@ -130,7 +130,7 @@ def run(args):
 
     pack_name: str = pack_config['name']
     pack_version = f"{pack_config['version'][1]}.{pack_config['version'][2]}"
-    display_version = pack_config.get("development_version", "B0.2.5")
+    display_version = pack_config.get("development_version", "B0.2.6")
     display_version_slug = display_version.lower().replace(" ", "-")
     pack_authors = ', '.join(pack_config['authors'])
     profile: str = args.p
