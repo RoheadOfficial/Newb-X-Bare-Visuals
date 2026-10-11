@@ -127,7 +127,7 @@
 #define NL_UNDERWATER_TINT vec3(0.9,1.0,0.9) // fog tint color when underwater
 
 /* Cloud type */
-#define BOX_CLOUDS              // Parent Newb box-cloud implementation is used by both subpacks
+//#define BOX_CLOUDS             // Disabled in B0.2.5 so rounded clouds remain active
 #define NL_CLOUD_TYPE 2          // B0.2.5: rounded clouds
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
@@ -230,7 +230,7 @@
 */
 
 #ifdef LITE
-  // Performance profile: keep the same box clouds and core Always Reflection identity.
+  // Performance profile: keep rounded clouds and reduce optional rendering work.
   // Reduce reflection distance and secondary effects instead of removing the main look.
   #undef NL_GROUND_REFL
   #define NL_GROUND_REFL 0.12
