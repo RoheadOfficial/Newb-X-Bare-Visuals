@@ -44,7 +44,7 @@ jobs:
     - run: pip install -r requirements.txt
     - run: |
         ./build.sh setup
-        ./build.sh pack -p android -v 5 --no-zip
+        ./build.sh pack -p android -v 6 --no-zip
     - uses: actions/upload-artifact@v4
       with:
         name: newb-x-bare-visuals-b0.2.6-android-pr
