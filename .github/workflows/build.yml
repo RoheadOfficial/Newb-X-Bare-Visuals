@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       subversion:
-        description: 'Numeric manifest sub-version (B0.2.2 uses 60)'
+        description: 'Numeric manifest sub-version (B0.2.5 uses 61)'
         required: true
-        default: '60'
+        default: '61'
         type: string
       platform:
         description: 'Target platform to build for'
@@ -41,7 +41,7 @@ jobs:
         .\build.bat pack -p windows -v ${{ inputs.subversion }} --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-windows
+        name: newb-x-bare-visuals-b0.2.5-windows
         path: ./build/pack-windows
   android:
     runs-on: ubuntu-latest
@@ -63,7 +63,7 @@ jobs:
         ./build.sh pack -p android -v ${{ inputs.subversion }} --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-android
+        name: newb-x-bare-visuals-b0.2.5-android
         path: ./build/pack-android
   ios:
     runs-on: ubuntu-latest
@@ -87,7 +87,7 @@ jobs:
         ./build.sh pack -p ios -v ${{ inputs.subversion }} --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-ios
+        name: newb-x-bare-visuals-b0.2.5-ios
         path: ./build/pack-ios
   multiplatform:
     runs-on: windows-2022
@@ -109,5 +109,5 @@ jobs:
         .\build.bat pack -p multiplatform -v ${{ inputs.subversion }} --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-multiplatform
+        name: newb-x-bare-visuals-b0.2.5-multiplatform
         path: ./build/pack-multiplatform
