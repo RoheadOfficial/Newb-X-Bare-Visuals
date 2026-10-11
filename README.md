@@ -16,11 +16,11 @@
 
 ## Current development stage
 
-### B0.2.5 — implementation in progress
+### B0.2.6 — implementation in progress
 
 B0.2.2 is a visual foundation rework following the underwhelming B0.1.9 in-game test. The Overworld lighting direction is inspired by the warm, semi-realistic approach of Newb Tropisphere, while keeping this project’s code and visual identity independent.
 
-B0.2.2 is the merged baseline. B0.2.5 is being implemented on the separate `b0.2.5-implementation` branch; no B0.2.5 code has been merged into `main`. CI compilation and in-game validation are still pending.
+B0.2.2 is the merged baseline. B0.2.5 was accepted after in-game testing. B0.2.6 is being implemented on the separate `b0.2.6-implementation` branch; `main` remains unchanged until explicit approval. CI compilation and in-game validation are still pending.
 
 - **Two subpacks only:** Lite first, Default second/right-most. Both use the parent Newb `BOX_CLOUDS` implementation. Default should be the initial selection; this must be checked in the generated pack and in Minecraft.
 - **Always Reflection tribute:** restore sky reflections on water, restrained always-on horizontal terrain reflections, rain-wet ground, and night aurora effects. Reflection range is capped for performance; Lite reduces the range and omits aurora reflection details.
@@ -108,16 +108,16 @@ The build tool reports the output location for the selected profile. A successfu
 
 ## Available subpacks
 
-B0.2.5 is being configured with three selectable options in this exact order:
+B0.2.6 keeps three selectable options in this exact order:
 
 1. **Lite — Box Clouds, Legacy Reflections & Reduced Effects**
 2. **Default — Box Clouds, Always Reflection & Full Atmosphere**
 
 - Lite (#1): performance-focused rounded-cloud profile.
-- Beta (#2): experimental lightmap-response and terrain contact-shading prototypes.
+- Beta (#2): intentionally empty experiment slot.
 - Default (#3): main visual profile with rounded clouds and refined atmosphere.
 
-B0.2.5 sets display version B0.2.5 and manifest version 0.2.5. The generated manifest and subpack order must be verified in CI. Beta's current source work does not yet establish full dynamic-light injection or true indoor reflections. See [the changelog](CHANGELOG.md) and [B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
+B0.2.6 sets display version B0.2.6 and manifest version 0.2.6. Beta is an intentionally empty experiment slot. Water reflection and vegetation/lantern waving are disabled; the subtle bloom-like glow is a lightweight material approximation, not screen-space bloom. See [the changelog](CHANGELOG.md) and [B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
 
 ## Verification status
 

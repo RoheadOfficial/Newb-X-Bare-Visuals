@@ -58,20 +58,12 @@ vec3 nlGlow(sampler2D tex, vec2 uv, float shimmer) {
     //u *= u*(3.0 - 2.0*u);
     vec2 v = 1.0 - u;
 
-    // corners
-    vec3 g = mix(mix(c1, c3, u.y), mix(c7, c5, u.y), u.x);
+    // B0.2.6 lightweight bloom approximation: four cardinal taps only.
+    // Avoid corner samples to keep the added texture work lower on mobile.
+    vec3 g = max(max(c2*(1.0-u.x), c6*u.x), max(c8*(1.0-u.y), c4*u.y));
 
-    /*
-    g = max(
-      max(c1*min(v.x,v.y), c3*min(v.x,u.y)),
-      max(c5*min(u.x,u.y), c7*min(u.x,v.y))
-    );*/
-
-    // sides
-    g = max(g, max(max(c2*v.x, c4*u.y), max(c6*u.x, c8*v.y)));
-
-    // apply attuenation and add to glow
-    g = ((g*0.7 + 0.2)*g + 0.1)*g;
+    // Keep the halo faint and local; this is not a screen-space bloom pass.
+    g = g*g*(0.5 + 0.5*g);
     glow = max(glow, g*NL_GLOW_LEAK);
   #endif
 
