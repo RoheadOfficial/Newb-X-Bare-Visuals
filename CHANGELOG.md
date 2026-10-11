@@ -4,7 +4,7 @@
 **Status: implementation in progress on `b0.2.5-implementation`; CI and in-game verification pending.**
 
 ### Current source changes
-- Set display version B0.2.5 and numeric manifest version `[0, 16, 61]`; generated manifest inspection is still required.
+- Set display version B0.2.5 and numeric manifest version `[0, 2, 5]`; generated manifest inspection is still required.
 - Configure MCpack order: Lite #1, Beta #2, Default #3.
 - Switch active cloud type to rounded clouds; shelve box clouds.
 - Disable the water-only Always Reflection macro while retaining the separate terrain reflection path.
