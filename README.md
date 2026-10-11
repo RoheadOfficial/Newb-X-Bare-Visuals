@@ -16,11 +16,11 @@
 
 ## Current development stage
 
-### B0.2.2 — implementation in progress
+### B0.2.2 — merged baseline; B0.2.5 planned
 
 B0.2.2 is a visual foundation rework following the underwhelming B0.1.9 in-game test. The Overworld lighting direction is inspired by the warm, semi-realistic approach of Newb Tropisphere, while keeping this project’s code and visual identity independent.
 
-The B0.2.2 implementation branch currently contains these source changes:
+B0.2.2 has been pushed to `main` and tested in Minecraft by the creator. The test found that the overall look needs major improvement and performance needs more work. The current source baseline includes:
 
 - **Two subpacks only:** Lite first, Default second/right-most. Both use the parent Newb `BOX_CLOUDS` implementation. Default should be the initial selection; this must be checked in the generated pack and in Minecraft.
 - **Always Reflection tribute:** restore sky reflections on water, restrained always-on horizontal terrain reflections, rain-wet ground, and night aurora effects. Reflection range is capped for performance; Lite reduces the range and omits aurora reflection details.
@@ -29,7 +29,7 @@ The B0.2.2 implementation branch currently contains these source changes:
 - **Warm, natural Overworld colors:** restrained saturation, warmer daylight and dawn, cooler night tones, and atmospheric fog/rain.
 - **Build identity:** display label B0.2.2 and numeric manifest sub-version 60.
 
-The shader source has been updated on the B0.2.2 implementation branch. Build success, generated subpack order, reflection behavior, distant-terrain shading, Android import, and device performance still require verification. Source changes are not proof of a successful build or a confirmed visual result.
+The shader source has been updated on the B0.2.2 implementation branch. The Android build and artifact upload passed, and the creator has tested the pack in-game. However, the terrain-shading change was not visibly effective to the creator, and the overall visual style and performance need substantial improvement. A successful build does not prove that the intended visuals or FPS gains have been achieved.
 
 ## Credits and licensing
 
@@ -108,12 +108,12 @@ The build tool reports the output location for the selected profile. A successfu
 
 ## Available subpacks
 
-B0.2.2 has exactly two selectable options:
+B0.2.2 currently has two selectable options:
 
 1. **Lite — Box Clouds, Legacy Reflections & Reduced Effects**
 2. **Default — Box Clouds, Always Reflection & Full Atmosphere**
 
-Both use the parent repository’s `BOX_CLOUDS` implementation. Rounded Clouds, Realistic Clouds, Render Anim, Soft Sunlight, Misty Mornings, and Golden Hour are not selectable in this version. Lite keeps the core reflection identity while reducing reflection distance and selected secondary effects. The subpack labels include short descriptions because Minecraft's subpack manifest does not provide a separate descriptive-text field. See [the B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
+Both currently use the parent repository’s `BOX_CLOUDS` implementation. B0.2.5 is planned to shelve box clouds and restore `rounded_clouds` in both subpacks. The planned update also removes Always Reflection from water, removes godrays, adjusts night clouds and aurora, and adds a Beta subpack for experimental dynamic lighting and indoor reflection/shadow work. These are planned changes, not features already present in B0.2.2. See [the changelog](CHANGELOG.md) and [B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
 
 ## Verification status
 
