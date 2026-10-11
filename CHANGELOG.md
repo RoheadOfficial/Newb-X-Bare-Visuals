@@ -1,7 +1,25 @@
 # Changelog
 
-## B0.2.5 — Visual Direction & Performance Corrections (planned)
-**Status: planned; not implemented yet.**
+## B0.2.5 — Visual Refinement, Performance & Beta Experiments
+**Status: implementation in progress on `b0.2.5-implementation`; CI and in-game verification pending.**
+
+### Current source changes
+- Set display version B0.2.5 and numeric manifest version `[0, 16, 61]`; generated manifest inspection is still required.
+- Configure MCpack order: Lite #1, Beta #2, Default #3.
+- Switch active cloud type to rounded clouds; shelve box clouds.
+- Disable the water-only Always Reflection macro while retaining the separate terrain reflection path.
+- Add a nighttime alpha fade for rounded clouds and increase configured aurora intensity.
+- Adjust base lighting toward restrained saturation, softer sunlight, and more readable terrain.
+- Reduce Default's weather overlay from 0.35 to 0.3465 (1% relative).
+- Add Beta-only prototypes for existing lightmap-driven torch response and terrain contact shading. These are not full dynamic-light injection, true indoor reflections, or shadow maps.
+- Update workflow version defaults, artifact labels, and pack-builder fallback.
+
+### Remaining implementation and verification
+- Review all active shader paths to ensure godrays are absent; no active godray toggle was found in the current config.
+- Build Android and multiplatform artifacts; inspect generated manifest and subpack order.
+- Test rounded clouds, night fade, aurora, lighting, water, and performance in Minecraft.
+- Continue investigating why B0.2.2's terrain correction was not visibly effective.
+- Determine what true dynamic lighting and indoor reflections the Bedrock/MB Loader pipeline supports before claiming those features complete.
 
 ### Visual direction
 - Replace box clouds with the existing `rounded_clouds` implementation in both Lite and Default.
