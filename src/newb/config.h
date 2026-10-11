@@ -31,16 +31,16 @@
 #define NL_TONEMAP_TYPE 3              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
 #define NL_GAMMA 1.33                  // 0.3 low ~ 2.0 high
 //#define NL_EXPOSURE 1.3              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.08            // B0.2.2: natural warm-vanilla color without oversaturation
+#define NL_SATURATION 1.04            // B0.2.2: natural warm-vanilla color without oversaturation
 //#define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.3,0.5,1.4) // color tint for dark tone
 #define NL_TINT_HIGH vec3(1.4,0.7,0.3) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.15 // Warm, balanced direct sunlight
+#define NL_SUNLIGHT_INTENSITY   3.00 // Warm, balanced direct sunlight
 #define NL_TORCHLIGHT_INTENSITY 1.0  // 0.5 weak ~ 3.0 bright
-#define NL_SHADOW_INTENSITY     0.74 // Preserve visible terrain depth without crushing shadows
-#define NL_MIN_LIGHTING_BOOST   1.30 // Keep dark areas readable while restoring lighting contrast
+#define NL_SHADOW_INTENSITY     0.78 // Preserve visible terrain depth without crushing shadows
+#define NL_MIN_LIGHTING_BOOST   1.20 // Keep dark areas readable while restoring lighting contrast
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // Disabled for the Android performance target
 
@@ -61,7 +61,7 @@
 
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
-#define NL_MIST_DENSITY 0.20      // Subtle atmospheric depth
+#define NL_MIST_DENSITY 0.22      // Subtle atmospheric depth
 #define NL_RAIN_MIST_OPACITY 0.12 // Keep rain mist restrained for mobile performance
 #define NL_CLOUDY_FOG 0.1         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
@@ -117,7 +117,7 @@
 #define NL_GROUND_REFL 0.22         // Always-on subtle sky reflection for horizontal terrain
 #define NL_GROUND_REFL_DISTANCE 0.40 // Limit reflection work to nearer terrain
 #define NL_GROUND_REFL_MAX_DISTANCE 56.0 // Absolute cap avoids scaling reflection cost with huge render distances
-#define NL_CLOUD_AURORA_REFLECTION  // Legacy-inspired aurora detail in water and wet-ground reflections
+//#define NL_CLOUD_AURORA_REFLECTION // B0.2.5: remove Always Reflection treatment from water
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 0.8         // 0.0 dark ~ 3.0 bright
@@ -128,7 +128,7 @@
 
 /* Cloud type */
 #define BOX_CLOUDS              // Parent Newb box-cloud implementation is used by both subpacks
-#define NL_CLOUD_TYPE 0          // Box clouds are the only active cloud style in B0.2.2
+#define NL_CLOUD_TYPE 2          // B0.2.5: rounded clouds
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
 #define NL_CLOUD0_THICKNESS 2.1      // 0.5 slim ~ 8.0 fat
@@ -168,10 +168,10 @@
 #define NL_CLOUD3_SHADOW_OFFSET 0.3      // 0.05 minimal ~ 1.0 large
 
 /* Aurora settings */
-#define NL_AURORA 0.75          // [toggle] restrained Legacy-inspired night aurora
+#define NL_AURORA 0.90          // [toggle] restrained Legacy-inspired night aurora
 #define NL_AURORA_VELOCITY 0.03 // 0.0 static ~ 0.3 very fast
 #define NL_AURORA_SCALE 0.04    // 0.002 large ~ 0.4 tiny
-#define NL_AURORA_WIDTH 0.18    // 0.04 thin line ~ 0.4 thick lines
+#define NL_AURORA_WIDTH 0.22    // 0.04 thin line ~ 0.4 thick lines
 #define NL_AURORA_COL1 vec3(0.1,1.0,0.0)
 #define NL_AURORA_COL2 vec3(0.1,0.0,1.0)
 
@@ -233,11 +233,11 @@
   // Performance profile: keep the same box clouds and core Always Reflection identity.
   // Reduce reflection distance and secondary effects instead of removing the main look.
   #undef NL_GROUND_REFL
-  #define NL_GROUND_REFL 0.16
+  #define NL_GROUND_REFL 0.12
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.22
+  #define NL_GROUND_REFL_DISTANCE 0.18
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 32.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 28.0
   #undef NL_CLOUD_AURORA_REFLECTION
   #undef NL_GLOW_SHIMMER
   #undef NL_LAVA_NOISE
@@ -256,6 +256,24 @@
   #undef NL_LANTERN_WAVE
   #define NL_LANTERN_WAVE 0.050
   #undef NL_ENTITY_EDGE_HIGHLIGHT
+#endif
+
+#ifdef DEFAULT
+  // Default rain-particle overlay reduced by 1% relative to the previous 0.35 setting.
+  #undef NL_WEATHER_SPECK
+  #define NL_WEATHER_SPECK 0.3465
+#endif
+
+#ifdef BETA
+  // Experimental profile: isolate prototype effects from Lite and Default.
+  #define NL_BETA_DYNAMIC_LIGHTING
+  #define NL_BETA_INDOOR_RESPONSE
+  #undef NL_AURORA
+  #define NL_AURORA 0.95
+  #undef NL_GROUND_REFL_DISTANCE
+  #define NL_GROUND_REFL_DISTANCE 0.28
+  #undef NL_GROUND_REFL_MAX_DISTANCE
+  #define NL_GROUND_REFL_MAX_DISTANCE 40.0
 #endif
 
 #ifdef NO_WAVE_NO_FOG
