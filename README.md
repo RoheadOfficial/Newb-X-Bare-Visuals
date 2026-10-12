@@ -16,11 +16,11 @@
 
 ## Current development stage
 
-### B0.2.2 — merged baseline; B0.2.5 planned
+### B0.2.6 — implementation in progress
 
 B0.2.2 is a visual foundation rework following the underwhelming B0.1.9 in-game test. The Overworld lighting direction is inspired by the warm, semi-realistic approach of Newb Tropisphere, while keeping this project’s code and visual identity independent.
 
-B0.2.2 has been pushed to `main` and tested in Minecraft by the creator. The test found that the overall look needs major improvement and performance needs more work. The current source baseline includes:
+B0.2.2 is the merged baseline. B0.2.5 was accepted after in-game testing. B0.2.6 is being implemented on the separate `b0.2.6-implementation` branch; `main` remains unchanged until explicit approval. CI compilation and in-game validation are still pending.
 
 - **Two subpacks only:** Lite first, Default second/right-most. Both use the parent Newb `BOX_CLOUDS` implementation. Default should be the initial selection; this must be checked in the generated pack and in Minecraft.
 - **Always Reflection tribute:** restore sky reflections on water, restrained always-on horizontal terrain reflections, rain-wet ground, and night aurora effects. Reflection range is capped for performance; Lite reduces the range and omits aurora reflection details.
@@ -108,12 +108,16 @@ The build tool reports the output location for the selected profile. A successfu
 
 ## Available subpacks
 
-B0.2.2 currently has two selectable options:
+B0.2.6 keeps three selectable options in this exact order:
 
 1. **Lite — Box Clouds, Legacy Reflections & Reduced Effects**
 2. **Default — Box Clouds, Always Reflection & Full Atmosphere**
 
-Both currently use the parent repository’s `BOX_CLOUDS` implementation. B0.2.5 is planned to shelve box clouds and restore `rounded_clouds` in both subpacks. The planned update also removes Always Reflection from water, removes godrays, adjusts night clouds and aurora, and adds a Beta subpack for experimental dynamic lighting and indoor reflection/shadow work. These are planned changes, not features already present in B0.2.2. See [the changelog](CHANGELOG.md) and [B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
+- Lite (#1): performance-focused rounded-cloud profile.
+- Beta (#2): intentionally empty experiment slot.
+- Default (#3): main visual profile with rounded clouds and refined atmosphere.
+
+B0.2.6 sets display version B0.2.6 and manifest version 0.2.6. Beta is an intentionally empty experiment slot. Water reflection and vegetation/lantern waving are disabled; the subtle bloom-like glow is a lightweight material approximation, not screen-space bloom. See [the changelog](CHANGELOG.md) and [B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
 
 ## Verification status
 

@@ -1,7 +1,54 @@
+## B0.2.6 — Natural Lighting, Performance & Effects
+**Status: implementation branch; build and in-game verification pending. B0.2.5 was accepted by the creator after testing.**
+
+### Lighting
+- Slightly enrich sunlight and color while preserving natural vanilla colors and avoiding oversaturation.
+- Keep the existing sky/lighting architecture and use restrained tuning rather than a dramatic visual overhaul.
+
+### Performance
+- Disable plant and lantern waving to remove their per-vertex wave calculations from the active path.
+- Reduce rounded-cloud ray steps from 5 to 4.
+- Shorten the terrain-reflection distance and hard cap to reduce fragment work in large terrain views.
+- Keep Lite's reflection range shorter and disable its glow-bleed samples.
+
+### Water and glow
+- Enable the existing vanilla-water path so custom water reflection and tinting are bypassed. Terrain-only reflection remains separate.
+- Add a faint four-direction, texture-local bloom-like emissive halo. This is not screen-space bloom and avoids a separate render pass.
+
+### Beta
+- Remove the Beta-only dynamic-lighting and indoor contact-shading prototypes.
+- Leave Beta as an empty experimental slot for future tests.
+
+### Validation still required
+- [ ] Android and multiplatform build checks pass.
+- [ ] Generated manifest confirms version 0.2.6 and subpack order Lite, Beta, Default.
+- [ ] Confirm water has no custom sky reflection in-game.
+- [ ] Compare lighting with the creator's supplied natural-lighting references at noon, dawn/dusk, rain, and night.
+- [ ] Test performance facing forests, mountains, dense villages, and distant terrain on the target Android device.
+- [ ] Check the subtle glow on emissive textures and ensure it does not wash out nearby blocks.
+
 # Changelog
 
-## B0.2.5 — Visual Direction & Performance Corrections (planned)
-**Status: planned; not implemented yet.**
+## B0.2.5 — Visual Refinement, Performance & Beta Experiments
+**Status: implementation in progress on `b0.2.5-implementation`; CI and in-game verification pending.**
+
+### Current source changes
+- Set display version B0.2.5 and numeric manifest version `[0, 2, 5]`; generated manifest inspection is still required.
+- Configure MCpack order: Lite #1, Beta #2, Default #3.
+- Switch active cloud type to rounded clouds; shelve box clouds.
+- Disable the water-only Always Reflection macro while retaining the separate terrain reflection path.
+- Add a nighttime alpha fade for rounded clouds and increase configured aurora intensity.
+- Adjust base lighting toward restrained saturation, softer sunlight, and more readable terrain.
+- Reduce Default's weather overlay from 0.35 to 0.3465 (1% relative).
+- Add Beta-only prototypes for existing lightmap-driven torch response and terrain contact shading. These are not full dynamic-light injection, true indoor reflections, or shadow maps.
+- Update workflow version defaults, artifact labels, and pack-builder fallback.
+
+### Remaining implementation and verification
+- Review all active shader paths to ensure godrays are absent; no active godray toggle was found in the current config.
+- Build Android and multiplatform artifacts; inspect generated manifest and subpack order.
+- Test rounded clouds, night fade, aurora, lighting, water, and performance in Minecraft.
+- Continue investigating why B0.2.2's terrain correction was not visibly effective.
+- Determine what true dynamic lighting and indoor reflections the Bedrock/MB Loader pipeline supports before claiming those features complete.
 
 ### Visual direction
 - Replace box clouds with the existing `rounded_clouds` implementation in both Lite and Default.

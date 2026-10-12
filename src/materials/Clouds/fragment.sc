@@ -22,11 +22,16 @@ void main() {
     #if NL_CLOUD_TYPE == 2
       color = renderCloudsRounded(vDir, cloudPos, v_color1.w, v_color2.w, v_color2.rgb, v_color1.rgb, NL_CLOUD_PARAMS(_));
 
+      // B0.2.5: fade cloud visibility after sunset, strongest near midnight.
+      float nightAmount = 1.0 - smoothstep(-0.28, 0.08, v_dayFactor);
+      color.a *= mix(1.0, 0.16, nightAmount);
+
       #ifdef NL_CLOUD2_LAYER2
         vec2 parallax = vDir.xz / abs(vDir.y) * NL_CLOUD2_LAYER2_OFFSET;
         vec3 offsetPos = cloudPos;
         offsetPos.xz += parallax;
         vec4 color2 = renderCloudsRounded(vDir, offsetPos, v_color1.a, v_color2.a*2.0, v_color2.rgb, v_color1.rgb, NL_CLOUD_PARAMS(_LAYER2_));
+        color2.a *= mix(1.0, 0.16, nightAmount);
         color = mix(color2, color, 0.2 + 0.8*color.a);
       #endif
 
