@@ -13,7 +13,7 @@ Reduce shader-side performance drops when facing mountains, forests, dense build
 - **Default:** Keep the full visual feature set, four rounded-cloud density samples, glow, rain styling, aurora, atmospheric fog, and wet-ground effects. Modestly reduce the terrain-reflection range cap from 40 to 36.
 - **Lite:** Keep the core visual identity, rain particles, atmosphere, wet ground, rounded clouds, and reduced-intensity aurora. Use a 24-unit terrain-reflection cap and three rounded-cloud density samples instead of four.
 - **Subpack order:** Lite #1, Beta #2, Default #3. Beta remains an empty experimental slot.
-- **Separate compilation:** Lite and Default must each compile their own material set with their profile define. An empty Default material list would cause the intended Default-specific settings to be skipped, so Default's material list must be explicit.
+- **Profile compilation:** The pack builder compiles the root material set using the `DEFAULT` define. Lite separately compiles the full material set with `LITE`; the Default subpack stays empty to inherit root materials and avoid duplicating shader binaries.
 - **Preserved exclusions:** No water waves or custom water reflections, no plant/lantern waving, no godrays, no custom sky replacement, no dramatic sky events, and no player/mob shadow feature.
 
 ### Implementation checklist
@@ -55,7 +55,7 @@ Reduce shader-side performance drops when facing mountains, forests, dense build
 - [ ] Static validation passes.
 - [ ] GitHub Actions Android and multiplatform builds pass.
 - [ ] Generated manifest shows version 0.2.9 and Lite, Beta, Default in that order.
-- [ ] Lite compiles with `LITE`; Default compiles with `DEFAULT`.
+- [ ] Confirm the root material set compiles with `DEFAULT` and Lite compiles with `LITE`.
 - [ ] Compare forests, mountains, wide terrain, dense builds, weather, night, and aurora in both profiles.
 - [ ] Confirm glow, rain particles, rain atmosphere, puddle variation, and wet-ground darkening remain visible.
 - [ ] Test on the vivo Y22s using comparable scenes and distinguish shader load from chunk-loading stutter.

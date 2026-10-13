@@ -12,7 +12,7 @@
 - Defer terrain-reflection cosine and blend-strength work until a vertex is on the reflective horizontal plane; keep puddle variation for wet-ground darkening.
 - Add an exact daytime early-out to the aurora function where the existing output mask is already zero.
 - Keep the local glow halo's four cardinal taps and remove unused corner sample declarations.
-- Compile Default as an explicit profile instead of inheriting the base materials, so its tuning is actually applied; preserve subpack order Lite, Beta, Default.
+- Keep the root material set compiled with `DEFAULT` and Lite compiled separately with `LITE`; leave Default's subpack material list empty to avoid duplicating shader binaries.
 - Align manifest/display versions, pack-builder fallback, workflow inputs, artifact names, and build-check version to B0.2.9.
 - Add static regression validation for version/profile metadata and protected shader features.
 - No claim of zero lag or visual equivalence until CI builds and in-game testing are complete.

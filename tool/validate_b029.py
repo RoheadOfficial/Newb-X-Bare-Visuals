@@ -30,7 +30,7 @@ def main() -> int:
     beta = next(item for item in subpacks if item.get("define") == "BETA")
     default = next(item for item in subpacks if item.get("define") == "DEFAULT")
     require(set(lite.get("materials", [])) == base_materials, "Lite must compile the full material set")
-    require(set(default.get("materials", [])) == base_materials, "Default must compile the full material set with DEFAULT")
+    require(not default.get("materials"), "Default should inherit the root material set rather than duplicate all shader binaries")
     require(not beta.get("materials"), "Beta must remain an empty experimental slot")
 
     cfg = read("src/newb/config.h")
@@ -53,6 +53,10 @@ def main() -> int:
 
     packer = read("tool/pack.py")
     require('"B0.2.9"' in packer, "pack builder fallback must be B0.2.9")
+    require('_build(status, args.p, "default", pack_config[\'materials\'], mats_dir)' in packer,
+            "root materials must be compiled using the DEFAULT profile define")
+    require("MacroDefine.from_string(subpack.upper())" in packer,
+            "subpack-specific defines must be passed into compilation")
     build = read(".github/workflows/build.yml")
     check = read(".github/workflows/build-check.yml")
     require("default: '9'" in build, "manual build default must use manifest sub-version 9")
