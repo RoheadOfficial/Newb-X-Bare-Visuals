@@ -118,7 +118,7 @@
 #define NL_WATER_STYLE_STRENGTH 0.16
 #define NL_GROUND_REFL 0.18         // Restrained terrain-only reflection; water reflection is disabled
 #define NL_GROUND_REFL_DISTANCE 0.32 // Shorter range reduces distant-terrain shader cost
-#define NL_GROUND_REFL_MAX_DISTANCE 40.0 // Hard cap for mobile terrain-reflection cost
+#define NL_GROUND_REFL_MAX_DISTANCE 40.0 // Base profile cap; Default and Lite tune this independently
 //#define NL_CLOUD_AURORA_REFLECTION // B0.2.5: remove Always Reflection treatment from water
 
 /* Underwater */
@@ -148,7 +148,7 @@
 /* Rounded cloud settings */
 #define NL_CLOUD2_THICKNESS 2.1            // 0.5 slim ~ 5.0 fat
 #define NL_CLOUD2_RAIN_THICKNESS 2.5       // 0.5 slim ~ 5.0 fat
-#define NL_CLOUD2_STEPS 4                  // B0.2.6: fewer rounded-cloud ray steps for mobile performance
+#define NL_CLOUD2_STEPS 4                  // Default keeps four samples for rounded-cloud quality
 #define NL_CLOUD2_SCALE vec2(0.033, 0.033) // 0.003 large ~ 0.3 tiny
 #define NL_CLOUD2_SHAPE vec2(0.5, 0.4)     // 0.0 round ~ 1.0 box vec2(horizontal shape, vertical shape)
 #define NL_CLOUD2_DENSITY 25.0             // 1.0 blurry ~ 100.0 sharp
@@ -240,6 +240,8 @@
   #define NL_GROUND_REFL_DISTANCE 0.18
   #undef NL_GROUND_REFL_MAX_DISTANCE
   #define NL_GROUND_REFL_MAX_DISTANCE 24.0
+  #undef NL_CLOUD2_STEPS
+  #define NL_CLOUD2_STEPS 3
   #undef NL_GLOW_LEAK
   #undef NL_CLOUD_AURORA_REFLECTION
   #undef NL_GLOW_SHIMMER
@@ -260,7 +262,12 @@
 #endif
 
 #ifdef DEFAULT
-  // Default rain-particle overlay reduced by 1% relative to the previous 0.35 setting.
+  // Keep the full Default effects while reducing distant reflection work modestly.
+  #undef NL_GROUND_REFL_DISTANCE
+  #define NL_GROUND_REFL_DISTANCE 0.28
+  #undef NL_GROUND_REFL_MAX_DISTANCE
+  #define NL_GROUND_REFL_MAX_DISTANCE 36.0
+  // Rain remains enabled; retain the previously agreed subtle overlay adjustment.
   #undef NL_WEATHER_SPECK
   #define NL_WEATHER_SPECK 0.3465
 #endif

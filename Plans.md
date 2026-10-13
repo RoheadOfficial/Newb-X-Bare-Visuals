@@ -1,105 +1,71 @@
 # Plans
 
-## B0.2.9 — The Performance Update
+## B0.2.9 — Terrain Performance Update
 
-**Status:** Discussion and repository investigation only. No B0.2.9 shader code changes have been approved or started.
+**Status:** Implementation is in progress on `b0.2.9-implementation`. The planning branch remains separate, and `main` has not been changed.
 
-### Main goal
+### Goal
 
-Improve performance on Android, especially on the vivo Y22s, by investigating the noticeable FPS drops that happen when facing mountains, forests, and other large or complex terrain.
+Reduce shader-side performance drops when facing mountains, forests, dense builds, and wide terrain on Android, especially on the vivo Y22s. Preserve the project's natural, cinematic Minecraft look and keep the effect set intact wherever practical. A successful compile does not guarantee zero lag; chunk loading and shader rendering must be evaluated separately in-game.
 
-The goal is to reduce unnecessary rendering work while preserving the project's natural, cinematic Minecraft look. Do not promise a specific FPS gain until it has been tested on-device.
+### Agreed profile direction
 
-### Observed issue
+- **Default:** Keep the full visual feature set, four rounded-cloud density samples, glow, rain styling, aurora, atmospheric fog, and wet-ground effects. Modestly reduce the terrain-reflection range cap from 40 to 36.
+- **Lite:** Keep the core visual identity, rain particles, atmosphere, wet ground, rounded clouds, and reduced-intensity aurora. Use a 24-unit terrain-reflection cap and three rounded-cloud density samples instead of four.
+- **Subpack order:** Lite #1, Beta #2, Default #3. Beta remains an empty experimental slot.
+- **Separate compilation:** Lite and Default must each compile their own material set with their profile define. An empty Default material list would cause the intended Default-specific settings to be skipped, so Default's material list must be explicit.
+- **Preserved exclusions:** No water waves or custom water reflections, no plant/lantern waving, no godrays, no custom sky replacement, no dramatic sky events, and no player/mob shadow feature.
 
-- **Main symptom:** Noticeable FPS drops when facing mountains, forests, and large terrain.
-- **Severity:** Noticeable FPS drops.
-- **Primary target:** Android / vivo Y22s.
-- **Important distinction:** Stutters can come from shader rendering, Minecraft chunk loading, or both. Do not assume the shader is the only cause without evidence.
+### Implementation checklist
 
-### Repository investigation so far
+#### Terrain and reflection
+- [x] Inspect RenderChunk vertex and fragment paths, shared lighting, fog, and terrain reflection.
+- [x] Identify the reflection-distance guard and the horizontal-plane reflection branch.
+- [ ] Keep puddle variation and wet-ground darkening intact while moving reflection-only cosine/blend calculations inside the horizontal-plane guard.
+- [ ] Review terrain fragment shading for repeated work without stripping out core lighting or effects.
+- [ ] Leave the previous terrain shading correction bounded and isolated; do not add actor/player/mob shadows.
 
-The B0.2.6 implementation branch has been inspected for the main terrain and supporting shader paths. These are investigation candidates, not confirmed bottlenecks:
+#### Glow
+- [x] Inspect Default's local emissive glow and Lite's compile-time skip.
+- [ ] Keep the four-cardinal local halo; remove unused corner sample declarations.
+- [ ] Preserve Default glow and shimmer; do not describe this material effect as screen-space bloom.
 
-1. **Terrain rendering (`src/materials/RenderChunk/vertex.sc` and `fragment.sc`)**
-   - Terrain vertex processing includes environment detection, lighting, fog, and optional wave logic.
-   - Terrain fragment processing includes texture sampling, optional glow, terrain shading correction, reflection-related work, and fog/color correction.
-   - Large views can multiply per-fragment costs. Investigate what can be reduced safely before changing appearance.
+#### Clouds and aurora
+- [x] Inspect rounded-cloud density sampling and the current four-step default.
+- [ ] Keep four samples in Default and use three in Lite as a modest profile-specific trade-off.
+- [ ] Return early from aurora rendering during daytime, where the existing mask already makes its output exactly zero.
+- [ ] Preserve rounded clouds, nighttime aurora, rain transitions, and the existing sky pipeline.
 
-2. **Glow (`src/newb/functions/glow.h` and the RenderChunk fragment shader)**
-   - Default calls `nlGlow` on terrain fragments; Lite skips the additional glow calculation.
-   - Glow is a concrete candidate for comparison, but its actual impact on the observed drops is not yet measured.
+#### Weather, fog, and entities
+- [x] Inspect weather particle, occlusion, fog/mist, and actor/material paths.
+- [ ] Preserve rain particles, rain mist, cloudy fog, and wet-ground effects.
+- [ ] Keep the existing low-cost entity path; do not introduce new entity shadows or remove the main lighting system.
+- [ ] Verify rain and entity-heavy scenes after building.
 
-3. **Terrain reflection (`src/newb/functions/rain.h` and RenderChunk shaders)**
-   - B0.2.6 limits the reflection distance, but terrain reflection-related logic remains in the shader.
-   - Inspect how it is enabled and evaluated. Do not assume it is the main cause without testing.
+#### Profiles, build, and regression checks
+- [ ] Set display and manifest versions to B0.2.9 / 0.2.9.
+- [ ] Update the pack-builder fallback, workflow defaults, artifact labels, and build-check version.
+- [ ] Keep the workflow building current source and uploading Android artifacts.
+- [ ] Add static regression checks for version consistency, profile material compilation, feature-preservation constraints, and workflow labels.
+- [ ] Run Android and multiplatform build checks; inspect generated manifest, subpack order, compiled material outputs, and artifact paths.
+- [ ] Update the changelog and project-specific documentation to match the actual implementation status.
 
-4. **Cloud rendering (`src/materials/Clouds/vertex.sc` and cloud functions)**
-   - The rounded-cloud path performs repeated density calculations.
-   - B0.2.6 reduced the main cloud step setting from five to four.
-   - Investigate whether further simplification could help without making the sky look poor.
+### Validation still required
 
-5. **Other rendering paths**
-   - Check lighting, fog, transparent materials, weather rendering, and shared shader functions for unnecessary repeated work.
-   - Plant and lantern waving were disabled in B0.2.6, so do not reintroduce them as part of this update.
-   - Water reflections were disabled in B0.2.6 per the project's direction; preserve that decision unless explicitly revisited.
+- [ ] Static validation passes.
+- [ ] GitHub Actions Android and multiplatform builds pass.
+- [ ] Generated manifest shows version 0.2.9 and Lite, Beta, Default in that order.
+- [ ] Lite compiles with `LITE`; Default compiles with `DEFAULT`.
+- [ ] Compare forests, mountains, wide terrain, dense builds, weather, night, and aurora in both profiles.
+- [ ] Confirm glow, rain particles, rain atmosphere, puddle variation, and wet-ground darkening remain visible.
+- [ ] Test on the vivo Y22s using comparable scenes and distinguish shader load from chunk-loading stutter.
+- [ ] Record visual regressions and performance observations before calling the update successful.
 
-### Proposed discussion priorities
+### Development rules
 
-- **Priority A — Large terrain views:** Investigate the main terrain shader and the cost of reflection-related and fragment-level effects.
-- **Priority B — Optional effects:** Compare glow and other optional calculations, especially the difference between Lite and Default.
-- **Priority C — Clouds:** Review rounded-cloud calculations and possible lower-cost alternatives.
-- **Priority D — Whole-repository review:** Inspect all relevant shader functions, materials, configuration, subpack definitions, and build workflow before proposing code changes.
-
-These priorities are not implementation approval. No feature should be removed or visually downgraded without discussing the trade-off first.
-
-### Visual and feature constraints
-
-- Keep the project's identity: vanilla Minecraft with natural, refined, cinematic visuals.
-- Preserve balanced, natural lighting and avoid oversaturation.
-- Keep attractive atmosphere, fog, rain particles, and wet-ground effects where practical.
-- Do not add dramatic sky events, custom water waves, tree waving, or player/mob shadows.
-- Do not reintroduce water reflections or plant/lantern waving that were disabled in B0.2.6.
-- Avoid making terrain excessively flat, dark, or visually stripped down just to chase performance.
-- Be honest about what is implemented, what is only a proposal, and what still needs testing.
-
-### Subpack direction — decision still needed
-
-The current question for discussion is whether:
-
-- **Option A:** Lite becomes the main performance-first profile, while Default retains more visual effects; or
-- **Option B:** Both Lite and Default receive similar optimizations, even if Default must also reduce some effects.
-
-Current recommendation: optimize both profiles, then allow Lite to make more aggressive cuts. This is only a recommendation; the final direction has not been decided. Beta remains an intentionally empty experiment slot from B0.2.6.
-
-### Testing plan after implementation is approved
-
-Use the same Minecraft world, location, time of day, weather, render distance, and camera positions for comparisons where possible.
-
-Compare at least:
-- A relatively open view.
-- A dense forest.
-- A mountain or large terrain view.
-- A village or similarly detailed area.
-- A rainy scene, to check weather and atmosphere costs.
-
-Record subjective stutter observations or FPS/frame-time readings if available. Compare Lite and Default separately. Do not claim a performance improvement based only on successful compilation.
-
-### Workflow and rules
-
-1. Inspect the whole relevant repository before proposing code changes.
-2. Identify likely expensive paths and separate source-based findings from unverified assumptions.
-3. Discuss the likely visual and performance trade-offs.
-4. Agree on the B0.2.9 scope before editing shader code.
-5. Implement only the agreed changes on a dedicated B0.2.9 branch.
-6. Keep the build workflow and version metadata consistent with B0.2.9.
-7. Build through GitHub Actions and check the build result.
-8. Test the artifact in Minecraft on the target Android device.
-9. Update the changelog and other project documentation to match the actual result.
-10. Do not merge to `main` without explicit approval.
-
-### Current stopping point
-
-B0.2.9 is still in the discussion phase. The repository inspection has identified terrain rendering, glow, terrain reflection, and rounded-cloud calculations as areas to investigate. None has been confirmed as the dominant cause of the FPS drops.
-
-The next discussion decision is the Lite-versus-Default optimization direction. After that, finish the whole-repository review and discuss the proposed changes before any shader code is modified.
+1. Make changes on `b0.2.9-implementation`, not `main`.
+2. Keep changes targeted and explain the reason for each optimization.
+3. Do not remove most shader effects to chase performance.
+4. Treat source-based performance expectations as hypotheses until the shader compiles and the pack is tested in Minecraft.
+5. Update build workflows and documentation alongside implementation.
+6. Do not merge into `main` without explicit approval.

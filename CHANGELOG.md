@@ -1,3 +1,33 @@
+## B0.2.9 — Terrain Performance & Profile Tuning
+
+**Status:** Implementation on `b0.2.9-implementation`. Static validation and GitHub Actions build checks are pending; in-game performance and visual acceptance are not yet confirmed.
+
+### GAME
+- Keep the natural, cinematic Newb X Bare Visuals look while targeting fewer shader-side stalls when facing forests, mountains, and wide terrain.
+- Keep rain particles, rain atmosphere, wet-ground response, rounded clouds, night aurora, Default glow, and the existing sky pipeline.
+- Lite uses a shorter terrain-reflection range and three rounded-cloud density samples; Default keeps four cloud samples and a modestly reduced reflection cap.
+- No water waves, plant/lantern waving, godrays, custom sky replacement, or dramatic sky events are introduced.
+
+### DEVELOPER
+- Defer terrain-reflection cosine and blend-strength work until a vertex is on the reflective horizontal plane; keep puddle variation for wet-ground darkening.
+- Add an exact daytime early-out to the aurora function where the existing output mask is already zero.
+- Keep the local glow halo's four cardinal taps and remove unused corner sample declarations.
+- Compile Default as an explicit profile instead of inheriting the base materials, so its tuning is actually applied; preserve subpack order Lite, Beta, Default.
+- Align manifest/display versions, pack-builder fallback, workflow inputs, artifact names, and build-check version to B0.2.9.
+- Add static regression validation for version/profile metadata and protected shader features.
+- No claim of zero lag or visual equivalence until CI builds and in-game testing are complete.
+
+### Validation checklist
+- [ ] Static B0.2.9 validator passes.
+- [ ] Android and multiplatform build-checks pass.
+- [ ] Generated manifest reports version 0.2.9 and subpack order Lite, Beta, Default.
+- [ ] Default actually compiles its own materials with the DEFAULT define; Lite compiles with LITE.
+- [ ] Compare Lite and Default in forests, mountains, dense builds, rain, night, and aurora scenes.
+- [ ] Confirm wet-ground darkening and puddle variation remain visible.
+- [ ] Confirm glow remains visible in Default and rain particles remain enabled in both profiles.
+- [ ] Test on the vivo Y22s with the same view/scene before and after; separate shader cost from chunk-loading stutter.
+- [ ] Confirm no large visual regression in rounded clouds, daytime sky, night sky, fog, or lighting.
+
 ## B0.2.6 — Natural Lighting, Performance & Effects
 **Status: implementation branch; build and in-game verification pending. B0.2.5 was accepted by the creator after testing.**
 
