@@ -1,124 +1,143 @@
-# Newb X Bare Visuals
+# Newb X Legacy
 
-**Newb X Bare Visuals** is a community-made visual variant of **Newb X Legacy**, the RenderDragon shader project maintained by devendrn and the Newb Shader contributors. The project builds on the upstream source and aims to establish its own visual identity.
+**Newb X Legacy** is a RenderDragon successor to the legacy GLSL shader, [Newb Shader](https://github.com/devendrn/newb-shader-mcbe). It is an enhanced vanilla shader that focuses on being lightweight and having soft aesthetics. It supports Minecraft Bedrock 1.26+ (Windows/Android/iOS).
 
-> **Patch notice:** Minecraft Bedrock shader loading is unofficial and may depend on external loaders, game versions, and platform-specific patches. Compatibility can vary by version and platform.
+<br>
 
-## Project overview
+![Screenshots](docs/screenshots.jpg "Newb X Legacy 15.47, MCBE 1.21.0")
 
-- **Variant:** Newb X Bare Visuals
-- **Upstream project:** [devendrn/newb-x-mcbe](https://github.com/devendrn/newb-x-mcbe)
-- **Repository:** [RoheadOfficial/Newb-X-Bare-Visuals](https://github.com/RoheadOfficial/Newb-X-Bare-Visuals)
-- **Creator:** RoheadOfficial
-- **Development versions:** B-series
-- **Primary target:** Minecraft Bedrock on Android devices
-- **Build system:** Upstream Newb build tools and GitHub Actions
+## Downloads
 
-## Current development stage
+You can download the shader pack from [release page](https://github.com/devendrn/newb-x-mcbe/releases/latest).
 
-### B0.2.6 — implementation in progress
+## Installation
 
-B0.2.2 is a visual foundation rework following the underwhelming B0.1.9 in-game test. The Overworld lighting direction is inspired by the warm, semi-realistic approach of Newb Tropisphere, while keeping this project’s code and visual identity independent.
+> [!NOTE]
+> Shaders are not officially supported on Minecraft Bedrock. The following are unofficial ways to load shaders. There are multiple ways to get it working. Start with the recommended method. If that doesn't work try the other method.
 
-B0.2.2 is the merged baseline. B0.2.5 was accepted after in-game testing. B0.2.6 is being implemented on the separate `b0.2.6-implementation` branch; `main` remains unchanged until explicit approval. CI compilation and in-game validation are still pending.
+### Android
 
-- **Two subpacks only:** Lite first, Default second/right-most. Both use the parent Newb `BOX_CLOUDS` implementation. Default should be the initial selection; this must be checked in the generated pack and in Minecraft.
-- **Always Reflection tribute:** restore sky reflections on water, restrained always-on horizontal terrain reflections, rain-wet ground, and night aurora effects. Reflection range is capped for performance; Lite reduces the range and omits aurora reflection details.
-- **No water waves or displacement:** water uses a flat reflection normal; plant and lantern movement remain the only intended world waving effects.
-- **Selective terrain shading:** a bounded, smooth RenderChunk-only correction based on the community snippet, intended to avoid cumulative dark stripes on distant terrain. Actor materials are not changed, so this does not add custom player or mob shadows.
-- **Warm, natural Overworld colors:** restrained saturation, warmer daylight and dawn, cooler night tones, and atmospheric fog/rain.
-- **Build identity:** display label B0.2.2 and numeric manifest sub-version 60.
+| **Using MB Loader App** |
+|:-|
+| 1. Install [MB Loader App](https://play.google.com/store/apps/details?id=io.github.bambosan.mbloader) |
+| 2. Launch Minecraft from MB Loader. |
+| 2. Import the resource pack and activate it in global resources. |
 
-The shader source has been updated on the B0.2.2 implementation branch. The Android build and artifact upload passed, and the creator has tested the pack in-game. However, the terrain-shading change was not visibly effective to the creator, and the overall visual style and performance need substantial improvement. A successful build does not prove that the intended visuals or FPS gains have been achieved.
+### Windows
 
-## Credits and licensing
+| **Using Wyvern Loader** |
+|:-|
+| 1. Download and setup Wyvern from [here](https://github.com/mcbegamerxx954/wyvern_releases/releases/latest) |
+| 2. Open Minecraft then click 'Inject' in Wyvern |
+| 3. Import the resource pack and activate it in global resources. |
 
-Newb X Legacy source code is distributed under the MIT License. The upstream license and its notice are retained in [LICENSE](LICENSE).
+### Linux / Mac
+This method is for [mcpelauncher-manifest](https://minecraft-linux.github.io/).
 
-The upstream project also provides a copyright notice for compiled Newb Shader resource packs that identifies those packs under CC BY-ND 4.0. That license permits redistribution of unmodified material under its terms; it does not grant permission to distribute modified compiled packs. Source-code licensing and compiled-pack licensing are separate considerations. See [COPYRIGHT.txt](COPYRIGHT.txt) and the notice included with the generated pack.
+| **Using MaterialBinLoader mod (Recommended): x86_64 arch** |
+|:-|
+| 1. Install [mcpelauncher-materialbinloader-mod](https://github.com/CrackedMatter/mcpelauncher-materialbinloader/releases/latest). |
+| 2. Import the resource pack and activate it in global resources. |
 
-Newb X Bare Visuals is an independent community variant and is not represented as officially verified or endorsed by the Newb Shader team. Eligible pack distributions should retain the applicable attribution to **Newb Shader** and the variant creator.
+| **Using shaders mod: x86_64, x86, arm64, arm arch** |
+|:-|
+| 1. Download [mcpelauncher-shadersmod](https://github.com/GameParrot/mcpelauncher-shadersmod/releases/latest). |
+| 2. Follow this [guide](https://faizul726.github.io/guides/shadersmodinstallation) to setup. |
 
-## Variant profile
 
-The project follows the Newb Variant guidelines shared by the Newb Shader community. Its current configuration includes the variant name, a distinct UUID, creator-first author attribution, a project URL, and the patch notice in the pack description.
+### iOS
+Using shaders on iOS is not very straightforward and not recommended for beginners.
 
-The remaining publication profile covers:
+| **Using Minecraft with Hynis** |
+|:-|
+| 1. Download Minecraft with Hynis IPA file from our [Discord server](https://discord.com/invite/newb-community-844591537430069279). |
+| 2. Sideload it with your preferred sideloading tool. |
+| 3. Import the resource pack and activate it in global resources. |
 
-- A distinct visual identity compared with Newb X Legacy
-- Original artwork and assets, or assets used with explicit permission
-- Accurate asset credits where permission-based assets are used
-- A pack title containing **Newb** and a description identifying the project as a modified Newb Shader
-- Material-file labeling through the prescribed build process
-- Resource packs generated by the project's build tool
-- Compatibility checks for each Minecraft Bedrock version supported on Android
-- Review by the Newb Shader team before publication as a verified variant
-
-AI-generated or AI-enhanced images are not part of the variant artwork or screenshots. The project is intended to remain within the community guideline of maintaining no more than two variants.
+<br>
 
 ## Building
 
-The project uses the upstream build tooling. Android is the intended player platform; Linux/Android-compatible shell and Windows commands below describe build environments, not additional target platforms.
+### Install dependencies
+- [Git](https://git-scm.com/)
+- [Python](https://www.python.org/) 3.11 or higher required
+- Python packages:
+  - [lazurite](https://veka0.github.io/lazurite/#installation) (Must be `v0.10.0`. Newer or older version may not be supported)
+  - [rich](https://rich.readthedocs.io/en/stable/introduction.html#installation) (Must be `v14+`)
 
-### Dependencies
+### Get source code
+```
+git clone https://github.com/devendrn/newb-x-mcbe/ -c core.symlinks=true
+cd newb-x-mcbe
+```
 
-- Git
-- Python 3.11 or newer
-- Python packages listed in `requirements.txt`
-
-Install the declared packages:
-
-```sh
+### Install dependencies from requirements.txt
+*Skip if you already have installed those versions.*
+```
 python -m pip install -r requirements.txt
 ```
 
-### Prepare the build environment
-
-Linux or Android-compatible shell:
-
-```sh
+### Setup build environment
+> [!NOTE]
+> On Windows, run `.\build.bat` instead of `./build.sh` for all following commands.
+```
 ./build.sh setup
 ```
+This will download shaderc binary and material data required to build shader.
 
-Windows:
+<br>
 
-```bat
-build.bat setup
+### Compile specific shader materials
+```
+./build.sh mats
+```
+Compiled material.bin files will be inside `build/<platform>/`
+
+**Command usage:**
+```
+usage: build mats [-h] [-p {android,windows,ios,multiplatform}] [-m M [M ...]] [-s S]
+
+options:
+  -h, --help            show this help message and exit
+  -p {android,windows,multiplatform,ios}
+                        build profile
+  -m M [M ...]          build materials (eg: Sky)
+  -s S                  subpack config to use (eg: NO_WAVE)
 ```
 
-The setup step downloads the compiler and material data required by the upstream build tool.
-
-### Build the resource pack
-
-Linux:
-
-```sh
+### Compile and build full shader pack
+```
 ./build.sh pack
 ```
 
-Windows:
+The final mcpack will be inside `build/`.
 
-```bat
-build.bat pack
+**Command usage:**
+```
+usage: build pack [-h] [-p {android,windows,ios,multiplatform}] [--no-zip] [--no-label] [-v V]
+
+options:
+  -h, --help            show this help message and exit
+  -p {android,windows,multiplatform,ios}
+                        build profile
+  --no-zip              don't make archive
+  --no-label            don't label materials
+  -v V                  version number eg: 17
 ```
 
-The build tool supports platform profiles and a numeric internal version argument. The repository's B-series development version and the compiled pack's internal version are separate concepts, so workflow changes need to preserve the builder's expected input format.
+> [!TIP]
+> If you want to customize pack name, author, version and other details, you can do so in `src/newb/pack_config.toml`.
 
-The build tool reports the output location for the selected profile. A successful build and an inspected artifact are separate from in-game compatibility verification on Android.
+<br>
 
-## Available subpacks
+## Development
 
-B0.2.6 keeps three selectable options in this exact order:
+Clangd can be used to get code completion and error checks for source files inside include/newb. Fake bgfx header and clangd config are provided for the same.
+- **Neovim**: Install clangd LSP.
+- **VSCode**: Install [vscode-clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd) extension.
 
-1. **Lite — Box Clouds, Legacy Reflections & Reduced Effects**
-2. **Default — Box Clouds, Always Reflection & Full Atmosphere**
+## License
 
-- Lite (#1): performance-focused rounded-cloud profile.
-- Beta (#2): intentionally empty experiment slot.
-- Default (#3): main visual profile with rounded clouds and refined atmosphere.
+**Source Code:** The "Newb Shader" source code is licensed under the MIT License. You are free to modify, distribute, and create derivative works based on the source code.
 
-B0.2.6 sets display version B0.2.6 and manifest version 0.2.6. Beta is an intentionally empty experiment slot. Water reflection and vegetation/lantern waving are disabled; the subtle bloom-like glow is a lightweight material approximation, not screen-space bloom. See [the changelog](CHANGELOG.md) and [B0.2.2 implementation notes](docs/B0.2.2_IMPLEMENTATION.md).
-
-## Verification status
-
-B0.2.2 build results, generated artifacts, visual differences, Android performance, and compatibility will be documented as they are confirmed. The target remains Minecraft Bedrock on Android; device testing is required before claiming visual or performance success. Android is the only target platform for the current development phase; support for other platforms is outside the present scope. Documentation reflects the current development state rather than treating configuration entries as proof of completed or tested behavior.
+**Compiled Resource Packs (`.mcpack` files):** The compiled resource packs distributed by the "Newb Shader" project and its variant creators are copyrighted works with restrictions. See the `COPYRIGHT.txt` file within each resource pack for more information.

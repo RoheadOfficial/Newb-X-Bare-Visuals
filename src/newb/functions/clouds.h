@@ -145,6 +145,12 @@ vec4 renderClouds(vec2 p, float t, float rain, vec3 horizonCol, vec3 zenithCol, 
 // aurora is rendered on clouds layer
 #ifdef NL_AURORA
 vec4 renderAurora(vec3 p, float t, float rain, float dayFactor) {
+  // The existing mask is exactly zero at dayFactor >= 0. Return before layered
+  // trigonometry; night and twilight output remains unchanged.
+  if (dayFactor >= 0.0) {
+    return vec4(0.0, 0.0, 0.0, 0.0);
+  }
+
   t *= NL_AURORA_VELOCITY;
   p.xz *= NL_AURORA_SCALE;
   p.xz += 0.05*sin(p.x*4.0 + 20.0*t);

@@ -31,7 +31,7 @@ vec3 glowDetectD(sampler2D tex, vec2 uv, vec2 offset, vec2 st) {
 vec3 nlGlow(sampler2D tex, vec2 uv, float shimmer) {
   vec3 glow = glowDetectC(tex, uv);
   #ifdef NL_GLOW_LEAK
-    // glow leak is done by interpolating 8 surrounding pixels
+    // Four cardinal samples provide the local halo; corner samples are not used.
     // c3 c4 c5
     // c2    c6
     // c1 c8 c7
@@ -44,13 +44,9 @@ vec3 nlGlow(sampler2D tex, vec2 uv, float shimmer) {
     vec2 st = boundSize*fract(64.0*uv*(texSize/texSize.x)) - 0.5*boundSize;
     st = sign(st)*step(vec2_splat(0.5*boundSize-1.01), abs(st));
 
-    vec3 c1 = glowDetectD(tex, uv, offset*vec2(-1,-1), st);
     vec3 c2 = glowDetectD(tex, uv, offset*vec2(-1, 0), st);
-    vec3 c3 = glowDetectD(tex, uv, offset*vec2(-1, 1), st);
     vec3 c4 = glowDetectD(tex, uv, offset*vec2( 0, 1), st);
-    vec3 c5 = glowDetectD(tex, uv, offset*vec2( 1, 1), st);
     vec3 c6 = glowDetectD(tex, uv, offset*vec2( 1, 0), st);
-    vec3 c7 = glowDetectD(tex, uv, offset*vec2( 1,-1), st);
     vec3 c8 = glowDetectD(tex, uv, offset*vec2( 0,-1), st);
 
     vec2 p = uv * texSize;

@@ -29,24 +29,29 @@ vec4 nlRefl(
     // clip reflection when far (better performance)
     float endDist = min(renderDist*NL_GROUND_REFL_DISTANCE, NL_GROUND_REFL_MAX_DISTANCE); // Fractional and absolute caps for mobile performance
     if (camDist < endDist) {
-      float cosR = max(viewDir.y, 0.0);
       float puddles = max(1.0 - NL_GROUND_RAIN_PUDDLES*fastRand(tiledCpos.xz), 0.0);
-
+      // Preserve puddle variation for wet-ground darkening, but defer reflection-only
+      // calculations until this vertex is on the reflective horizontal plane.
       #ifndef NL_GROUND_REFL
         wetness *= puddles;
-        float reflective = wetness*env.rainFactor*NL_GROUND_RAIN_WETNESS;
       #else
-        float reflective = NL_GROUND_REFL;
-        if (!env.end && !env.nether) {
-          // only multiply with wetness in overworld
-          reflective *= wetness;
-        } 
-
+        float reflectionWetness = wetness;
         wetness *= puddles;
-        reflective = mix(reflective, wetness, env.rainFactor);
       #endif
 
       if (wPos.y < 0.0) {
+        float cosR = max(viewDir.y, 0.0);
+        #ifndef NL_GROUND_REFL
+          float reflective = wetness*env.rainFactor*NL_GROUND_RAIN_WETNESS;
+        #else
+          float reflective = NL_GROUND_REFL;
+          if (!env.end && !env.nether) {
+            // Preserve the pre-puddle wetness contribution from the existing reflection blend.
+            reflective *= reflectionWetness;
+          }
+          reflective = mix(reflective, wetness, env.rainFactor);
+        #endif
+
         viewDir.y = -viewDir.y;
         wetRefl.rgb = nlRenderSky(skycol, env, viewDir, t, false);
 
