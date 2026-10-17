@@ -2,7 +2,7 @@
 
 ## B0.2.9 — Terrain Performance Update
 
-**Status:** Implementation is in progress on `b0.2.9-implementation`. The planning branch remains separate, and `main` has not been changed.
+**Status:** B0.2.9 has been merged into `main` via PR #8. Static regression validation and Android/multiplatform build checks passed; manual in-game performance and visual validation remain pending.
 
 ### Goal
 
@@ -21,45 +21,50 @@ Reduce shader-side performance drops when facing mountains, forests, dense build
 #### Terrain and reflection
 - [x] Inspect RenderChunk vertex and fragment paths, shared lighting, fog, and terrain reflection.
 - [x] Identify the reflection-distance guard and the horizontal-plane reflection branch.
-- [ ] Keep puddle variation and wet-ground darkening intact while moving reflection-only cosine/blend calculations inside the horizontal-plane guard.
-- [ ] Review terrain fragment shading for repeated work without stripping out core lighting or effects.
-- [ ] Leave the previous terrain shading correction bounded and isolated; do not add actor/player/mob shadows.
+- [x] Keep puddle variation and wet-ground darkening intact while moving reflection-only cosine/blend calculations inside the horizontal-plane guard.
+- [x] Review the terrain reflection path and limit the optimization to reflection-only calculations without stripping out core lighting or effects.
+- [x] Keep the change bounded to terrain reflection; do not add actor/player/mob shadows.
 
 #### Glow
 - [x] Inspect Default's local emissive glow and Lite's compile-time skip.
-- [ ] Keep the four-cardinal local halo; remove unused corner sample declarations.
-- [ ] Preserve Default glow and shimmer; do not describe this material effect as screen-space bloom.
+- [x] Keep the four-cardinal local halo; remove unused corner sample declarations.
+- [x] Preserve Default glow and shimmer; this material effect is not screen-space bloom.
 
 #### Clouds and aurora
 - [x] Inspect rounded-cloud density sampling and the current four-step default.
-- [ ] Keep four samples in Default and use three in Lite as a modest profile-specific trade-off.
-- [ ] Return early from aurora rendering during daytime, where the existing mask already makes its output exactly zero.
-- [ ] Preserve rounded clouds, nighttime aurora, rain transitions, and the existing sky pipeline.
+- [x] Keep four samples in Default and use three in Lite as a modest profile-specific trade-off.
+- [x] Return early from aurora rendering during daytime, where the existing mask already makes its output exactly zero.
+- [x] Preserve rounded clouds, nighttime aurora, rain transitions, and the existing sky pipeline.
 
 #### Weather, fog, and entities
 - [x] Inspect weather particle, occlusion, fog/mist, and actor/material paths.
-- [ ] Preserve rain particles, rain mist, cloudy fog, and wet-ground effects.
-- [ ] Keep the existing low-cost entity path; do not introduce new entity shadows or remove the main lighting system.
+- [x] Preserve rain particles, rain mist, cloudy fog, and wet-ground effects.
+- [x] Keep the existing low-cost entity path; do not introduce new entity shadows or remove the main lighting system.
 - [ ] Verify rain and entity-heavy scenes after building.
 
 #### Profiles, build, and regression checks
-- [ ] Set display and manifest versions to B0.2.9 / 0.2.9.
-- [ ] Update the pack-builder fallback, workflow defaults, artifact labels, and build-check version.
-- [ ] Keep the workflow building current source and uploading Android artifacts.
-- [ ] Add static regression checks for version consistency, profile material compilation, feature-preservation constraints, and workflow labels.
-- [ ] Run Android and multiplatform build checks; inspect generated manifest, subpack order, compiled material outputs, and artifact paths.
-- [ ] Update the changelog and project-specific documentation to match the actual implementation status.
+- [x] Set display and manifest versions to B0.2.9 / 0.2.9.
+- [x] Update the pack-builder fallback, workflow defaults, artifact labels, and build-check version.
+- [x] Keep the workflow building current source and uploading Android artifacts.
+- [x] Add static regression checks for version consistency, profile material compilation, feature-preservation constraints, and workflow labels.
+- [x] Run Android and multiplatform build checks.
+- [ ] Inspect the generated manifest, subpack order, compiled material outputs, and artifact paths.
+- [x] Update the changelog and project-specific documentation to match the actual implementation status.
 
 ### Validation still required
 
-- [ ] Static validation passes.
-- [ ] GitHub Actions Android and multiplatform builds pass.
+- [x] Static validation passes.
+- [x] GitHub Actions Android and multiplatform builds pass.
 - [ ] Generated manifest shows version 0.2.9 and Lite, Beta, Default in that order.
-- [ ] Confirm the root material set compiles with `DEFAULT` and Lite compiles with `LITE`.
+- [x] CI compiles the root material set with `DEFAULT` and Lite with `LITE`.
 - [ ] Compare forests, mountains, wide terrain, dense builds, weather, night, and aurora in both profiles.
 - [ ] Confirm glow, rain particles, rain atmosphere, puddle variation, and wet-ground darkening remain visible.
 - [ ] Test on the vivo Y22s using comparable scenes and distinguish shader load from chunk-loading stutter.
 - [ ] Record visual regressions and performance observations before calling the update successful.
+
+### Deferred idea
+
+- The proposed standalone custom in-game Settings interface discussed for B0.3.2 has been scrapped for now. It is not part of B0.2.9 and should only be reconsidered through a new planning decision.
 
 ### Development rules
 
@@ -68,4 +73,4 @@ Reduce shader-side performance drops when facing mountains, forests, dense build
 3. Do not remove most shader effects to chase performance.
 4. Treat source-based performance expectations as hypotheses until the shader compiles and the pack is tested in Minecraft.
 5. Update build workflows and documentation alongside implementation.
-6. Do not merge into `main` without explicit approval.
+6. Merge into `main` only after explicit approval.
