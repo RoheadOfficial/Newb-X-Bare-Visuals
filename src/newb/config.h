@@ -40,7 +40,7 @@
 #define NL_SUNLIGHT_INTENSITY   3.08 // Slightly richer direct sunlight without harsh highlights
 #define NL_TORCHLIGHT_INTENSITY 1.0  // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     0.80 // Add gentle depth while keeping shadow detail readable
-#define NL_MIN_LIGHTING_BOOST   1.16 // Preserve natural contrast rather than lifting every dark surface
+#define NL_MIN_LIGHTING_BOOST   1.20 // Slightly improve dark-scene readability without emissive ore glow
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // Disabled for the Android performance target
 
@@ -51,7 +51,7 @@
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.62,0.40) // Warm sunrise without orange oversaturation
 #define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.94,0.84) // Warm-neutral daytime light
-#define NL_NIGHT_MOONLIGHT_COL vec3(0.025,0.045,0.12)
+#define NL_NIGHT_MOONLIGHT_COL vec3(0.035,0.055,0.12) // Gentle night readability, not daytime brightness
 
 /* Torch colors */
 #define NL_OVERWORLD_TORCH_COL  vec3(1.0,0.52,0.18)
@@ -77,9 +77,9 @@
 #define NL_DAY_ZENITH_COL    vec3(0.34,0.66,1.0)
 #define NL_DAY_HORIZON_COL   vec3(0.76,0.88,0.98)
 #define NL_DAY_EDGE_COL      vec3(0.92,0.96,1.0)
-#define NL_NIGHT_ZENITH_COL  vec3(0.012,0.024,0.065)
-#define NL_NIGHT_HORIZON_COL vec3(0.025,0.045,0.09)
-#define NL_NIGHT_EDGE_COL    vec3(0.04,0.065,0.11)
+#define NL_NIGHT_ZENITH_COL  vec3(0.018,0.030,0.075)
+#define NL_NIGHT_HORIZON_COL vec3(0.030,0.050,0.095)
+#define NL_NIGHT_EDGE_COL    vec3(0.045,0.070,0.12)
 #define NL_RAIN_ZENITH_COL   vec3(0.36,0.42,0.50)
 #define NL_RAIN_HORIZON_COL  vec3(0.53,0.59,0.66)
 
