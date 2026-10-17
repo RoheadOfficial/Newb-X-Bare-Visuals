@@ -15,17 +15,19 @@ The project is Android-focused and is designed for Minecraft Bedrock with Render
 
 ## Profiles
 
-- **Lite:** A performance-focused profile with a shorter terrain-reflection range and fewer rounded-cloud density samples, while retaining the core atmosphere and weather effects.
-- **Beta:** An empty experimental slot reserved for future tests.
-- **Default:** The main profile, retaining the full intended effect set with a modest terrain-reflection range reduction.
+- **Default:** The balanced main profile, with natural daylight, warmer sunsets and evenings, soft-blue believable water, rounded clouds, rain atmosphere, wet ground, aurora, and restrained local glow.
+- **Pootaytoe:** The performance-focused profile. It keeps the recognizable look while reducing selected rendering work more aggressively where the trade-off is worthwhile.
+- **Bare Visuals:** The most atmospheric profile, built around cozy peach-golden sunrises and sunsets, softer blue skies, rounded clouds, gentle atmospheric depth, and subtle material highlights.
 
-The pack's selectable order is Lite, Beta, Default.
+The selectable order is Default, Pootaytoe, Bare Visuals. The names and descriptions reflect the intended character of each profile; the visual percentages used during planning are internal creative notes, not player-facing labels.
 
-## B0.2.9 — Terrain Performance Update
+## B0.3.2 — Beauty and Performance
 
-B0.2.9 targets shader-side work that may contribute to frame drops when looking across mountains, forests, dense builds, and wide terrain. The implementation uses separate tuning for Lite and Default and focuses on avoiding calculations that cannot affect the current output.
+B0.3.2 builds on B0.2.9's terrain-performance work instead of replacing it. All three profiles receive performance-minded tuning. Default stays balanced, Pootaytoe makes more aggressive simplifications, and Bare Visuals keeps the strongest cozy atmosphere while bounding expensive terrain-reflection work.
 
-Static regression validation and the Android/multiplatform GitHub Actions build checks have passed. In-game performance and visual acceptance remain unverified, especially on the target vivo Y22s. A successful build does not guarantee zero lag.
+The visual direction is inspired by the welcoming, cozy feel of Prizma Visuals without copying it. Colors remain restrained rather than oversaturated. Water keeps its vanilla rendering path; there are no water waves, always-on water reflections, godrays, box clouds, plant/lantern waving, or custom player/mob shadows. The material-highlight experiment is a small color-based approximation, not a full PBR renderer or environment-reflection pass.
+
+The source-level update includes a static regression validator and GitHub Actions build checks. Actual frame-rate gains, visual acceptance, generated subpack selection, and MCBE 26.50 + MB Loader 26.52 behavior still require artifact inspection and in-game testing on the target vivo Y22s. No zero-lag guarantee is made.
 
 ## Source and credits
 
