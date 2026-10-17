@@ -63,6 +63,17 @@ def main() -> int:
     require("#undef NL_MATERIAL_HIGHLIGHT_STRENGTH" in cfg,
             "Pootaytoe must skip optional material highlights")
 
+    ore_texture_names = (
+        "copper_ore.png", "diamond_ore.png", "emerald_ore.png", "gold_ore.png",
+        "iron_ore.png", "lapis_ore.png", "nether_gold_ore.png", "quartz_ore.png",
+        "redstone_ore.png",
+    )
+    for name in ore_texture_names:
+        ore_path = ROOT / "assets" / "textures" / "blocks" / name
+        require(ore_path.is_file(), f"ore texture is missing: {name}")
+        require(ore_path.read_bytes().startswith(b"\\x89PNG\\r\\n\\x1a\\n"),
+                f"ore texture is not a valid PNG: {name}")
+
     rain = read("src/newb/functions/rain.h")
     require("if (wPos.y < 0.0)" in rain, "terrain reflection must remain limited to the horizontal-plane branch")
     require("wetness *= puddles;" in rain, "puddle variation must continue affecting wet-ground response")
