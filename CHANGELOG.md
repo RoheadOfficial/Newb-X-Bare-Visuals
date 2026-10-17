@@ -1,3 +1,40 @@
+## B0.3.2 — Beauty & Performance
+
+**Status:** Implementation branch created; source changes are in progress. Static validation, GitHub Actions builds, generated-artifact inspection, and in-game visual/performance testing are required before acceptance.
+
+### GAME
+- Give Default, Pootaytoe, and Bare Visuals their own identities while keeping all three performance-minded.
+- Default balances natural daylight, warmer sunsets/evenings, believable soft-blue water, rounded clouds, rain, wet-ground response, aurora, and restrained local glow.
+- Pootaytoe makes more aggressive, targeted savings while preserving the core look, rain, wet ground, rounded clouds, and nighttime atmosphere where practical.
+- Bare Visuals emphasizes cozy peach/golden sunrises and sunsets, softer blue skies, rounded clouds, gentle haze, and screenshot-worthy scenery without oversaturation.
+- Keep the vanilla-water path. No always-on water reflections, water waves, godrays, box clouds, plant/lantern waving, or custom player/mob shadows.
+- Add only subtle, inexpensive PBR-inspired material highlights; do not claim full PBR or use a costly environment-reflection pass.
+
+### DEVELOPER
+- Carry forward B0.2.9's bounded terrain-reflection work, daytime aurora early-out, cardinal-only glow sampling, and separate root/subpack compilation model.
+- Reduce the shared terrain-reflection cap and tune each profile independently: Default 32 units, Pootaytoe 20, Bare Visuals 30.
+- Retain four rounded-cloud samples for Default and Bare Visuals; reduce Pootaytoe to two as its intentional quality/performance trade-off.
+- Use a color-based material-highlight approximation only on opaque, non-season terrain. It adds no texture reads and is disabled in Pootaytoe.
+- Use the Default root material set for the Default subpack; compile the complete material set separately for Pootaytoe and Bare Visuals with their own defines.
+- Update pack version metadata, builder fallback, workflows, artifact labels, and static validation for B0.3.2.
+- Preserve the original Newb README and keep project-specific identity/documentation in About.md and the project docs.
+
+### Validation checklist
+- [ ] B0.3.2 static validator passes.
+- [ ] Android and multiplatform GitHub Actions builds pass.
+- [ ] Generated manifest reports version 0.3.2 and subpack order Default, Pootaytoe, Bare Visuals.
+- [ ] Default uses the root materials compiled with DEFAULT; Pootaytoe and Bare Visuals compile their complete material lists with their own defines.
+- [ ] Confirm all profiles preserve rain particles, rain fog/mist, wet-ground response, rounded clouds, readable night sky, and intended aurora behavior.
+- [ ] Confirm vanilla water remains free of custom reflection/displacement and no godrays, box clouds, vegetation waving, or player/mob shadows are introduced.
+- [ ] Compare mountains, dense forests, distant terrain, dense builds, water, rain, thunderstorms, particles, and night.
+- [ ] Check Bare Visuals sunrise/sunset color transitions, terrain color readability, cloud shape, and soft-blue water; ensure the sky does not remain sunset-colored all night.
+- [ ] Inspect the material-highlight approximation for visible but restrained results and ensure it does not tint unrelated blocks or wash out highlights.
+- [ ] Test on the vivo Y22s using comparable scenes, recording FPS/frametime observations and separating shader load from chunk-loading stutter.
+- [ ] Confirm compatibility with Minecraft Bedrock 26.50 + MB Loader 26.52 and inspect the final .mcpack artifact.
+- [ ] Fix any CI, manifest, subpack, or in-game regressions before considering the update complete.
+
+---
+
 ## B0.2.9 — Terrain Performance & Profile Tuning
 
 **Status:** Merged into `main` via PR #8. The static regression validator and Android/multiplatform build checks passed on the implementation branch. In-game performance and visual acceptance remain pending.
