@@ -22,7 +22,7 @@ The internal Prizma-inspired percentages are planning notes only. Never put them
 - [x] **Bare Mode principles:** Fold the lean, vanilla-recognizable, reduced-effects behavior into Pootaytoe instead of adding a fourth subpack.
 - [x] **Comfort-first visuals:** maintain restrained saturation, natural sunlight, readable block colors, warm but controlled evenings, and no distracting effects.
 - [x] **Night Visibility:** slightly lift the night palette and minimum-light contribution while preserving a clearly nighttime sky.
-- [ ] **Ore Visibility:** keep ores non-emissive and use texture-only treatment rather than glow. The repository has dedicated textures for copper, diamond, emerald, gold, iron, lapis, nether gold, quartz, and redstone ores. A restrained contrast/readability pass on those texture assets still needs to be implemented and checked in-game; do not fake ore detection with shader color heuristics.
+- [x] **Ore Visibility (texture pass):** apply restrained contrast/readability enhancement to the existing copper, diamond, emerald, gold, iron, lapis, nether gold, quartz, and redstone ore textures. This is texture-only; no emissive ore glow or shader color heuristic is used. In-game readability and color balance still need review.
 - [x] **Animation Controls policy:** keep compile-time control points but leave plant/lantern waving, tree waving, and water waves disabled, as already agreed. No player-facing runtime toggle is claimed without a supported settings interface.
 - [x] **Custom Main Settings Entry:** explicitly scrapped and excluded from B0.3.2. Do not attempt to add a custom page to Minecraft's main Settings menu through an ordinary resource pack.
 - [x] **PBR-inspired material highlights:** add a restrained, inexpensive color-based approximation for Default and Bare Visuals; no extra texture reads, full PBR claims, or costly environment reflections.
@@ -49,7 +49,8 @@ The internal Prizma-inspired percentages are planning notes only. Never put them
 - [ ] Inspect the material-highlight result and confirm no unintended tinting or washed-out surfaces.
 - [ ] Verify sunrise, sunset, daytime, rain, nighttime, clouds, water, aurora, and wet-ground effects.
 - [ ] Check all profiles in mountains, dense forests, distant terrain, dense builds, water, rain, thunderstorms, particles, and night.
-- [ ] Apply a restrained texture-only readability pass to the nine existing ore texture assets; inspect each result and test it in-game. Do not add emissive ore glow or a speculative shader color heuristic.
+- [x] Apply a restrained texture-only readability pass to the nine existing ore texture assets; static validation checks that each PNG exists.
+- [ ] Inspect all nine texture results in Minecraft and confirm ore colors remain natural and readable. Do not add emissive ore glow or a speculative shader color heuristic.
 - [ ] Test Minecraft Bedrock 26.50 + MB Loader 26.52 on the vivo Y22s.
 - [ ] Compare equivalent scenes and record FPS/frametime observations; distinguish shader cost from chunk-loading stutter.
 - [ ] Fix build, compatibility, manifest, profile, or visual regressions before acceptance.
