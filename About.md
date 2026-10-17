@@ -25,7 +25,7 @@ The pack's selectable order is Lite, Beta, Default.
 
 B0.2.9 targets shader-side work that may contribute to frame drops when looking across mountains, forests, dense builds, and wide terrain. The implementation uses separate tuning for Lite and Default and focuses on avoiding calculations that cannot affect the current output.
 
-The update is still being built and verified. A successful build will confirm compilation, not guarantee zero lag or final visual acceptance. In-game checks on the target Android device remain necessary.
+Static regression validation and the Android/multiplatform GitHub Actions build checks have passed. In-game performance and visual acceptance remain unverified, especially on the target vivo Y22s. A successful build does not guarantee zero lag.
 
 ## Source and credits
 
