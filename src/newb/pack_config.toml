@@ -1,10 +1,10 @@
 name = "Newb X Bare Visuals"
-version = [0, 2, 9]
-development_version = "B0.2.9"
+version = [0, 3, 2]
+development_version = "B0.3.2"
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
-§7- A modified version of Newb X Legacy focused on a natural, lightweight visual style.
+§7- A cozy, natural Newb variant with a lighter touch on performance.
 §7- Newb X Bare Visuals is a community-made Newb Shader variant by RoheadOfficial.
 §8[§2MOSS §8· §6COFFEE §8· §fSTONE§8] §rᴠᴀɴɪʟʟᴀ ᴍɪɴᴇᴄʀᴀғᴛ, ɴᴀᴛᴜʀᴀʟʟʏ ᴇɴʜᴀɴᴄᴇᴅ.
 %v
@@ -31,18 +31,19 @@ Original Newb Shader source and upstream project: https://github.com/devendrn/ne
 Variant creator: RoheadOfficial
 '''
 
-# Required MCpack order: Lite #1, Beta #2 (empty experiment slot), Default #3.
-[[subpack]]
-define = "LITE"
-materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Lite — Rounded Clouds, Reduced Effects & Performance"
-
-[[subpack]]
-define = "BETA"
-materials = []
-description = "Beta — Empty Experimental Slot"
-
+# Required MCpack order: Default #1, Pootaytoe #2, Bare Visuals #3.
+# The root material set is compiled with DEFAULT; Default inherits it without duplicating binaries.
 [[subpack]]
 define = "DEFAULT"
 materials = []
-description = "Default — Rounded Clouds, Refined Lighting & Atmosphere"
+description = "Default — Vanilla vibes, but the lighting showed up"
+
+[[subpack]]
+define = "POOTAYTOE"
+materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
+description = "Pootaytoe — Fewer GPU tantrums, same Minecraft world"
+
+[[subpack]]
+define = "BARE_VISUALS"
+materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
+description = "Bare Visuals — Golden-hour screenshots incoming"

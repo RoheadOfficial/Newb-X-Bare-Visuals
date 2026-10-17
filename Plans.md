@@ -1,5 +1,72 @@
 # Plans
 
+## B0.3.2 — Beauty & Performance
+
+**Status:** Implementation is underway on b0.3.2-implementation. B0.2.9 is the performance foundation. Static validation, CI builds, artifact inspection, and actual in-game visual/performance testing remain required.
+
+### Main goal
+
+Make Newb X Bare Visuals beautiful, recognizable, cozy, and more efficient in all three profiles. Prizma Visuals is the main mood inspiration, especially its welcoming cozy atmosphere, but the implementation must remain original. No oversaturation, visual gimmicks, or effects added just to make the changelog longer.
+
+### Final subpacks
+
+- **Default:** balanced main profile; natural daylight, warmer sunsets/evenings, believable soft-blue vanilla water, rounded clouds, restrained local glow, rain atmosphere, wet ground, and night aurora. Four rounded-cloud samples; 32-unit terrain-reflection cap.
+- **Pootaytoe:** performance-focused profile; preserve the core look while making more aggressive targeted savings. Two rounded-cloud samples; 20-unit terrain-reflection cap; skip optional glow leak/shimmer, weather speck styling, lava noise, underwater streaks, and material highlights.
+- **Bare Visuals:** strongest cozy Prizma-inspired mood; softer blue skies, peach/golden sunrise and sunset, rounded clouds, gentle depth, readable night transition, and subtle material highlights. Four rounded-cloud samples; 30-unit terrain-reflection cap.
+
+The internal Prizma-inspired percentages are planning notes only. Never put them in pack descriptions or metadata. Player-facing descriptions may be playful, but must not disclose the percentages.
+
+### Full feature checklist and disposition
+
+- [x] **Performance Profiles:** Default, Pootaytoe, and Bare Visuals have separate compile-time profile behavior. Optimize every profile, not only Pootaytoe.
+- [x] **Bare Mode principles:** Fold the lean, vanilla-recognizable, reduced-effects behavior into Pootaytoe instead of adding a fourth subpack.
+- [x] **Comfort-first visuals:** maintain restrained saturation, natural sunlight, readable block colors, warm but controlled evenings, and no distracting effects.
+- [x] **Night Visibility:** slightly lift the night palette and minimum-light contribution while preserving a clearly nighttime sky.
+- [x] **Ore Visibility (texture pass):** apply restrained contrast/readability enhancement to the existing copper, diamond, emerald, gold, iron, lapis, nether gold, quartz, and redstone ore textures. This is texture-only; no emissive ore glow or shader color heuristic is used. In-game readability and color balance still need review.
+- [x] **Animation Controls policy:** keep compile-time control points but leave plant/lantern waving, tree waving, and water waves disabled, as already agreed. No player-facing runtime toggle is claimed without a supported settings interface.
+- [x] **Custom Main Settings Entry:** explicitly scrapped and excluded from B0.3.2. Do not attempt to add a custom page to Minecraft's main Settings menu through an ordinary resource pack.
+- [x] **PBR-inspired material highlights:** add a restrained, inexpensive color-based approximation for Default and Bare Visuals; no extra texture reads, full PBR claims, or costly environment reflections.
+- [x] **B0.2.9 performance foundation:** retain the terrain-reflection guard/range bounds, four-cardinal glow sampling, daytime aurora early-out, profile-specific cloud steps, and material compilation architecture.
+- [x] **Water exclusions:** retain vanilla water; no always-on water reflections, water waves, or displacement.
+- [x] **Weather/atmosphere preservation:** retain lightweight rain particles, rain fog/mist, wet ground and puddle variation, rounded clouds, night aurora/light night clouds, and the existing sky pipeline.
+- [x] **Other exclusions:** no godrays, box clouds, vegetation waving, custom player/mob shadows, or unnecessary effect removals.
+
+### Implementation checklist
+
+- [x] Create b0.3.2-implementation from main.
+- [x] Set display version B0.3.2 and manifest version [0, 3, 2].
+- [x] Replace Lite/Beta/Default lineup with Default/Pootaytoe/Bare Visuals.
+- [x] Configure Default to inherit root materials compiled with DEFAULT; compile all materials separately for Pootaytoe and Bare Visuals.
+- [x] Apply profile-specific reflection caps and rounded-cloud sample counts.
+- [x] Add lightweight terrain material highlights, skipped in Pootaytoe.
+- [x] Improve night palette and minimum-light readability conservatively.
+- [x] Update pack-builder fallback, workflow labels, workflow triggers, and build-check version.
+- [x] Add a B0.3.2-specific static validator.
+- [x] Update About.md and CHANGELOG.md and add docs/B0.3.2_IMPLEMENTATION.md.
+- [x] Run B0.3.2 static validator; it passes on the Android and multiplatform CI jobs.
+- [ ] Run Android and multiplatform GitHub Actions builds.
+- [ ] Inspect generated manifest, subpack order, output paths, and artifact names.
+- [ ] Inspect the material-highlight result and confirm no unintended tinting or washed-out surfaces.
+- [ ] Verify sunrise, sunset, daytime, rain, nighttime, clouds, water, aurora, and wet-ground effects.
+- [ ] Check all profiles in mountains, dense forests, distant terrain, dense builds, water, rain, thunderstorms, particles, and night.
+- [x] Apply a restrained texture-only readability pass to the nine existing ore texture assets; static validation checks that each PNG exists.
+- [ ] Inspect all nine texture results in Minecraft and confirm ore colors remain natural and readable. Do not add emissive ore glow or a speculative shader color heuristic.
+- [ ] Test Minecraft Bedrock 26.50 + MB Loader 26.52 on the vivo Y22s.
+- [ ] Compare equivalent scenes and record FPS/frametime observations; distinguish shader cost from chunk-loading stutter.
+- [ ] Fix build, compatibility, manifest, profile, or visual regressions before acceptance.
+
+### Performance and validation rules
+
+1. Reuse B0.2.9 optimizations when they remain correct; don't assume they eliminate every performance problem.
+2. Prefer cheaper calculations over removing effects, unless testing proves removal is necessary.
+3. Treat performance gains as a goal until tested in Minecraft. Never promise zero lag or a specific FPS from source inspection alone.
+4. Keep all changes on b0.3.2-implementation. Do not merge into main without explicit approval.
+5. Keep the final subpack lineup at three profiles. Custom Main Settings Entry remains scrapped.
+
+---
+
+# Plans
+
 ## B0.2.9 — Terrain Performance Update
 
 **Status:** B0.2.9 has been merged into `main` via PR #8. Static regression validation and Android/multiplatform build checks passed; manual in-game performance and visual validation remain pending.
