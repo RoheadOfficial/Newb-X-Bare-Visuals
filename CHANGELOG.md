@@ -1,6 +1,6 @@
 ## B0.2.9 — Terrain Performance & Profile Tuning
 
-**Status:** Implementation on `b0.2.9-implementation`. Static validation and GitHub Actions build checks are pending; in-game performance and visual acceptance are not yet confirmed.
+**Status:** Merged into `main` via PR #8. The static regression validator and Android/multiplatform build checks passed on the implementation branch. In-game performance and visual acceptance remain pending.
 
 ### GAME
 - Keep the natural, cinematic Newb X Bare Visuals look while targeting fewer shader-side stalls when facing forests, mountains, and wide terrain.
@@ -18,8 +18,8 @@
 - No claim of zero lag or visual equivalence until CI builds and in-game testing are complete.
 
 ### Validation checklist
-- [ ] Static B0.2.9 validator passes.
-- [ ] Android and multiplatform build-checks pass.
+- [x] Static B0.2.9 validator passes.
+- [x] Android and multiplatform build-checks pass.
 - [ ] Generated manifest reports version 0.2.9 and subpack order Lite, Beta, Default.
 - [ ] Default actually compiles its own materials with the DEFAULT define; Lite compiles with LITE.
 - [ ] Compare Lite and Default in forests, mountains, dense builds, rain, night, and aurora scenes.
