@@ -118,7 +118,8 @@
 #define NL_WATER_STYLE_STRENGTH 0.16
 #define NL_GROUND_REFL 0.18         // Restrained terrain-only reflection; water reflection is disabled
 #define NL_GROUND_REFL_DISTANCE 0.32 // Shorter range reduces distant-terrain shader cost
-#define NL_GROUND_REFL_MAX_DISTANCE 40.0 // Base profile cap; Default and Lite tune this independently
+#define NL_GROUND_REFL_MAX_DISTANCE 32.0 // B0.3.2: keep the shared terrain-reflection cap bounded for large views
+#define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.012 // Cheap color-based material lift; no extra texture reads
 //#define NL_CLOUD_AURORA_REFLECTION // B0.2.5: remove Always Reflection treatment from water
 
 /* Underwater */
@@ -231,24 +232,20 @@
   Build tool will enable corresponding flags when compiling.
 */
 
-#ifdef LITE
-  // Performance profile: keep rounded clouds and reduce optional rendering work.
-  // Reduce reflection distance and secondary effects instead of removing the main look.
+#ifdef POOTAYTOE
+  // Pootaytoe: more aggressive savings while retaining rounded clouds, rain, wet ground, and the sky pipeline.
   #undef NL_GROUND_REFL
-  #define NL_GROUND_REFL 0.12
+  #define NL_GROUND_REFL 0.10
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.18
+  #define NL_GROUND_REFL_DISTANCE 0.16
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 24.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 20.0
   #undef NL_CLOUD2_STEPS
-  #define NL_CLOUD2_STEPS 3
+  #define NL_CLOUD2_STEPS 2
   #undef NL_GLOW_LEAK
-  #undef NL_CLOUD_AURORA_REFLECTION
   #undef NL_GLOW_SHIMMER
   #undef NL_LAVA_NOISE
   #undef NL_WEATHER_SPECK
-  #undef NL_SHOOTING_STAR
-  #undef NL_RAINBOW
   #undef NL_UNDERWATER_STREAKS
   #undef NL_RAIN_MIST_OPACITY
   #define NL_RAIN_MIST_OPACITY 0.07
@@ -256,34 +253,48 @@
   #define NL_CLOUDY_FOG 0.05
   #undef NL_AURORA
   #define NL_AURORA 0.45
+  #undef NL_MATERIAL_HIGHLIGHT_STRENGTH
   #undef NL_PLANTS_WAVE
   #undef NL_LANTERN_WAVE
   #undef NL_ENTITY_EDGE_HIGHLIGHT
 #endif
 
 #ifdef DEFAULT
-  // Keep the full Default effects while reducing distant reflection work modestly.
+  // Default: preserve the full established effects with B0.2.9-style terrain optimizations.
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.28
+  #define NL_GROUND_REFL_DISTANCE 0.26
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 36.0
-  // Rain remains enabled; retain the previously agreed subtle overlay adjustment.
+  #define NL_GROUND_REFL_MAX_DISTANCE 32.0
   #undef NL_WEATHER_SPECK
   #define NL_WEATHER_SPECK 0.3465
 #endif
 
-#ifdef BETA
-  // Experimental profile: isolate prototype effects from Lite and Default.
-  // B0.2.6: Beta is intentionally empty until a new experiment is approved.
-  #undef NL_BETA_DYNAMIC_LIGHTING
-  #undef NL_BETA_INDOOR_RESPONSE
-  #undef NL_AURORA
-  #define NL_AURORA 0.95
+#ifdef BARE_VISUALS
+  // Bare Visuals: stronger cozy dawn/sunset identity, with a bounded reflection path and subtle highlights.
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.28
+  #define NL_GROUND_REFL_DISTANCE 0.25
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 40.0
-  #undef NL_GLOW_LEAK
+  #define NL_GROUND_REFL_MAX_DISTANCE 30.0
+  #undef NL_MATERIAL_HIGHLIGHT_STRENGTH
+  #define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.022
+  #undef NL_DAWN_SUNLIGHT_COL
+  #define NL_DAWN_SUNLIGHT_COL vec3(1.0,0.68,0.46)
+  #undef NL_DAWN_ZENITH_COL
+  #define NL_DAWN_ZENITH_COL vec3(0.24,0.38,0.58)
+  #undef NL_DAWN_HORIZON_COL
+  #define NL_DAWN_HORIZON_COL vec3(1.0,0.66,0.49)
+  #undef NL_DAWN_EDGE_COL
+  #define NL_DAWN_EDGE_COL vec3(1.05,0.78,0.63)
+  #undef NL_DAY_ZENITH_COL
+  #define NL_DAY_ZENITH_COL vec3(0.30,0.54,0.84)
+  #undef NL_DAY_HORIZON_COL
+  #define NL_DAY_HORIZON_COL vec3(0.76,0.87,0.96)
+  #undef NL_DAY_EDGE_COL
+  #define NL_DAY_EDGE_COL vec3(0.91,0.95,1.0)
+  #undef NL_WEATHER_SPECK
+  #define NL_WEATHER_SPECK 0.35
+  #undef NL_CLOUD2_STEPS
+  #define NL_CLOUD2_STEPS 4
 #endif
 
 #ifdef NO_WAVE_NO_FOG
