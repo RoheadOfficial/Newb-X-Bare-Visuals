@@ -9,6 +9,7 @@
 - Bare Visuals emphasizes cozy peach/golden sunrises and sunsets, softer blue skies, rounded clouds, gentle haze, and screenshot-worthy scenery without oversaturation.
 - Keep the vanilla-water path. No always-on water reflections, water waves, godrays, box clouds, plant/lantern waving, or custom player/mob shadows.
 - Add only subtle, inexpensive PBR-inspired material highlights; do not claim full PBR or use a costly environment-reflection pass.
+- Apply restrained contrast/readability enhancement to the existing copper, diamond, emerald, gold, iron, lapis, nether gold, quartz, and redstone ore textures. Keep the treatment texture-only; do not add emissive ore glow.
 
 ### DEVELOPER
 - Carry forward B0.2.9's bounded terrain-reflection work, daytime aurora early-out, cardinal-only glow sampling, and separate root/subpack compilation model.
