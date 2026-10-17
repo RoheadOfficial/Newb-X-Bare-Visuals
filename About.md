@@ -27,7 +27,7 @@ B0.3.2 builds on B0.2.9's terrain-performance work instead of replacing it. All 
 
 The visual direction is inspired by the welcoming, cozy feel of Prizma Visuals without copying it. Colors remain restrained rather than oversaturated. Water keeps its vanilla rendering path; there are no water waves, always-on water reflections, godrays, box clouds, plant/lantern waving, or custom player/mob shadows. The material-highlight experiment is a small color-based approximation, not a full PBR renderer or environment-reflection pass.
 
-The source-level update includes a static regression validator and GitHub Actions build checks. Actual frame-rate gains, visual acceptance, generated subpack selection, and MCBE 26.50 + MB Loader 26.52 behavior still require artifact inspection and in-game testing on the target vivo Y22s. No zero-lag guarantee is made.
+The update includes a static regression validator, GitHub Actions build checks, and a restrained texture-only readability pass for the nine existing ore textures. The ore treatment adds no emissive glow. Actual visual acceptance, generated subpack selection, frame-rate gains, and MCBE 26.50 + MB Loader 26.52 behavior still require artifact inspection and in-game testing on the target vivo Y22s. No zero-lag guarantee is made.
 
 ## Source and credits
 
