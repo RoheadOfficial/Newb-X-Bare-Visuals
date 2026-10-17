@@ -71,7 +71,7 @@ def main() -> int:
     for name in ore_texture_names:
         ore_path = ROOT / "assets" / "textures" / "blocks" / name
         require(ore_path.is_file(), f"ore texture is missing: {name}")
-        require(ore_path.read_bytes().startswith(b"\\x89PNG\\r\\n\\x1a\\n"),
+        require(ore_path.read_bytes().startswith(b"\x89PNG\r\n\x1a\n"),
                 f"ore texture is not a valid PNG: {name}")
 
     rain = read("src/newb/functions/rain.h")
