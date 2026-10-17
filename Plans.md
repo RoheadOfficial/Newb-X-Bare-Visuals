@@ -43,7 +43,7 @@ The internal Prizma-inspired percentages are planning notes only. Never put them
 - [x] Update pack-builder fallback, workflow labels, workflow triggers, and build-check version.
 - [x] Add a B0.3.2-specific static validator.
 - [x] Update About.md and CHANGELOG.md and add docs/B0.3.2_IMPLEMENTATION.md.
-- [ ] Run static validator; correct any failures.
+- [x] Run B0.3.2 static validator; it passes on the Android and multiplatform CI jobs.
 - [ ] Run Android and multiplatform GitHub Actions builds.
 - [ ] Inspect generated manifest, subpack order, output paths, and artifact names.
 - [ ] Inspect the material-highlight result and confirm no unintended tinting or washed-out surfaces.
