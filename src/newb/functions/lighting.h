@@ -16,7 +16,7 @@ vec3 sunLightTint(float dayFactor, float rain) {
   tint = mix(tint, NL_DAWN_SUNLIGHT_COL, dawnFactor);
   float cozyDaylight = max(dayFactor, 0.0);
   tint = mix(tint, tint * vec3(1.035, 1.015, 0.975),
-             cozyDaylight * 0.10 * NL_COZY_AMBIENT_STRENGTH);
+             cozyDaylight * 0.14 * NL_COZY_AMBIENT_STRENGTH);
   tint = mix(tint, vec3_splat(dot(tint, vec3_splat(0.33))), rain);
   return tint;
 }
@@ -97,7 +97,7 @@ vec3 nlLighting(
 
     // sky ambient
     lum = luminance(light);
-    light += (skycol.horizon*(1.0 + 0.24*NL_COZY_AMBIENT_STRENGTH) + skycol.zenith)
+    light += (skycol.horizon*(1.0 + 0.38*NL_COZY_AMBIENT_STRENGTH) + skycol.zenith)
              *(uv1.y/(1.0+lum));
 
   }
@@ -172,7 +172,7 @@ vec3 nlEntityLighting(nl_skycolor skycol, nl_environment env, vec3 pos, vec4 nor
 
     // sky ambient
     lum = luminance(light);
-    light += (skycol.horizon*(1.0 + 0.18*NL_COZY_AMBIENT_STRENGTH) + skycol.zenith)
+    light += (skycol.horizon*(1.0 + 0.26*NL_COZY_AMBIENT_STRENGTH) + skycol.zenith)
              *(l/(1.0+lum));
   }
 
