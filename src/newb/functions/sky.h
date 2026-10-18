@@ -54,12 +54,12 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
 
   // A restrained warm lift keeps the horizon welcoming beyond the dawn peak.
   float cozyWarmth = dawnFactor * NL_COZY_SKY_STRENGTH;
-  s.horizon = mix(s.horizon, s.horizon * vec3(1.055, 1.025, 0.985),
-                  0.10 * NL_COZY_SKY_STRENGTH);
-  s.horizon = mix(s.horizon, s.horizon * vec3(1.12, 1.035, 0.965),
-                  0.18 * cozyWarmth);
-  s.horizonEdge = mix(s.horizonEdge, s.horizonEdge * vec3(1.08, 1.025, 0.975),
-                      0.10 * cozyWarmth);
+  s.horizon = mix(s.horizon, s.horizon * vec3(1.09, 1.03, 0.97),
+                  0.22 * NL_COZY_SKY_STRENGTH);
+  s.horizon = mix(s.horizon, s.horizon * vec3(1.20, 1.055, 0.92),
+                  0.30 * cozyWarmth);
+  s.horizonEdge = mix(s.horizonEdge, s.horizonEdge * vec3(1.12, 1.04, 0.95),
+                      0.20 * cozyWarmth);
 
   float zh = dot(s.zenith, vec3_splat(0.33));
   float hh = dot(s.horizon, vec3_splat(0.33));
@@ -117,7 +117,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   // Broaden the horizon transition into a soft atmospheric band.
   float horizonBand = pow(clamp(1.0-abs(viewDir.y), 0.0, 1.0), 5.0);
   vec3 horizonBlend = mix(skyCol.horizon, skyCol.horizonEdge, 0.42);
-  float horizonStrength = 0.07 * NL_COZY_SKY_STRENGTH * (0.55 + 0.45*dawnFactor);
+  float horizonStrength = 0.15 * NL_COZY_SKY_STRENGTH * (0.60 + 0.40*dawnFactor);
   sky = mix(sky, horizonBlend, horizonBand*horizonStrength);
 
   sky *= 0.5+0.5*gradient2;
