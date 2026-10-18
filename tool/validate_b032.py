@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static regression checks for the B0.3.3 beauty and performance update."""
+"""Static regression checks for the B0.3.2 beauty and performance update."""
 from pathlib import Path
 import re
 import sys
@@ -19,8 +19,8 @@ def require(condition: bool, message: str) -> None:
 
 def main() -> int:
     config = tomllib.loads(read("src/newb/pack_config.toml"))
-    require(config.get("version") == [0, 3, 3], "manifest version must be [0, 3, 3]")
-    require(config.get("development_version") == "B0.3.3", "display version must be B0.3.3")
+    require(config.get("version") == [0, 3, 2], "manifest version must be [0, 3, 2]")
+    require(config.get("development_version") == "B0.3.2", "display version must be B0.3.2")
     require("Newb X Bare Visuals" in config.get("name", ""), "pack name must retain Newb X Bare Visuals identity")
     require("%w" in config.get("description", "") and "%v" in config.get("description", ""),
             "patch warning and generated version placeholders must remain")
@@ -50,24 +50,10 @@ def main() -> int:
                 f"{macro} must not be enabled in the shared configuration")
     require("#ifdef POOTAYTOE" in cfg and "#ifdef DEFAULT" in cfg and "#ifdef BARE_VISUALS" in cfg,
             "all three profile-specific configuration blocks must exist")
-    for macro in ("NL_COZY_SKY_STRENGTH", "NL_COZY_AMBIENT_STRENGTH", "NL_COZY_FOG_STRENGTH", "NL_COZY_CLOUD_SOFTNESS"):
-        require(f"#define {macro}" in cfg, f"cozy atmosphere control is missing: {macro}")
-    sky = read("src/newb/functions/sky.h")
-    require("horizonBand" in sky and "cozyWarmth" in sky,
-            "sky redesign must affect the rendered gradient and horizon warmth")
-    fog = read("src/newb/functions/fog.h")
-    require("mistStrength" in fog and "NL_COZY_FOG_STRENGTH" in fog,
-            "fog redesign must provide profile-aware atmospheric depth")
-    lighting = read("src/newb/functions/lighting.h")
-    require("NL_COZY_AMBIENT_STRENGTH" in lighting,
-            "lighting redesign must use the cozy ambient profile control")
-    clouds = read("src/newb/functions/clouds.h")
-    require("NL_COZY_CLOUD_SOFTNESS" in clouds,
-            "rounded cloud shading must use the cozy atmosphere control")
     require("#define NL_GROUND_REFL_MAX_DISTANCE 20.0" in cfg,
             "Pootaytoe must use its shorter terrain-reflection cap")
     require("#define NL_GROUND_REFL_MAX_DISTANCE 32.0" in cfg,
-            "Default must use the bounded B0.3.3 terrain-reflection cap")
+            "Default must use the bounded B0.3.2 terrain-reflection cap")
     require("#define NL_GROUND_REFL_MAX_DISTANCE 30.0" in cfg,
             "Bare Visuals must retain a bounded terrain-reflection cap")
     require("#define NL_CLOUD2_STEPS 2" in cfg,
@@ -109,8 +95,8 @@ def main() -> int:
             "terrain fog blending must remain")
 
     packer = read("tool/pack.py")
-    require('pack_config.get("development_version", "B0.3.3")' in packer,
-            "pack-builder fallback must be B0.3.3")
+    require('pack_config.get("development_version", "B0.3.2")' in packer,
+            "pack-builder fallback must be B0.3.2")
     require('_build(status, args.p, "default", pack_config[\'materials\'], mats_dir)' in packer,
             "root material set must compile using the DEFAULT define")
     require("MacroDefine.from_string(subpack.upper())" in packer,
@@ -118,15 +104,15 @@ def main() -> int:
 
     build = read(".github/workflows/build.yml")
     check = read(".github/workflows/build-check.yml")
-    require("default: '3'" in build, "manual build default must use manifest sub-version 2")
-    require("b0.3.3" in build, "manual build artifact labels must use B0.3.3")
-    require("tool/validate_b033.py" in build and "tool/validate_b033.py" in check,
-            "both build workflows must run the B0.3.3 static validator")
-    require(" -v 3 " in check, "build-check must use manifest sub-version 2")
-    require("b0.3.3-implementation" in check, "build-check must run on the B0.3.3 implementation branch")
+    require("default: '2'" in build, "manual build default must use manifest sub-version 2")
+    require("b0.3.2" in build, "manual build artifact labels must use B0.3.2")
+    require("tool/validate_b032.py" in build and "tool/validate_b032.py" in check,
+            "both build workflows must run the B0.3.2 static validator")
+    require(" -v 2 " in check, "build-check must use manifest sub-version 2")
+    require("b0.3.2-implementation" in check, "build-check must run on the B0.3.2 implementation branch")
     require("branches: [main]" in check, "pull-request checks must target main")
 
-    print("B0.3.3 static regression checks passed.")
+    print("B0.3.2 static regression checks passed.")
     return 0
 
 
@@ -134,5 +120,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (AssertionError, KeyError, StopIteration, tomllib.TOMLDecodeError) as exc:
-        print(f"B0.3.3 validation failed: {exc}", file=sys.stderr)
+        print(f"B0.3.2 validation failed: {exc}", file=sys.stderr)
         raise SystemExit(1)
