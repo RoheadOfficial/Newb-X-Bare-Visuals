@@ -1,6 +1,6 @@
 name = "Newb X Bare Visuals"
-version = [0, 3, 2]
-development_version = "B0.3.2"
+version = [0, 3, 3]
+development_version = "B0.3.3"
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
