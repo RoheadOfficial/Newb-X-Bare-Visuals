@@ -1,3 +1,29 @@
+## B0.3.3 — Cozy Atmosphere Redesign
+
+**Status:** Implementation in progress on `b0.3.3-cozy-atmosphere`. Source changes are committed but still require static validation, successful CI builds, and in-game visual/performance acceptance. No FPS or visual result is claimed yet.
+
+### GAME
+- Redesign the Overworld horizon with a broader, softer atmospheric transition and a restrained warm lift.
+- Coordinate sky colors, sunlight, sky ambient lighting, fog, and rounded-cloud shading around a cozy-first visual direction.
+- Give Bare Visuals a stronger cozy profile, retain a balanced Default, and keep Pootaytoe's atmospheric blending lighter.
+- Preserve natural colors, readable terrain, vanilla-like water, rain, and wet-ground behavior.
+
+### DEVELOPER
+- Added profile-aware cozy atmosphere controls for sky, ambient lighting, fog, and cloud softness.
+- Updated the active sky, fog, lighting, and rounded-cloud shader paths instead of relying only on config changes.
+- Bumped pack metadata and build workflow defaults to B0.3.3 / manifest sub-version 3.
+- Added B0.3.3 static regression validation for atmosphere controls and existing safeguards.
+
+### Verification still required
+- [ ] Run `tool/validate_b033.py` and resolve any failures.
+- [ ] Complete Android and multiplatform GitHub Actions builds.
+- [ ] Compare B0.3.2 and B0.3.3 under identical time, weather, location, and camera conditions.
+- [ ] Verify all three profiles have visible, intentional differences.
+- [ ] Test daylight, dawn/dusk, night, rain, forests, and mountains on the target Android setup.
+- [ ] Confirm performance remains acceptable on the vivo Y22s.
+
+---
+
 ## B0.3.2 — Beauty & Performance
 
 **Status:** Implementation branch created; source changes are in progress. Static validation, GitHub Actions builds, generated-artifact inspection, and in-game visual/performance testing are required before acceptance.
