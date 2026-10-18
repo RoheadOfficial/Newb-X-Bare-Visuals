@@ -123,7 +123,7 @@ def main() -> int:
     require("tool/validate_b033.py" in build and "tool/validate_b033.py" in check,
             "both build workflows must run the B0.3.3 static validator")
     require(" -v 3 " in check, "build-check must use manifest sub-version 2")
-    require("b0.3.3-implementation" in check, "build-check must run on the B0.3.3 implementation branch")
+    require("b0.3.3-cozy-atmosphere" in check, "build-check must run on the B0.3.3 implementation branch")
     require("branches: [main]" in check, "pull-request checks must target main")
 
     print("B0.3.3 static regression checks passed.")
