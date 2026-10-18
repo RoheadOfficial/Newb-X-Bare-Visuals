@@ -97,7 +97,7 @@ vec4 renderCloudsRounded(
   vec4 col = vec4(zenithCol + horizonCol, d.x);
   // Soft horizon-side fill makes the rounded cloud shading feel less flat.
   col.rgb = mix(col.rgb, horizonCol*1.12 + zenithCol*0.88,
-                0.10*NL_COZY_CLOUD_SOFTNESS);
+                0.18*NL_COZY_CLOUD_SOFTNESS);
   col.rgb += dot(col.rgb, vec3(0.3,0.4,0.3))*d.y*d.y;
   col.rgb *= 1.0 - 0.8*rain;
   return col;
