@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       subversion:
-        description: 'Numeric manifest version component (B0.3.3 uses 2)'
+        description: 'Numeric manifest version component (B0.3.3 uses 3)'
         required: true
         default: '3'
         type: string
