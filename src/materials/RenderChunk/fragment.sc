@@ -82,6 +82,21 @@ void main() {
 
   diffuse.rgb += glow;
 
+  // B0.3.2: inexpensive PBR-inspired material lift for bright, low-chroma terrain.
+  // This is deliberately not a reflection pass: it uses no extra texture samples,
+  // normals, ray marching, or environment rendering.
+  #if !defined(TRANSPARENT) && !defined(SEASONS) && defined(NL_MATERIAL_HIGHLIGHT_STRENGTH)
+    float materialLuma = dot(diffuse.rgb, vec3(0.2126, 0.7152, 0.0722));
+    float materialMax = max(max(diffuse.r, diffuse.g), diffuse.b);
+    float materialMin = min(min(diffuse.r, diffuse.g), diffuse.b);
+    float materialChroma = materialMax - materialMin;
+    float neutralMaterial = 1.0 - smoothstep(0.16, 0.48, materialChroma);
+    float brightMaterial = smoothstep(0.42, 0.86, materialLuma);
+    float materialHighlight = neutralMaterial * brightMaterial;
+    diffuse.rgb += vec3(1.0, 0.97, 0.91) *
+                   (NL_MATERIAL_HIGHLIGHT_STRENGTH * materialHighlight);
+  #endif
+
   if (v_extra.b > 0.9) {
     diffuse.rgb += v_refl.rgb*v_refl.a;
   } else if (v_refl.a > 0.0) {
