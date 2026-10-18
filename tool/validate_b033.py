@@ -118,11 +118,11 @@ def main() -> int:
 
     build = read(".github/workflows/build.yml")
     check = read(".github/workflows/build-check.yml")
-    require("default: '3'" in build, "manual build default must use manifest sub-version 2")
+    require("default: '3'" in build, "manual build default must use manifest sub-version 3")
     require("b0.3.3" in build, "manual build artifact labels must use B0.3.3")
     require("tool/validate_b033.py" in build and "tool/validate_b033.py" in check,
             "both build workflows must run the B0.3.3 static validator")
-    require(" -v 3 " in check, "build-check must use manifest sub-version 2")
+    require(" -v 3 " in check, "build-check must use manifest sub-version 3")
     require("b0.3.3-cozy-atmosphere" in check, "build-check must run on the B0.3.3 implementation branch")
     require("branches: [main]" in check, "pull-request checks must target main")
 
