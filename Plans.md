@@ -1,8 +1,38 @@
 # Plans
 
+## B0.3.3 — Cozy Atmosphere Redesign
+
+**Status:** Implementation is underway on b0.3.3-cozy-atmosphere, based on the merged B0.3.2 main branch. Static validation, CI builds, artifact inspection, and in-game visual/performance acceptance are still required.
+
+### Main goal
+
+Make B0.3.3 an unmistakable visual update rather than repeating B0.3.2's underwhelming in-game result. Cozy atmosphere comes first, with a deep redesign of the existing sky, lighting, fog, clouds, and terrain integration. Prizma Visuals is a mood reference only; the result remains an original Newb X Bare Visuals design.
+
+### Visual acceptance targets
+
+- **Sky:** softer, warmer horizon transitions and a more intentional dawn/dusk gradient, while keeping daytime blue natural and avoiding oversaturation.
+- **Lighting:** cohesive warm-neutral daylight and gentle sky-colored ambient fill on terrain.
+- **Fog:** more atmospheric depth at distance without hiding mountains or making the world uniformly grey.
+- **Clouds:** rounded clouds sit more naturally within the sky palette, without additional expensive sampling.
+- **Weather and night:** preserve rain, wet ground, nighttime identity, and readable navigation.
+- **Profiles:** Default is balanced, Bare Visuals expresses the cozy direction more strongly, and Pootaytoe retains a lighter-cost version of the shared atmosphere.
+- **Performance:** preserve B0.2.9 terrain safeguards and avoid adding render passes or high-cost effects.
+
+### Implementation and validation checklist
+
+- [ ] Run B0.3.3 static regression checks and resolve failures.
+- [ ] Build Default, Pootaytoe, and Bare Visuals using manifest sub-version 3.
+- [ ] Verify the horizon band is visible in-game at daylight and dawn/dusk.
+- [ ] Verify ambient tint affects terrain without washing out block colors.
+- [ ] Compare fog depth at the same mountain and forest viewpoints with B0.3.2.
+- [ ] Confirm rounded clouds remain rounded and do not add extra samples.
+- [ ] Compare B0.3.2 and B0.3.3 at identical times, weather, locations, and camera angles.
+- [ ] Test on MCBE 26.50 + MB Loader 26.52, prioritizing vivo Y22s.
+- [ ] Do not call the update visually successful until the creator confirms the changes are noticeable in-game.
+
 ## B0.3.2 — Beauty & Performance
 
-**Status:** Implementation is underway on b0.3.2-implementation. B0.2.9 is the performance foundation. Static validation, CI builds, artifact inspection, and actual in-game visual/performance testing remain required.
+**Status:** Merged into `main` via PR #9. Creator feedback was that Default, Bare Visuals, and Pootaytoe still looked almost the same as the previous version. B0.3.3 responds with a deeper atmosphere redesign. B0.2.9 remains the performance foundation.
 
 ### Main goal
 
