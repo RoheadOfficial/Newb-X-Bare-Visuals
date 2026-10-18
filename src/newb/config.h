@@ -70,6 +70,12 @@
 #define NL_SKY_VOID_DARKNESS   0.3
 #define NL_SKY_RAIN_MIX_FACTOR 0.9
 
+/* Cozy atmosphere controls — tuned per profile */
+#define NL_COZY_SKY_STRENGTH 1.0
+#define NL_COZY_AMBIENT_STRENGTH 1.0
+#define NL_COZY_FOG_STRENGTH 1.0
+#define NL_COZY_CLOUD_SOFTNESS 1.0
+
 /* Sky colors - zenith=top, horizon=bottom */
 #define NL_DAWN_ZENITH_COL   vec3(0.22,0.38,0.60)
 #define NL_DAWN_HORIZON_COL  vec3(1.0,0.62,0.42)
@@ -233,6 +239,16 @@
 */
 
 #ifdef POOTAYTOE
+  // Pootaytoe keeps the shared mood with a lighter atmospheric blend.
+  #undef NL_COZY_SKY_STRENGTH
+  #define NL_COZY_SKY_STRENGTH 0.82
+  #undef NL_COZY_AMBIENT_STRENGTH
+  #define NL_COZY_AMBIENT_STRENGTH 0.82
+  #undef NL_COZY_FOG_STRENGTH
+  #define NL_COZY_FOG_STRENGTH 0.78
+  #undef NL_COZY_CLOUD_SOFTNESS
+  #define NL_COZY_CLOUD_SOFTNESS 0.78
+
   // Pootaytoe: more aggressive savings while retaining rounded clouds, rain, wet ground, and the sky pipeline.
   #undef NL_GROUND_REFL
   #define NL_GROUND_REFL 0.10
@@ -260,6 +276,16 @@
 #endif
 
 #ifdef DEFAULT
+  // Default: balanced cozy atmosphere.
+  #undef NL_COZY_SKY_STRENGTH
+  #define NL_COZY_SKY_STRENGTH 1.0
+  #undef NL_COZY_AMBIENT_STRENGTH
+  #define NL_COZY_AMBIENT_STRENGTH 1.0
+  #undef NL_COZY_FOG_STRENGTH
+  #define NL_COZY_FOG_STRENGTH 1.0
+  #undef NL_COZY_CLOUD_SOFTNESS
+  #define NL_COZY_CLOUD_SOFTNESS 1.0
+
   // Default: preserve the full established effects with B0.2.9-style terrain optimizations.
   #undef NL_GROUND_REFL_DISTANCE
   #define NL_GROUND_REFL_DISTANCE 0.26
@@ -270,6 +296,16 @@
 #endif
 
 #ifdef BARE_VISUALS
+  // Bare Visuals expresses the cozy atmosphere more strongly.
+  #undef NL_COZY_SKY_STRENGTH
+  #define NL_COZY_SKY_STRENGTH 1.28
+  #undef NL_COZY_AMBIENT_STRENGTH
+  #define NL_COZY_AMBIENT_STRENGTH 1.20
+  #undef NL_COZY_FOG_STRENGTH
+  #define NL_COZY_FOG_STRENGTH 1.16
+  #undef NL_COZY_CLOUD_SOFTNESS
+  #define NL_COZY_CLOUD_SOFTNESS 1.18
+
   // Bare Visuals: stronger cozy dawn/sunset identity, with a bounded reflection path and subtle highlights.
   #undef NL_GROUND_REFL_DISTANCE
   #define NL_GROUND_REFL_DISTANCE 0.25
