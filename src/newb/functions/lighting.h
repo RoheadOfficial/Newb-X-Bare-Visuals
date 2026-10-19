@@ -94,7 +94,7 @@ vec3 nlLighting(
 
     // sky ambient
     lum = luminance(light);
-    light += (skycol.horizon + skycol.zenith)*(uv1.y/(1.0+lum));
+    light += (skycol.horizon + skycol.zenith)*(uv1.y/(1.0+lum))*NL_SKY_AMBIENT_STRENGTH;
 
   }
 
@@ -168,7 +168,7 @@ vec3 nlEntityLighting(nl_skycolor skycol, nl_environment env, vec3 pos, vec4 nor
 
     // sky ambient
     lum = luminance(light);
-    light += (skycol.horizon + skycol.zenith)*(l/(1.0+lum));
+    light += (skycol.horizon + skycol.zenith)*(l/(1.0+lum))*NL_SKY_AMBIENT_STRENGTH;
   }
 
   // torch light

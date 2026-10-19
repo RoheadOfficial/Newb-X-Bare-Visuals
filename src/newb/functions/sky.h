@@ -108,6 +108,12 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   sky *= 0.5+0.5*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
+  // B0.3.6: a soft horizon band ties the zenith, horizon and distance atmosphere together.
+  // It reuses existing sky colors and adds no texture reads or secondary render pass.
+  float horizonBand = 1.0 - smoothstep(0.02, 0.30, abs(viewDir.y));
+  float horizonGlow = horizonBand * NL_SKY_HORIZON_GLOW * (1.0 - 0.55*env.rainFactor);
+  sky = mix(sky, skyCol.horizonEdge, clamp(horizonGlow, 0.0, 0.32));
+
   if (!isSkyPlane) {
     float source = max(0.0, (mg8-0.22)/0.78);
     source *= source;
