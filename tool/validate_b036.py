@@ -42,6 +42,8 @@ def main() -> int:
                 f"{name} description must not expose internal inspiration percentages")
 
     cfg = read("src/newb/config.h")
+    require("#define NL_TONEMAP_TYPE 4" in cfg, "B0.3.6 must use the coordinated ACES tone-mapping pipeline")
+    require("#if NL_TONEMAP_TYPE == 4" in read("src/newb/functions/tonemap.h"), "ACES inverse compensation must be defined")
     for required in (
         "#define NL_VANILLA_WATER",
         "#define NL_GROUND_RAIN_WETNESS",

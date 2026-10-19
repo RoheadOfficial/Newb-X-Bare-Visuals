@@ -12,6 +12,7 @@
 ### DEVELOPER
 - Add a low-cost horizon band using the existing sky colors; no extra texture reads or render pass.
 - Reduce the fog mist response and moderate rain-driven fog advance to protect distant-forest and mountain visibility.
+- Move the shared color pipeline to ACES tone mapping with a matching inverse curve for fog-color compensation.
 - Balance directional lighting against sky ambient contribution, with per-profile settings.
 - Round and thicken cloud shapes without increasing the configured ray sample count; Pootaytoe remains at two samples while Default and Bare Visuals retain four.
 - Retain the bounded terrain shading and reflection paths, and keep the terrain material response free of additional texture reads.

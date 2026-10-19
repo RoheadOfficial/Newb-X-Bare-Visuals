@@ -28,10 +28,10 @@
 */
 
 /* Color correction */
-#define NL_TONEMAP_TYPE 3              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
-#define NL_GAMMA 1.30                  // B0.3.6: firmer midtone response without crushing the palette
+#define NL_TONEMAP_TYPE 4              // B0.3.6: ACES tone mapping for a more cinematic highlight roll-off
+#define NL_GAMMA 1.36                  // B0.3.6: keep midtones readable with the ACES curve
 //#define NL_EXPOSURE 1.3              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.06            // B0.2.6: slightly richer natural color, still restrained
+#define NL_SATURATION 1.04            // B0.3.6: restrained color after cinematic tone mapping
 //#define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.3,0.5,1.4) // color tint for dark tone
 #define NL_TINT_HIGH vec3(1.4,0.7,0.3) // color tint for light tone
