@@ -1,3 +1,35 @@
+## B0.3.6 — Java-Inspired Cozy Shader Revamp
+
+**Status:** Implementation started on `b0.3.6-java-inspired-revamp`. Static validation, Android/multiplatform builds, generated-artifact inspection, and in-game visual/performance acceptance are pending.
+
+### GAME
+- Begin a coordinated visual redesign across terrain lighting, sky/horizon, fog, rounded clouds, and the three established subpacks.
+- Aim for a balanced Java-shader-inspired look on Bedrock: natural colors, clearer terrain depth, a soft integrated horizon, and cozy dawn/sunset atmosphere without oversaturation.
+- Preserve Default as the balanced main experience, Pootaytoe as the performance-focused profile, and Bare Visuals as the full Prizma-inspired visual direction.
+- Retain vanilla-like water, rain particles, rain atmosphere, wet-ground response, rounded clouds, and nighttime atmosphere.
+- Keep water waves, Always Reflection, godrays, box clouds, plant/lantern waving, and player/mob shadows excluded.
+
+### DEVELOPER
+- Add a low-cost horizon band using the existing sky colors; no extra texture reads or render pass.
+- Reduce the fog mist response and moderate rain-driven fog advance to protect distant-forest and mountain visibility.
+- Move the shared color pipeline to ACES tone mapping with a matching inverse curve for fog-color compensation.
+- Balance directional lighting against sky ambient contribution, with per-profile settings.
+- Round and thicken cloud shapes without increasing the configured ray sample count; Pootaytoe remains at two samples while Default and Bare Visuals retain four.
+- Retain the bounded terrain shading and reflection paths, and keep the terrain material response free of additional texture reads.
+- Update B-Series metadata, pack-builder fallback, workflows, artifact names, and static validation for B0.3.6.
+
+### Validation checklist
+- [ ] B0.3.6 static validator passes.
+- [ ] Android and multiplatform GitHub Actions builds pass.
+- [ ] Generated manifest reports version 0.3.6 and subpack order Default, Pootaytoe, Bare Visuals.
+- [ ] Inspect compiled output and confirm each subpack's profile-specific defines and materials.
+- [ ] Compare old and new builds in open terrain, dense forests, mountains, water, rain/storms, and nighttime.
+- [ ] Test on vivo Y22s with MCBE 26.50 + MB Loader 26.52, recording comparable FPS/frame-time observations.
+- [ ] Verify the horizon blend, terrain lighting, reduced fog washout, rounded cloud shape, and each profile's distinct identity in-game.
+- [ ] Do not claim the 50–60 FPS target or final visual acceptance until measured on-device.
+
+---
+
 ## B0.3.2 — Beauty & Performance
 
 **Status:** Implementation branch created; source changes are in progress. Static validation, GitHub Actions builds, generated-artifact inspection, and in-game visual/performance testing are required before acceptance.

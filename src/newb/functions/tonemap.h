@@ -54,11 +54,27 @@ vec3 colorCorrectionInv(vec3 col) {
     col = mix(vec3_splat(dot(col,vec3(0.21, 0.71, 0.08))), col, 1.0/NL_SATURATION);
   #endif
 
-  // incomplete
-  // extended reinhard only
-  float ws = 0.7966;
   col = pow(col, vec3_splat(NL_GAMMA));
-  col = col*(ws + col)/(ws + col*(1.0 - ws));
+
+  #if NL_TONEMAP_TYPE == 4
+    // Invert the ACES rational curve used above so fog-color compensation remains consistent.
+    // The curve is monotonic over the clamped output range, so the positive quadratic root is stable.
+    const float a = 1.04;
+    const float b = 0.03;
+    const float c = 0.93;
+    const float d = 0.56;
+    const float e = 0.14;
+    vec3 y = clamp(col, vec3_splat(0.0), vec3_splat(1.0));
+    vec3 A = vec3_splat(a) - y*c;
+    vec3 B = vec3_splat(b) - y*d;
+    vec3 C = -y*e;
+    vec3 discriminant = max(B*B - 4.0*A*C, vec3_splat(0.0));
+    col = (-B + sqrt(discriminant))/(2.0*A*0.85);
+  #else
+    // Inverse of the extended Reinhard curve.
+    float ws = 0.7966;
+    col = col*(ws + col)/(ws + col*(1.0 - ws));
+  #endif
 
   #ifdef NL_EXPOSURE
     col /= NL_EXPOSURE;

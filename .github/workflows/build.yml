@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       subversion:
-        description: 'Numeric manifest version component (B0.3.2 uses 2)'
+        description: 'Numeric manifest version component (B0.3.6 uses 6)'
         required: true
-        default: '2'
+        default: '6'
         type: string
       platform:
         description: 'Target platform to build for'
@@ -36,13 +36,13 @@ jobs:
         path: |
           ${{ github.workspace }}/tool/data
     - run: pip install -r requirements.txt
-    - run: python tool/validate_b032.py
+    - run: python tool/validate_b036.py
     - run: |
         .\build.bat setup
         .\build.bat pack -p windows -v ${{ inputs.subversion }} --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-bare-visuals-b0.3.2-windows
+        name: newb-x-bare-visuals-b0.3.6-windows
         path: ./build/pack-windows
   android:
     runs-on: ubuntu-latest
@@ -59,13 +59,13 @@ jobs:
         path: |
           ${{ github.workspace }}/tool/data
     - run: pip install -r requirements.txt
-    - run: python tool/validate_b032.py
+    - run: python tool/validate_b036.py
     - run: |
         ./build.sh setup
         ./build.sh pack -p android -v ${{ inputs.subversion }} --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-bare-visuals-b0.3.2-android
+        name: newb-x-bare-visuals-b0.3.6-android
         path: ./build/pack-android
   ios:
     runs-on: ubuntu-latest
@@ -84,13 +84,13 @@ jobs:
         path: |
           ${{ github.workspace }}/tool/data
     - run: pip install -r requirements.txt
-    - run: python tool/validate_b032.py
+    - run: python tool/validate_b036.py
     - run: |
         ./build.sh setup
         ./build.sh pack -p ios -v ${{ inputs.subversion }} --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-bare-visuals-b0.3.2-ios
+        name: newb-x-bare-visuals-b0.3.6-ios
         path: ./build/pack-ios
   multiplatform:
     runs-on: windows-2022
@@ -107,11 +107,11 @@ jobs:
         path: |
           ${{ github.workspace }}/tool/data
     - run: pip install -r requirements.txt
-    - run: python tool/validate_b032.py
+    - run: python tool/validate_b036.py
     - run: |
         .\build.bat setup
         .\build.bat pack -p multiplatform -v ${{ inputs.subversion }} --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-bare-visuals-b0.3.2-multiplatform
+        name: newb-x-bare-visuals-b0.3.6-multiplatform
         path: ./build/pack-multiplatform

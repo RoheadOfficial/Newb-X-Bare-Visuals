@@ -28,19 +28,19 @@
 */
 
 /* Color correction */
-#define NL_TONEMAP_TYPE 3              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
-#define NL_GAMMA 1.33                  // 0.3 low ~ 2.0 high
+#define NL_TONEMAP_TYPE 4              // B0.3.6: ACES tone mapping for a more cinematic highlight roll-off
+#define NL_GAMMA 1.36                  // B0.3.6: keep midtones readable with the ACES curve
 //#define NL_EXPOSURE 1.3              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.06            // B0.2.6: slightly richer natural color, still restrained
+#define NL_SATURATION 1.04            // B0.3.6: restrained color after cinematic tone mapping
 //#define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.3,0.5,1.4) // color tint for dark tone
 #define NL_TINT_HIGH vec3(1.4,0.7,0.3) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.08 // Slightly richer direct sunlight without harsh highlights
+#define NL_SUNLIGHT_INTENSITY   3.16 // B0.3.6: clearer directional light for stronger terrain depth
 #define NL_TORCHLIGHT_INTENSITY 1.0  // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     0.80 // Add gentle depth while keeping shadow detail readable
-#define NL_MIN_LIGHTING_BOOST   1.20 // Slightly improve dark-scene readability without emissive ore glow
+#define NL_MIN_LIGHTING_BOOST   1.12 // B0.3.6: retain readability while reducing flat ambient lift
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // Disabled for the Android performance target
 
@@ -61,25 +61,27 @@
 
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
-#define NL_MIST_DENSITY 0.22      // Subtle atmospheric depth
+#define NL_MIST_DENSITY 0.18      // B0.3.6: preserve depth without washing out distant terrain
 #define NL_RAIN_MIST_OPACITY 0.12 // Keep rain mist restrained for mobile performance
 #define NL_CLOUDY_FOG 0.1         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
 /* Sky */
 #define NL_SKY_VOID_FACTOR     0.5
 #define NL_SKY_VOID_DARKNESS   0.3
-#define NL_SKY_RAIN_MIX_FACTOR 0.9
+#define NL_SKY_RAIN_MIX_FACTOR 0.86
+#define NL_SKY_HORIZON_GLOW 0.16       // B0.3.6: soft, readable horizon band without a heavy glow pass
+#define NL_SKY_AMBIENT_STRENGTH 0.90  // B0.3.6: balance sky fill against directional terrain shading
 
 /* Sky colors - zenith=top, horizon=bottom */
 #define NL_DAWN_ZENITH_COL   vec3(0.22,0.38,0.60)
 #define NL_DAWN_HORIZON_COL  vec3(1.0,0.62,0.42)
 #define NL_DAWN_EDGE_COL     vec3(1.12,0.76,0.60)
-#define NL_DAY_ZENITH_COL    vec3(0.34,0.66,1.0)
-#define NL_DAY_HORIZON_COL   vec3(0.76,0.88,0.98)
-#define NL_DAY_EDGE_COL      vec3(0.92,0.96,1.0)
-#define NL_NIGHT_ZENITH_COL  vec3(0.018,0.030,0.075)
-#define NL_NIGHT_HORIZON_COL vec3(0.030,0.050,0.095)
-#define NL_NIGHT_EDGE_COL    vec3(0.045,0.070,0.12)
+#define NL_DAY_ZENITH_COL    vec3(0.32,0.61,0.92) // Softer blue, closer to a natural vanilla-plus sky
+#define NL_DAY_HORIZON_COL   vec3(0.78,0.88,0.97)
+#define NL_DAY_EDGE_COL      vec3(0.93,0.97,1.0)
+#define NL_NIGHT_ZENITH_COL  vec3(0.020,0.034,0.080)
+#define NL_NIGHT_HORIZON_COL vec3(0.040,0.060,0.110)
+#define NL_NIGHT_EDGE_COL    vec3(0.055,0.080,0.13)
 #define NL_RAIN_ZENITH_COL   vec3(0.36,0.42,0.50)
 #define NL_RAIN_HORIZON_COL  vec3(0.53,0.59,0.66)
 
@@ -119,7 +121,7 @@
 #define NL_GROUND_REFL 0.18         // Restrained terrain-only reflection; water reflection is disabled
 #define NL_GROUND_REFL_DISTANCE 0.32 // Shorter range reduces distant-terrain shader cost
 #define NL_GROUND_REFL_MAX_DISTANCE 32.0 // B0.3.2: keep the shared terrain-reflection cap bounded for large views
-#define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.012 // Cheap color-based material lift; no extra texture reads
+#define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.016 // B0.3.6: restrained material separation without extra texture reads
 //#define NL_CLOUD_AURORA_REFLECTION // B0.2.5: remove Always Reflection treatment from water
 
 /* Underwater */
@@ -147,11 +149,11 @@
 #define NL_CLOUD1_OPACITY 0.9              // 0.0 invisible ~ 1.0 opaque
 
 /* Rounded cloud settings */
-#define NL_CLOUD2_THICKNESS 2.1            // 0.5 slim ~ 5.0 fat
-#define NL_CLOUD2_RAIN_THICKNESS 2.5       // 0.5 slim ~ 5.0 fat
+#define NL_CLOUD2_THICKNESS 2.3            // B0.3.6: fuller rounded cloud bodies at the same sample count
+#define NL_CLOUD2_RAIN_THICKNESS 2.8       // Slightly fuller cloud cover in rain
 #define NL_CLOUD2_STEPS 4                  // Default keeps four samples for rounded-cloud quality
 #define NL_CLOUD2_SCALE vec2(0.033, 0.033) // 0.003 large ~ 0.3 tiny
-#define NL_CLOUD2_SHAPE vec2(0.5, 0.4)     // 0.0 round ~ 1.0 box vec2(horizontal shape, vertical shape)
+#define NL_CLOUD2_SHAPE vec2(0.44, 0.34)   // B0.3.6: rounder cloud edges without adding ray samples
 #define NL_CLOUD2_DENSITY 25.0             // 1.0 blurry ~ 100.0 sharp
 #define NL_CLOUD2_VELOCITY 0.8             // 0.0 static ~ 4.0 very fast
 //#define NL_CLOUD2_LAYER2                      // [toggle] extra cloud layer
@@ -242,6 +244,10 @@
   #define NL_GROUND_REFL_MAX_DISTANCE 20.0
   #undef NL_CLOUD2_STEPS
   #define NL_CLOUD2_STEPS 2
+  #undef NL_SKY_HORIZON_GLOW
+  #define NL_SKY_HORIZON_GLOW 0.10
+  #undef NL_SKY_AMBIENT_STRENGTH
+  #define NL_SKY_AMBIENT_STRENGTH 0.86
   #undef NL_GLOW_LEAK
   #undef NL_GLOW_SHIMMER
   #undef NL_LAVA_NOISE
@@ -265,6 +271,10 @@
   #define NL_GROUND_REFL_DISTANCE 0.26
   #undef NL_GROUND_REFL_MAX_DISTANCE
   #define NL_GROUND_REFL_MAX_DISTANCE 32.0
+  #undef NL_SKY_HORIZON_GLOW
+  #define NL_SKY_HORIZON_GLOW 0.16
+  #undef NL_SKY_AMBIENT_STRENGTH
+  #define NL_SKY_AMBIENT_STRENGTH 0.90
   #undef NL_WEATHER_SPECK
   #define NL_WEATHER_SPECK 0.3465
 #endif
@@ -275,8 +285,12 @@
   #define NL_GROUND_REFL_DISTANCE 0.25
   #undef NL_GROUND_REFL_MAX_DISTANCE
   #define NL_GROUND_REFL_MAX_DISTANCE 30.0
+  #undef NL_SKY_HORIZON_GLOW
+  #define NL_SKY_HORIZON_GLOW 0.24
+  #undef NL_SKY_AMBIENT_STRENGTH
+  #define NL_SKY_AMBIENT_STRENGTH 0.98
   #undef NL_MATERIAL_HIGHLIGHT_STRENGTH
-  #define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.022
+  #define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.024
   #undef NL_DAWN_SUNLIGHT_COL
   #define NL_DAWN_SUNLIGHT_COL vec3(1.0,0.68,0.46)
   #undef NL_DAWN_ZENITH_COL
