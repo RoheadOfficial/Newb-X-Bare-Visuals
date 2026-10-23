@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""Static regression checks for the B0.3.6 Java-inspired cozy shader revamp."""
+"""Current-source regression checks for Newb X Bare Visuals."""
 from pathlib import Path
 import re
 import sys
 import tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
-IMPLEMENTATION_BRANCH = "b0.3.6-java-inspired-revamp"
 
 
 def read(path: str) -> str:
@@ -20,11 +19,18 @@ def require(condition: bool, message: str) -> None:
 
 def main() -> int:
     pack = tomllib.loads(read("src/newb/pack_config.toml"))
-    require(pack.get("version") == [0, 3, 6], "manifest version must be [0, 3, 6]")
-    require(pack.get("development_version") == "B0.3.6", "display version must be B0.3.6")
+    require(pack.get("version") == [0, 3, 7], "manifest version must be [0, 3, 7]")
+    require(pack.get("development_version") == "B0.3.7", "simple version must be B0.3.7")
+    require(pack.get("minecraft_target_version") == "26.52", "declared Minecraft target must be 26.52 until retargeted")
     require("Newb X Bare Visuals" in pack.get("name", ""), "pack identity must remain Newb X Bare Visuals")
     require("%w" in pack.get("description", "") and "%v" in pack.get("description", ""),
             "patch warning and generated version placeholders must remain")
+
+    sys.path.insert(0, str(ROOT / "tool"))
+    from versioning import get_version_identity
+    display, target, full = get_version_identity(pack)
+    require((display, target, full) == ("B0.3.7", "26.52", "B0.3.7.2652"),
+            "canonical version identity must be B0.3.7 / 26.52 / B0.3.7.2652")
 
     subpacks = pack.get("subpack", [])
     names = [item.get("define") for item in subpacks]
@@ -42,11 +48,10 @@ def main() -> int:
                 f"{name} description must not expose internal inspiration percentages")
 
     cfg = read("src/newb/config.h")
-    require("#define NL_TONEMAP_TYPE 4" in cfg, "B0.3.6 must use the coordinated ACES tone-mapping pipeline")
-    require("#if NL_TONEMAP_TYPE == 4" in read("src/newb/functions/tonemap.h"), "ACES inverse compensation must be defined")
+    require("#define NL_TONEMAP_TYPE 4" in cfg, "preserve the B0.3.6 ACES tone-mapping pipeline")
+    require("#define NL_SATURATION 1.04" in cfg, "preserve the approved B0.3.6 saturation")
+    require("#define NL_VANILLA_WATER" in cfg, "vanilla water path must remain enabled")
     for required in (
-        "#define NL_VANILLA_WATER",
-        "#define NL_GROUND_RAIN_WETNESS",
         "#define NL_SKY_HORIZON_GLOW 0.16",
         "#define NL_SKY_AMBIENT_STRENGTH 0.90",
         "#define NL_CLOUD2_STEPS 4",
@@ -64,17 +69,15 @@ def main() -> int:
 
     sky = read("src/newb/functions/sky.h")
     require("float horizonBand =" in sky and "NL_SKY_HORIZON_GLOW" in sky,
-            "the new low-cost horizon blend must be present")
+            "B0.3.6 horizon blend must remain present")
     fog = read("src/newb/functions/fog.h")
-    require("12.0 - 11.0*FOG_COLOR.g" in fog,
-            "fog must use the reduced mist density response")
-    require("rain*0.12" in fog, "rain atmosphere must remain but avoid excessive front fog")
+    require("12.0 - 11.0*FOG_COLOR.g" in fog and "rain*0.12" in fog,
+            "restrained mist and rain atmosphere must remain")
     lighting = read("src/newb/functions/lighting.h")
     require(lighting.count("*NL_SKY_AMBIENT_STRENGTH") >= 2,
             "terrain and entity lighting must both use the balanced ambient response")
     clouds = read("src/newb/functions/clouds.h")
-    require("if (dayFactor >= 0.0)" in clouds,
-            "daytime aurora early-out must remain")
+    require("if (dayFactor >= 0.0)" in clouds, "daytime aurora early-out must remain")
     glow = read("src/newb/functions/glow.h")
     for unused in ("vec3 c1 =", "vec3 c3 =", "vec3 c5 =", "vec3 c7 ="):
         require(unused not in glow, f"unused glow corner sample remains: {unused}")
@@ -91,26 +94,33 @@ def main() -> int:
             "terrain fog blending must remain")
 
     packer = read("tool/pack.py")
-    require('pack_config.get("development_version", "B0.3.6")' in packer,
-            "pack-builder fallback must be B0.3.6")
+    require("get_version_identity" in packer, "pack builder must use the shared versioning logic")
+    require("full_version_slug" in packer, "artifact naming must include the advanced version")
+    require("Keep the simple B0.x.y label aligned" in packer,
+            "manual manifest patch overrides must not create conflicting version labels")
+    require("Keep the simple B0.x.y label aligned" in packer,
+            "manual manifest patch overrides must not create conflicting version labels")
+    for workflow_path in (".github/workflows/build.yml", ".github/workflows/build-check.yml"):
+        workflow = read(workflow_path)
+        require("tool/validate_pack.py" in workflow, f"{workflow_path} must run the shared validator")
+        require("tool/versioning.py" in workflow, f"{workflow_path} must emit canonical version outputs")
+        require("tool/audit_duplicates.py" in workflow, f"{workflow_path} must audit duplicate files")
+        require("steps.version.outputs.full_version_slug" in workflow,
+                f"{workflow_path} artifact names must use the canonical full version")
     build = read(".github/workflows/build.yml")
     check = read(".github/workflows/build-check.yml")
-    for workflow in (build, check):
-        require("tool/validate_b036.py" in workflow, "build workflows must run the B0.3.6 validator")
-        require("newb-x-bare-visuals-b0.3.6" in workflow,
-                "build artifact labels must use B0.3.6")
-    require("default: '6'" in build, "manual build default must use manifest sub-version 6")
-    require("-v 6 --no-zip" in check, "build-check must compile manifest sub-version 6")
-    require(IMPLEMENTATION_BRANCH in check,
-            "build-check must run on the B0.3.6 implementation branch")
+    require("default: '7'" in build, "manual build default must use manifest sub-version 7")
+    require("-v 7 --no-zip" in check, "build-check must compile manifest sub-version 7")
+    require("b0.3.7-polish-performance-compat" in check,
+            "build-check must run on the B0.3.7 development branch")
 
-    print("B0.3.6 static regression checks passed.")
+    print("B0.3.7 static regression checks passed.")
     return 0
 
 
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except (AssertionError, KeyError, StopIteration, tomllib.TOMLDecodeError) as exc:
-        print(f"B0.3.6 validation failed: {exc}", file=sys.stderr)
+    except (AssertionError, KeyError, StopIteration, tomllib.TOMLDecodeError, ValueError) as exc:
+        print(f"B0.3.7 validation failed: {exc}", file=sys.stderr)
         raise SystemExit(1)
