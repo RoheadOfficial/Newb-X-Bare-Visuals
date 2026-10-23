@@ -39,8 +39,6 @@ jobs:
     - run: python tool/validate_pack.py
     - id: version
       run: python tool/versioning.py
-    - id: version
-      run: python tool/versioning.py
     - run: |
         .\build.bat setup
         .\build.bat pack -p windows -v ${{ inputs.subversion }} --no-zip
@@ -64,8 +62,6 @@ jobs:
           ${{ github.workspace }}/tool/data
     - run: pip install -r requirements.txt
     - run: python tool/validate_pack.py
-    - id: version
-      run: python tool/versioning.py
     - id: version
       run: python tool/versioning.py
     - run: |
@@ -95,8 +91,6 @@ jobs:
     - run: python tool/validate_pack.py
     - id: version
       run: python tool/versioning.py
-    - id: version
-      run: python tool/versioning.py
     - run: |
         ./build.sh setup
         ./build.sh pack -p ios -v ${{ inputs.subversion }} --no-zip
@@ -120,8 +114,6 @@ jobs:
           ${{ github.workspace }}/tool/data
     - run: pip install -r requirements.txt
     - run: python tool/validate_pack.py
-    - id: version
-      run: python tool/versioning.py
     - id: version
       run: python tool/versioning.py
     - run: |
