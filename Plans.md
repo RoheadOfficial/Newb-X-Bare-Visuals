@@ -40,7 +40,7 @@
 - [x] Align Pootaytoe's glow shortcut with the actual profile define.
 - [x] Add Experimental as the fourth profile and implement bounded fake terrain shading.
 - [x] Update profile order, docs, validator, and Android-only development workflow.
-- [ ] Review duplicate-audit findings and remove only proven redundant copies.
+- [x] Review duplicate-audit findings. The only reported matches are shared material.json/config.json files across material definitions; retained these identical source templates because they appear intentional and removing them could break material compilation. No confirmed accidental duplicate was deleted.
 - [ ] Pass static validation and Android-only GitHub Actions build.
 - [ ] Inspect generated Android pack, manifest, profile order, and compiled materials.
 - [ ] Test all four profiles on Vivo Y22s; compare visuals/FPS in equivalent forests, mountains, open terrain, water, rain/storms, clouds, and night scenes.
