@@ -126,6 +126,11 @@ def run(args):
     if args.v:
         if args.v.isdigit():
             pack_config['version'][2] = int(args.v)
+            # Keep the simple B0.x.y label aligned with a manual manifest patch override.
+            if str(pack_config.get("development_version", "")).startswith("B0."):
+                pack_config["development_version"] = (
+                    f"B0.{pack_config['version'][1]}.{pack_config['version'][2]}"
+                )
         else:
             console.print("[yellow]Ignoring invalid version number '" + args.v + "' specified using -v")
 
