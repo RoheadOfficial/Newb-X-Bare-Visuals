@@ -138,7 +138,7 @@ def run(args):
     console.print("~ Pack info", style="bold")
     console.print("  [dim]name    :", "[cyan]" + pack_name)
     console.print("  [dim]authors :", "[cyan]" + pack_authors)
-    console.print("  [dim]version :", "[cyan]" + display_version + " (manifest " + pack_version + ")\n")
+    console.print("  [dim]version :", "[cyan]" + display_version + " / " + full_version + " (Minecraft target " + minecraft_target_version + ", manifest " + pack_version + ")\n")
 
     console.print("~ Build target", style="bold")
     console.print("  [dim]profile :", "[cyan]" + args.p)
