@@ -6,6 +6,7 @@ from importlib import import_module, metadata
 from rich.console import Console
 from rich.status import Status
 from util import print_styled_error, get_materials_path, create_pack_manifest, check_conf, SHADERC_PATH
+from versioning import get_version_identity
 from lazurite.compiler.macro_define import MacroDefine
 from lazurite import util
 
@@ -125,26 +126,36 @@ def run(args):
     if args.v:
         if args.v.isdigit():
             pack_config['version'][2] = int(args.v)
+            # Keep the simple B0.x.y label aligned with a manual manifest patch override.
+            if str(pack_config.get("development_version", "")).startswith("B0."):
+                pack_config["development_version"] = (
+                    f"B0.{pack_config['version'][1]}.{pack_config['version'][2]}"
+                )
+            # Keep the simple B0.x.y label aligned with a manual manifest patch override.
+            if str(pack_config.get("development_version", "")).startswith("B0."):
+                pack_config["development_version"] = (
+                    f"B0.{pack_config['version'][1]}.{pack_config['version'][2]}"
+                )
         else:
             console.print("[yellow]Ignoring invalid version number '" + args.v + "' specified using -v")
 
     pack_name: str = pack_config['name']
     pack_version = f"{pack_config['version'][1]}.{pack_config['version'][2]}"
-    display_version = pack_config.get("development_version", "B0.3.6")
-    display_version_slug = display_version.lower().replace(" ", "-")
+    display_version, minecraft_target_version, full_version = get_version_identity(pack_config)
     pack_authors = ', '.join(pack_config['authors'])
     profile: str = args.p
 
     console.print("~ Pack info", style="bold")
     console.print("  [dim]name    :", "[cyan]" + pack_name)
     console.print("  [dim]authors :", "[cyan]" + pack_authors)
-    console.print("  [dim]version :", "[cyan]" + display_version + " (manifest " + pack_version + ")\n")
+    console.print("  [dim]version :", "[cyan]" + display_version + " / " + full_version + " (Minecraft target " + minecraft_target_version + ", manifest " + pack_version + ")\n")
 
     console.print("~ Build target", style="bold")
     console.print("  [dim]profile :", "[cyan]" + args.p)
 
     pack_acr_name = "".join(filter(str.isupper, pack_name)).lower()
-    pack_acr_name = f"{pack_acr_name}-{display_version_slug}-{profile}"
+    full_version_slug = full_version.lower().replace(" ", "-")
+    pack_acr_name = f"{pack_acr_name}-{full_version_slug}-{profile}"
     pack_dir = os.path.join('build', 'pack-' + args.p)
     mats_dir = os.path.join(pack_dir, 'renderer', 'materials')
 
@@ -164,7 +175,7 @@ def run(args):
     elif profile == 'multiplatform':
         patch_warning += "MB Loader (Android) or Wyvern Loader (Windows) or Minecraft with Hynis (iOS)"
 
-    pack_description = pack_description.replace("%w", patch_warning).replace("%v", display_version + " · " + args.p)
+    pack_description = pack_description.replace("%w", patch_warning).replace("%v", display_version + " · " + full_version + " · " + args.p)
     pack_config['description'] = pack_description
     pack_manifest = create_pack_manifest(pack_config)
 
