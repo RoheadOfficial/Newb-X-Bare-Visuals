@@ -23,7 +23,7 @@
 - [x] Remove aggressive sky-source boost and add restrained water blue reduction.
 - [x] Fix Pootaytoe's glow shortcut define.
 - [x] Update static validation, docs, and Android-only workflow.
-- [ ] Review duplicate-audit findings; delete only confirmed accidental duplicates.
+- [x] Review duplicate-audit findings. The reported matches are shared material.json/config.json files across material definitions; retained these identical source templates because they appear intentional and removing them could break material compilation. No confirmed accidental duplicate was deleted.
 - [ ] Pass static validation and Android-only GitHub Actions build.
 - [ ] Inspect generated Android pack, manifest, profile order, and compiled materials.
 - [ ] Test all four profiles on Vivo Y22s and compare visuals/FPS in equivalent scenes.
