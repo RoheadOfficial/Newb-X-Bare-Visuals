@@ -1,6 +1,6 @@
 ## B0.3.7 — Polish, Performance & Compatibility
 
-**Status:** Implementation in progress on `b0.3.7-polish-performance-compat`. CI, duplicate-audit findings, generated-artifact inspection, and on-device testing remain required.
+**Status:** Versioning, documentation, shared validation, and duplicate-audit tooling merged into `main` via PR #12. Build results, duplicate-audit findings, generated-artifact inspection, and on-device testing remain unconfirmed.
 
 ### GAME
 - Refine the B0.3.6 visual result instead of performing another complete redesign.
