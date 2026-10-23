@@ -5,7 +5,7 @@
 **Full version identity:** `B0.3.7.2652`  
 **Simple version:** `B0.3.7`  
 **Declared Minecraft target:** `26.52` (a target label, not proof of compatibility)  
-**Status:** Implementation branch `b0.3.7-polish-performance-compat`. The accepted B0.3.6 changes have been merged into `main`; B0.3.7 implementation is in progress. CI and on-device acceptance must be checked before declaring the update complete.
+**Status:** B0.3.7 versioning, documentation, validator, and duplicate-audit tooling have been merged into `main` via PR #12. CI results, duplicate-audit findings, visual/performance changes, and on-device acceptance remain to be verified.
 
 ### Goals
 
@@ -65,7 +65,7 @@ Do not write internal inspiration percentages in player-facing metadata.
 2. Do not lower cloud samples, remove atmosphere, or alter saturation just to claim a performance update.
 3. Preserve vanilla-like water, lightweight rain, rain fog, wet-ground response, nighttime atmosphere, and the agreed exclusions: no godrays, water waves, waving vegetation, box clouds, or player/mob shadows.
 4. Static validation and successful compilation do not establish visual quality, runtime compatibility, or FPS gains.
-5. Keep `main` unchanged until the B0.3.7 candidate has passed CI and been reviewed; publish only after acceptance.
+5. Treat the merge as implementation, not final acceptance. Review CI output, duplicate-audit findings, and on-device behavior before calling B0.3.7 complete or releasing it.
 
 ---
 
