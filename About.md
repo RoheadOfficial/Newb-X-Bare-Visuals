@@ -15,17 +15,18 @@ The project is Android-focused and is designed for Minecraft Bedrock with Render
 
 ## Profiles
 
-- **Default:** The balanced main profile, with natural daylight, warmer sunsets and evenings, soft-blue believable water, rounded clouds, rain atmosphere, wet ground, aurora, and restrained local glow.
-- **Pootaytoe:** The performance-focused profile. It keeps the recognizable look while reducing selected rendering work more aggressively where the trade-off is worthwhile.
-- **Bare Visuals:** The most atmospheric profile, built around cozy peach-golden sunrises and sunsets, softer blue skies, rounded clouds, gentle atmospheric depth, and subtle material highlights.
+- **Default:** balanced main profile with natural lighting, rounded clouds, rain atmosphere, wet ground, night aurora, and restrained local glow.
+- **Pootaytoe:** performance-first profile; preserves the core atmosphere and skips the extra terrain glow texture sample.
+- **Bare Visuals:** fuller cozy atmosphere, warmer dawns/sunsets, gentle depth, and subtle material highlights.
+- **Experimental:** optional fake-shadow prototype that reuses existing terrain vertex-lighting gradients. No shadow maps or extra texture samples; it does not create genuine tree-cast, player, or mob shadows.
 
-The selectable order is Default, Pootaytoe, Bare Visuals. The names and descriptions reflect the intended character of each profile; the visual percentages used during planning are internal creative notes, not player-facing labels.
+Selectable order: Default, Pootaytoe, Bare Visuals, Experimental. Experimental is a visual experiment, not a promise of real dynamic shadows or zero performance cost.
 
 ## Current development — B0.3.7
 
-B0.3.7 focuses on polishing the B0.3.6 look, investigating performance costs, and preparing compatibility checks for upcoming Minecraft releases. The saturation approved by the creator is preserved. Default remains balanced, Pootaytoe remains performance-focused, and Bare Visuals keeps the fuller cozy atmosphere.
+B0.3.7 polishes the approved B0.3.6 foundation and keeps `NL_SATURATION 1.04`. It removes the aggressive sun-source brightness boost, gently reduces blue in the existing vanilla-water path, and fixes Pootaytoe's glow-sample shortcut to match its actual compile-time define. Experimental deepens existing terrain vertex-lighting gradients with a bounded fake-shadow approximation; it adds no shadow map, texture reads, normals, or render pass and cannot generate true tree-canopy cast shadows.
 
-The project uses two related version identities: the simple pack version (for example, `B0.3.7`) and the advanced version (for example, `B0.3.7.2652`, where `2652` represents the declared Minecraft target `26.52`). The target is tracked separately from the pack's numeric manifest version. A target label does not prove compatibility; Minecraft and MB Loader must be tested independently.
+The declared target remains Minecraft `26.52` and full identity `B0.3.7.2652`; these labels do not prove compatibility. Implementation builds Android only. Multiplatform builds are reserved for release preparation. In-game appearance, FPS, and compatibility still require testing.
 
 ## B0.3.2 — Beauty and Performance
 

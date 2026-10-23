@@ -114,12 +114,8 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   float horizonGlow = horizonBand * NL_SKY_HORIZON_GLOW * (1.0 - 0.55*env.rainFactor);
   sky = mix(sky, skyCol.horizonEdge, clamp(horizonGlow, 0.0, 0.32));
 
-  if (!isSkyPlane) {
-    float source = max(0.0, (mg8-0.22)/0.78);
-    source *= source;
-    source *= source;
-    sky *= 1.0 + 15.0*source*(1.0-env.rainFactor);
-  }
+  // B0.3.7: remove the aggressive sun-source boost that created distracting glare.
+  // Keep the normal sky gradient and SunMoon disk; no godray/ray-marching effect is added.
 
   #ifdef NL_RAINBOW
     if (!env.underwater) {

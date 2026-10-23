@@ -34,6 +34,18 @@ float nlBareTerrainShade(vec4 vertexColor) {
 }
 
 
+#ifdef NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH
+// Cheap fake-shadow approximation for Experimental only. Reuses the terrain vertex-lighting
+// gradient already passed to this shader: no extra texture reads, normals, shadow maps, or passes.
+// It deepens existing darker regions rather than pretending to create real cast shadows.
+float nlExperimentalFakeShadow(vec4 vertexColor) {
+  float shadowBand = 1.0 - smoothstep(0.617, 0.642, vertexColor.g);
+  shadowBand = shadowBand * shadowBand * (3.0 - 2.0 * shadowBand);
+  float strength = NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH * shadowBand;
+  return clamp(1.0 - strength, 0.90, 1.0);
+}
+#endif
+
 void main() {
   #if defined(DEPTH_ONLY_OPAQUE) || defined(DEPTH_ONLY) || defined(INSTANCING)
     gl_FragColor = vec4(1.0,1.0,1.0,1.0);
@@ -54,8 +66,8 @@ void main() {
     diffuse.rgb *= mix(vec3(1.0,1.0,1.0), texture2D(s_SeasonsTexture, v_color1.xy).rgb * 2.0, v_color1.z);
   #endif
 
-  #ifdef LITE
-    // Lite skips the extra glow texture sample on every terrain fragment.
+  #if defined(LITE) || defined(POOTAYTOE)
+    // Pootaytoe is the current performance profile define; it also skips the extra glow texture sample.
     vec3 glow = vec3_splat(0.0);
   #else
     vec3 glow = nlGlow(s_MatTexture, v_texcoord0, v_extra.a);
@@ -74,10 +86,19 @@ void main() {
 
   diffuse.rgb *= color.rgb;
 
+  // B0.3.7: soften excessive blue in water while retaining the existing vanilla-water path.
+  // The existing water flag is reused; no extra texture sample or rendering pass is added.
+  if (v_extra.b > 0.9) {
+    diffuse.b *= NL_WATER_BLUE_REDUCTION;
+  }
+
   // Apply only to RenderChunk terrain; skip water and glass.
   // Smooth bounded shading avoids cumulative dark stripes from repeated g-thresholds.
   #if !defined(TRANSPARENT) && !defined(SEASONS)
     diffuse.rgb *= nlBareTerrainShade(v_color1);
+    #ifdef NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH
+      diffuse.rgb *= nlExperimentalFakeShadow(v_color1);
+    #endif
   #endif
 
   diffuse.rgb += glow;
