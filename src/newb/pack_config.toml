@@ -1,6 +1,7 @@
 name = "Newb X Bare Visuals"
-version = [0, 3, 6]
-development_version = "B0.3.6"
+version = [0, 3, 7]
+development_version = "B0.3.7"
+minecraft_target_version = "26.52" # Target label only; compatibility must be verified in-game
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
@@ -46,4 +47,4 @@ description = "Pootaytoe — Performance-focused, with the same core atmosphere"
 [[subpack]]
 define = "BARE_VISUALS"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Bare Visuals — The full Prizma-inspired cozy visual direction"
+description = "Bare Visuals — The full cozy visual experience with richer atmosphere"
