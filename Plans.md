@@ -67,7 +67,7 @@ Do not write internal inspiration percentages in player-facing metadata.
 4. Static validation and successful compilation do not establish visual quality, runtime compatibility, or FPS gains.
 5. Keep `main` unchanged until the B0.3.7 candidate has passed CI and been reviewed; publish only after acceptance.
 
---- 
+---
 
 ## B0.3.2 — Beauty & Performance
 
