@@ -132,7 +132,6 @@ def run(args):
     pack_name: str = pack_config['name']
     pack_version = f"{pack_config['version'][1]}.{pack_config['version'][2]}"
     display_version, minecraft_target_version, full_version = get_version_identity(pack_config)
-    display_version_slug = display_version.lower().replace(" ", "-")
     pack_authors = ', '.join(pack_config['authors'])
     profile: str = args.p
 
