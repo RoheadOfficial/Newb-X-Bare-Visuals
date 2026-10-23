@@ -1,6 +1,37 @@
+## B0.3.7 — Polish, Performance & Compatibility
+
+**Status:** Implementation in progress on `b0.3.7-polish-performance-compat`. CI, duplicate-audit findings, generated-artifact inspection, and on-device testing remain required.
+
+### GAME
+- Refine the B0.3.6 visual result instead of performing another complete redesign.
+- Preserve the creator-approved saturation; avoid unnecessary color tuning.
+- Focus on visual coherence across sky, fog, terrain lighting, rounded clouds, water, rain, and wet ground.
+- Preserve the Default, Pootaytoe, and Bare Visuals identities and established order.
+- Prepare for the upcoming Minecraft drop without claiming compatibility before Minecraft and MB Loader testing.
+
+### DEVELOPER
+- Add canonical version logic: simple `B0.3.7`, advanced `B0.3.7.2652`, with Minecraft target `26.52` stored separately.
+- Generate advanced output filenames and GitHub Actions artifact labels from the shared versioning helper.
+- Keep numeric manifest versioning valid and independent of the display/full version.
+- Replace the active B0.3.6-only validator wiring with a current-source regression validator.
+- Add a review-first audit for byte-identical tracked files; do not automatically delete identical files that may be intentional.
+- Do not claim performance gains from source inspection alone. Benchmark comparable scenes before adjusting costly visual effects.
+
+### Validation checklist
+- [ ] Shared version helper derives `B0.3.7.2652` from `B0.3.7` + target `26.52`.
+- [ ] Android and multiplatform GitHub Actions builds pass.
+- [ ] Duplicate-audit report is reviewed and any confirmed redundant copies are removed safely.
+- [ ] Manifest version and all three subpacks are correct.
+- [ ] All three profiles import, activate, and render on the target Android setup.
+- [ ] Saturation and visual identity remain consistent with the approved B0.3.6 result.
+- [ ] Compare FPS/stutter in equivalent scenes; no performance claim before measurement.
+- [ ] Verify current Minecraft and MB Loader compatibility separately from the upcoming drop.
+
+---
+
 ## B0.3.6 — Java-Inspired Cozy Shader Revamp
 
-**Status:** Implementation started on `b0.3.6-java-inspired-revamp`. Static validation, Android/multiplatform builds, generated-artifact inspection, and in-game visual/performance acceptance are pending.
+**Status:** Merged into `main` via PR #10. The creator tested B0.3.6 and approved its overall look, especially its saturation. Measured FPS improvement, complete generated-artifact review, and compatibility beyond the tested setup remain unverified.
 
 ### GAME
 - Begin a coordinated visual redesign across terrain lighting, sky/horizon, fog, rounded clouds, and the three established subpacks.
