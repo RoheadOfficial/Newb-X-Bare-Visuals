@@ -98,6 +98,8 @@ def main() -> int:
     require("full_version_slug" in packer, "artifact naming must include the advanced version")
     require("Keep the simple B0.x.y label aligned" in packer,
             "manual manifest patch overrides must not create conflicting version labels")
+    require("Keep the simple B0.x.y label aligned" in packer,
+            "manual manifest patch overrides must not create conflicting version labels")
     for workflow_path in (".github/workflows/build.yml", ".github/workflows/build-check.yml"):
         workflow = read(workflow_path)
         require("tool/validate_pack.py" in workflow, f"{workflow_path} must run the shared validator")
