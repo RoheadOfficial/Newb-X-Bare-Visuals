@@ -21,6 +21,12 @@ The project is Android-focused and is designed for Minecraft Bedrock with Render
 
 The selectable order is Default, Pootaytoe, Bare Visuals. The names and descriptions reflect the intended character of each profile; the visual percentages used during planning are internal creative notes, not player-facing labels.
 
+## Current development — B0.3.7
+
+B0.3.7 focuses on polishing the B0.3.6 look, investigating performance costs, and preparing compatibility checks for upcoming Minecraft releases. The saturation approved by the creator is preserved. Default remains balanced, Pootaytoe remains performance-focused, and Bare Visuals keeps the fuller cozy atmosphere.
+
+The project uses two related version identities: the simple pack version (for example, `B0.3.7`) and the advanced version (for example, `B0.3.7.2652`, where `2652` represents the declared Minecraft target `26.52`). The target is tracked separately from the pack's numeric manifest version. A target label does not prove compatibility; Minecraft and MB Loader must be tested independently.
+
 ## B0.3.2 — Beauty and Performance
 
 B0.3.2 builds on B0.2.9's terrain-performance work instead of replacing it. All three profiles receive performance-minded tuning. Default stays balanced, Pootaytoe makes more aggressive simplifications, and Bare Visuals keeps the strongest cozy atmosphere while bounding expensive terrain-reflection work.
