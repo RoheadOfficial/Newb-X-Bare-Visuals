@@ -36,6 +36,7 @@ jobs:
         path: |
           ${{ github.workspace }}/tool/data
     - run: pip install -r requirements.txt
+    - run: python tool/audit_duplicates.py
     - run: python tool/validate_pack.py
     - id: version
       run: python tool/versioning.py
