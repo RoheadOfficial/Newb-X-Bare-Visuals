@@ -2,7 +2,7 @@ name: build-check
 
 on:
   push:
-    branches: [b0.3.6-java-inspired-revamp]
+    branches: [b0.3.7-polish-performance-compat]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -22,13 +22,16 @@ jobs:
         path: |
           ${{ github.workspace }}/tool/data
     - run: pip install -r requirements.txt
-    - run: python tool/validate_b036.py
+    - run: python tool/audit_duplicates.py
+    - run: python tool/validate_pack.py
+    - id: version
+      run: python tool/versioning.py
     - run: |
         .\build.bat setup
-        .\build.bat pack -p multiplatform -v 6 --no-zip
+        .\build.bat pack -p multiplatform -v 7 --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-bare-visuals-b0.3.6-multiplatform-pr
+        name: newb-x-bare-visuals-${{ steps.version.outputs.full_version_slug }}-multiplatform-pr
         path: ./build/pack-multiplatform
 
   android:
@@ -45,11 +48,14 @@ jobs:
         path: |
           ${{ github.workspace }}/tool/data
     - run: pip install -r requirements.txt
-    - run: python tool/validate_b036.py
+    - run: python tool/audit_duplicates.py
+    - run: python tool/validate_pack.py
+    - id: version
+      run: python tool/versioning.py
     - run: |
         ./build.sh setup
-        ./build.sh pack -p android -v 6 --no-zip
+        ./build.sh pack -p android -v 7 --no-zip
     - uses: actions/upload-artifact@v4
       with:
-        name: newb-x-bare-visuals-b0.3.6-android-pr
+        name: newb-x-bare-visuals-${{ steps.version.outputs.full_version_slug }}-android-pr
         path: ./build/pack-android
