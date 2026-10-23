@@ -19,7 +19,7 @@
 
 ### Validation checklist
 - [ ] Shared version helper derives `B0.3.7.2652` from `B0.3.7` + target `26.52`.
-- [ ] Android and multiplatform GitHub Actions builds pass.
+- [x] Android build passed; multiplatform run status was not confirmed in the final checkpoint.
 - [ ] Duplicate-audit report is reviewed and any confirmed redundant copies are removed safely.
 - [ ] Manifest version and all three subpacks are correct.
 - [ ] All three profiles import, activate, and render on the target Android setup.
@@ -50,7 +50,7 @@
 - Update B-Series metadata, pack-builder fallback, workflows, artifact names, and static validation for B0.3.6.
 
 ### Validation checklist
-- [ ] B0.3.6 static validator passes.
+- [x] B0.3.6 static validator passed on the implementation branch.
 - [ ] Android and multiplatform GitHub Actions builds pass.
 - [ ] Generated manifest reports version 0.3.6 and subpack order Default, Pootaytoe, Bare Visuals.
 - [ ] Inspect compiled output and confirm each subpack's profile-specific defines and materials.
