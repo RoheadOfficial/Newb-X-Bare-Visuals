@@ -1,6 +1,6 @@
 name = "Newb X Bare Visuals"
-version = [0, 4, 0]
-development_version = "B0.4.0"
+version = [0, 4, 1]
+development_version = "B0.4.1"
 minecraft_target_version = "26.52" # Target label only; compatibility must be verified in-game
 min_supported_mc_version = [1, 26, 50]
 description = '''

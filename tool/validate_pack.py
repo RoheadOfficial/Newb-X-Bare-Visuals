@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static regression checks for Newb X Bare Visuals B0.4.0 / Overworld O6.0."""
+"""Static regression checks for Newb X Bare Visuals B0.4.1 forest performance / Overworld O6.0."""
 from pathlib import Path
 import re
 import sys
@@ -12,15 +12,15 @@ def require(condition: bool, message: str) -> None:
         raise AssertionError(message)
 def main() -> int:
     pack = tomllib.loads(read("src/newb/pack_config.toml"))
-    require(pack.get("version") == [0, 4, 0], "manifest version must be [0, 4, 0]")
-    require(pack.get("development_version") == "B0.4.0", "simple version must be B0.4.0")
+    require(pack.get("version") == [0, 4, 1], "manifest version must be [0, 4, 1]")
+    require(pack.get("development_version") == "B0.4.1", "simple version must be B0.4.1")
     require(pack.get("minecraft_target_version") == "26.52", "declared Minecraft target must remain 26.52")
     require("Newb X Bare Visuals" in pack.get("name", ""), "pack identity must remain Newb X Bare Visuals")
     require("%w" in pack.get("description", "") and "%v" in pack.get("description", ""), "patch warning/version placeholders must remain")
     sys.path.insert(0, str(ROOT / "tool"))
     from versioning import get_version_identity
     display, target, full = get_version_identity(pack)
-    require((display, target, full) == ("B0.4.0", "26.52", "B0.4.0.2652"), "canonical version identity must be correct")
+    require((display, target, full) == ("B0.4.1", "26.52", "B0.4.1.2652"), "canonical version identity must be correct")
     subpacks = pack.get("subpack", [])
     names = [item.get("define") for item in subpacks]
     require(names == ["DEFAULT", "POOTAYTOE", "BARE_VISUALS", "EXPERIMENTAL"], "profile order must remain stable")
@@ -65,6 +65,7 @@ def main() -> int:
     require("!defined(NL_DISABLE_ALL_WAVING)" in vertex and "refl = nlWater(color, worldPos" in vertex, "wave guard and custom water path must be active")
     require("NL_VANILLA_WATER" not in vertex, "vanilla-water bypass must not disable reflection")
     require("Alpha-tested foliage/billboards cannot display the horizontal terrain reflection mask" in vertex, "foliage must skip unused terrain-reflection work")
+    require("#if defined(NL_GLOW_SHIMMER) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS) || defined(ALPHA_TEST))" in vertex, "foliage must skip vertex glow-shimmer work")
     require("fogColor.a > 0.001 || env.rainFactor > 0.0" in vertex, "nearby clear-weather terrain must skip unused sky fog calculations")
     terrain = read("src/materials/RenderChunk/fragment.sc")
     require("waterLuma * NL_WATER_TINT" in terrain and "diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);" in terrain, "water palette and fog blend must remain")
@@ -79,9 +80,9 @@ def main() -> int:
     require("default: 'Android'" in build, "manual build default must be Android")
     for name, workflow in (("build.yml",build),("build-check.yml",check)):
         require("tool/validate_pack.py" in workflow and "tool/versioning.py" in workflow and "tool/audit_duplicates.py" in workflow and "steps.version.outputs.full_version_slug" in workflow, f"{name} validation/artifact setup must remain")
-    require("default: '0'" in build and "-v 0" in check and "--no-zip" not in check and "path: ./build/*.mcpack" in check, "workflow must publish a directly installable B0.4.0 mcpack")
-    require("b0.4.0-performance-fixes" in check and "multiplatform:" not in check and "android:" in check, "implementation checks must target Android on the B0.4.0 branch")
-    print("B0.4.0 performance static regression checks passed.")
+    require("default: '0'" in build and "-v 0" in check and "--no-zip" not in check and "path: ./build/*.mcpack" in check, "workflow must publish a directly installable B0.4.1 mcpack")
+    require("b0.4.1-forest-performance" in check and "b0.4.0-performance-fixes" in check and "multiplatform:" not in check and "android:" in check, "implementation checks must target Android on the B0.4.1 branch")
+    print("B0.4.1 forest performance static regression checks passed.")
     return 0
 if __name__ == "__main__":
     try:
