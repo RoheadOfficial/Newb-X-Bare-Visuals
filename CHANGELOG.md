@@ -9,6 +9,7 @@
 - Keep base water reflections active while limiting extra aurora reflection detail to night/twilight and profile-specific distances.
 - Reduce rounded-cloud sampling in Default, Bare Visuals, and Experimental; Pootaytoe retains its lower-cost two-sample setting.
 - Reduce weather-particle styling while keeping weather particles, rain atmosphere, wet ground, and auroras.
+- Skip four extra glow-halo texture taps on alpha-tested foliage while retaining the center emissive glow.
 - Add a global compile-time guard that blocks vegetation, lantern, water, and underwater waving.
 - Bump the development and numeric manifest version to B0.3.8 / `[0, 3, 8]`; keep Android as the implementation build target.
 
