@@ -1,12 +1,11 @@
 name = "Newb X Bare Visuals"
-version = [0, 4, 1]
-development_version = "B0.4.1"
+version = [0, 4, 5]
+development_version = "B0.4.5"
 minecraft_target_version = "26.52" # Target label only; compatibility must be verified in-game
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
-§7- A Java-shader-inspired Newb variant with cozy atmosphere and mobile-minded performance.
-§7- Newb X Bare Visuals is a community-made Newb Shader variant by RoheadOfficial.
+§7- A softer Overworld, tuned for cozy exploration and mobile play.
 §8[§2MOSS §8· §6COFFEE §8· §fSTONE§8] §rᴠᴀɴɪʟʟᴀ ᴍɪɴᴇᴄʀᴀғᴛ, ɴᴀᴛᴜʀᴀʟʟʏ ᴇɴʜᴀɴᴄᴇᴅ.
 %v
 §3https://github.com/RoheadOfficial/Newb-X-Bare-Visuals
@@ -37,17 +36,17 @@ Variant creator: RoheadOfficial
 [[subpack]]
 define = "DEFAULT"
 materials = []
-description = "Default — Cozy natural lighting with a balanced shader experience"
+description = "Default — Natural light, soft clouds, and balanced atmosphere"
 
 [[subpack]]
 define = "POOTAYTOE"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Pootaytoe — Performance-focused, with the same core atmosphere"
+description = "Pootaytoe — Lean rendering with the core atmosphere intact"
 
 [[subpack]]
 define = "BARE_VISUALS"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Bare Visuals — The full cozy visual experience with richer atmosphere"
+description = "Bare Visuals — A richer, cozier atmosphere and material feel"
 
 [[subpack]]
 define = "EXPERIMENTAL"
