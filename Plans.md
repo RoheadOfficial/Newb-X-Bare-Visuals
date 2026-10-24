@@ -19,7 +19,7 @@
 ### Acceptance
 
 - [ ] Static validator and duplicate-file audit pass.
-- [ ] Android build succeeds and artifact includes compiled RenderChunk material binaries for all profiles.
+- [ ] Android build succeeds and artifact is a directly installable `.mcpack` with compiled RenderChunk material binaries for all profiles.
 - [ ] Test Default, Pootaytoe, Bare Visuals, and Experimental on-device against B0.3.8 using the same world, render distance, weather, and camera position.
 - [ ] Check trees, clear-weather fog/atmosphere, sunrise/sunset lighting, heavy rain, water, horizon/haze, Actor Glint, clouds, and general frame-time stutter.
 - [ ] Check reflection cutoff/pop-in, foliage wetness, cloud quality, rain appearance, and fog transitions.
