@@ -36,6 +36,9 @@ def main() -> int:
     for macro in ("NL_WATER_WAVE","NL_PLANTS_WAVE","NL_LANTERN_WAVE","NL_EXTRA_PLANTS_WAVE","NL_UNDERWATER_WAVE","NL_CLOUD_SHADOW","NL_CLOUDY_FOG","NL_VANILLA_WATER"):
         require(not re.search(rf"(?m)^\s*#define\s+{macro}\b", cfg), f"{macro} must not be enabled")
     require("#define NL_CLOUD_AURORA_REFLECTION" in cfg, "Newb reflection detail must remain enabled")
+    require("#define NL_GROUND_REFL 0.18" in cfg, "terrain Always Reflection must stay enabled")
+    require("#define NL_GROUND_REFL_MAX_DISTANCE 28.0" in cfg, "base terrain reflection must retain a bounded range")
+    require("#define NL_GROUND_REFL_MAX_DISTANCE 16.0" in cfg and "#define NL_GROUND_REFL_MAX_DISTANCE 26.0" in cfg and "#define NL_GROUND_REFL_MAX_DISTANCE 24.0" in cfg, "profile-specific terrain reflection limits must remain tuned")
     for distance in ("24.0","12.0","28.0","18.0"):
         require(f"#define NL_WATER_DETAIL_REFLECTION_DISTANCE {distance}" in cfg, "each profile must have a reflection detail range")
     for required in ("#define NL_MIST_DENSITY 0.12","#define NL_RAIN_MIST_OPACITY 0.08","#define NL_WEATHER_SPECK 0.28","#define NL_CLOUD2_STEPS 3","#define NL_CLOUD2_STEPS 2","#define NL_WATER_TINT vec3(0.90,0.94,0.93)","#define NL_WATER_STYLE_STRENGTH 0.42","#define NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH 0.10"):
