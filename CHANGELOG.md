@@ -7,7 +7,7 @@
 - Skip sky-color rendering for nearby terrain when clear-weather fog alpha is effectively zero; preserve sky-derived fog when fog can contribute or rain is active.
 - Reuse sun dawn/night factors in sunlight tinting rather than recalculating them per terrain/entity vertex.
 - Remove the second weather-texture lookup per particle and replace its overlay with cheaper analytic modulation. Minecraft's particle spawn count is unchanged.
-- Reduce rounded-cloud density steps to two in all profiles, keep base water sky reflections, and shorten only extra aurora-reflection detail ranges.
+- Reduce rounded-cloud density steps to two in all profiles; retain a sky reflection across visible water but use a cheap horizon-to-zenith gradient beyond each profile's full-reflection range, while separately limiting extra aurora detail.
 - Guard transparent Actor Glint against unnecessary texture sampling; retain both glint layers when the effect is visible.
 - Preserve approved saturation, natural color, rain/wet ground, rounded clouds, nighttime aurora, and terrain Always Reflection. No waving, godrays, or player/mob shadow systems were added.
 
