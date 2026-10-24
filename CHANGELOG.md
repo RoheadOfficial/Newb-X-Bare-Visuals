@@ -13,7 +13,7 @@
 
 ### Verification required
 - [ ] Static validator and duplicate audit pass.
-- [ ] Android GitHub Actions build succeeds and artifact contains all expected RenderChunk binaries.
+- [ ] Android GitHub Actions build succeeds and artifact is a directly installable `.mcpack` containing all expected RenderChunk binaries.
 - [ ] On-device A/B test in a fixed world for dense trees, clear-weather terrain, heavy rain, large water, wide sky, and enchanted actors.
 - [ ] Check for reflection fade/pop-in, foliage wetness differences, cloud quality, rain appearance, and fog transitions in all four profiles.
 - [ ] Confirm Minecraft 26.52 / MB Loader 26.52 runtime behavior; target metadata alone is not proof of compatibility.
