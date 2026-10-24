@@ -1,63 +1,25 @@
 # Plans
 
-## B0.3.7 — Polish, Performance & Compatibility
+## B0.3.8 — O6.0 Performance & Water Refinement
 
-**Version:** `B0.3.7.2652` (simple `B0.3.7`, target label `26.52`)  
-**Branch:** `b0.3.7-implementation`  
-**Build scope:** Android only during implementation; multiplatform is reserved for release preparation.
+**Version:** `B0.3.8.2652` (Minecraft target label `26.52`)  
+**Branch:** `b0.3.8-o6-performance-implementation`  
+**Build scope:** Android during implementation; multiplatform during release preparation.
 
-### Goals and source changes
-- Preserve the creator-approved B0.3.6 look and `NL_SATURATION 1.04`.
-- Remove the aggressive sun-source brightness multiplier in `sky.h`; retain the normal sky gradient and sun/moon disk.
-- Keep vanilla water rendering and reduce blue-channel output by 8% on pixels identified by the existing water flag. No custom water reflections, waves, or displacement.
-- Fix Pootaytoe's glow-sample optimization to recognize its actual `POOTAYTOE` define, alongside legacy `LITE`.
-- Add Experimental as profile four, with a smooth, bounded fake-shadow approximation that reuses existing terrain vertex-lighting gradients.
-- Keep Default, Pootaytoe, and Bare Visuals identities and existing effects intact; don't claim FPS gains or zero lag without device testing.
+### Implementation priorities
+- Reduce tree-heavy rendering cost without removing established shader systems; target a measurable 50% reduction in tree-related overhead, not an unverified FPS promise.
+- Reduce nearby haze and weather overlay; retain distance fog, rain, wet ground, and the existing sky pipeline.
+- Restore Newb's custom water reflection path and give water a muted mineral-gray identity; no water waves or displacement.
+- Keep base sky reflection active while bounding more expensive aurora reflection detail by profile and distance.
+- Reduce rounded-cloud sampling and retain nighttime aurora with its daytime early-out.
+- Globally block vegetation, lantern, water, and underwater waving paths.
+- Preserve approved saturation and all four existing profile identities.
 
-### Profile roles and order
-1. **Default:** balanced main profile with approved saturation and established effects.
-2. **Pootaytoe:** performance-first profile; skips the extra terrain glow texture sample.
-3. **Bare Visuals:** fuller cozy atmosphere and profile-specific highlights/palette.
-4. **Experimental:** fake terrain-shadow prototype only; no shadow maps, extra texture reads, rendering passes, or player/mob shadows.
-
-### Experimental limitations
-- Uses existing `v_color1` terrain vertex-color/lighting gradients and only affects opaque terrain in this profile.
-- Adds no texture sampling, normal reconstruction, shadow-map rendering, geometry pass, water effect, or actor-material change.
-- Reinforces existing darker terrain regions; it cannot reliably create new tree-canopy cast shadows without additional spatial/shadow information.
-- Compare it with Default in forests, around buildings, and on open terrain. Keep/refine only if visual benefit and measured cost justify it.
-
-### Build and repository rules
-- Preserve numeric manifest version `[0, 3, 7]`, patch warning, Newb attribution, original upstream README, unique pack identity, and licensing notices.
-- Update static validation, docs, and workflows for four profiles.
-- Run the duplicate audit and inspect its findings; delete only confirmed accidental duplicates, never intentional identical assets/notices.
-- Build Android only during implementation. Do not run multiplatform until release preparation.
-- Keep `main` untouched until the creator reviews and accepts the implementation.
-
-### Validation checklist
-- [x] Create a clean implementation branch from current `main`.
-- [x] Preserve version identity and approved saturation.
-- [x] Remove aggressive sky-source boost and add restrained water blue reduction.
-- [x] Align Pootaytoe's glow shortcut with the actual profile define.
-- [x] Add Experimental as the fourth profile and implement bounded fake terrain shading.
-- [x] Update profile order, docs, validator, and Android-only development workflow.
-- [x] Review duplicate-audit findings. The only reported matches are shared material.json/config.json files across material definitions; retained these identical source templates because they appear intentional and removing them could break material compilation. No confirmed accidental duplicate was deleted.
-- [ ] Pass static validation and Android-only GitHub Actions build.
-- [ ] Inspect generated Android pack, manifest, profile order, and compiled materials.
-- [ ] Test all four profiles on Vivo Y22s; compare visuals/FPS in equivalent forests, mountains, open terrain, water, rain/storms, clouds, and night scenes.
-- [ ] Compare Experimental vs Default around buildings and under trees.
-- [ ] Verify Minecraft and MB Loader compatibility independently.
-- [ ] Run multiplatform build during release preparation only; do not merge to `main` until creator acceptance.
-
-### Performance and safety rules
-1. Treat shader-cost estimates as hypotheses until measured.
-2. Preserve saturation, rain, rain fog, wet ground, rounded clouds, and night atmosphere.
-3. Keep water vanilla-like; no custom water reflections, waves, or displacement.
-4. Keep godrays/sunrays, box clouds, waving vegetation, and custom player/mob shadows excluded.
-5. Compilation does not establish visual quality, FPS gains, or runtime compatibility.
-
----
-
----
+### Acceptance evidence
+- Static regression checks and Android build pass; inspect generated pack, manifest, profile order, and compiled materials.
+- Repository checks confirm wave paths are disabled and water reflection remains active.
+- A 50% runtime performance improvement, visual acceptance, and Minecraft/MB Loader compatibility remain unverified until comparable in-game testing is possible.
+- Keep `main` untouched until review and explicit merge approval.
 
 ## B0.3.2 — Beauty & Performance
 
