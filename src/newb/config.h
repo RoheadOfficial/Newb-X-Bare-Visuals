@@ -115,13 +115,13 @@
 #define NL_WATER_BUMP 0.0           // Flat surface: no water-wave distortion
 #define NL_WATER_WAVE_SPEED  0.8    // Retained for underwater caustic timing
 #define NL_WATER_TEX_OPACITY 0.3    // Retain recognizable vanilla water texture
-#define NL_WATER_BLUE_REDUCTION 0.92 // Keep the existing restrained blue-channel correction
+#define NL_WATER_BLUE_REDUCTION 0.95 // Keep the existing restrained blue-channel correction
 //#define NL_WATER_WAVE             // No water displacement or animated waves
 //#define NL_WATER_REFL_MASK        // Keep sky reflections broad and natural
 #define NL_WATER_TINT vec3(0.90,0.94,0.93) // Muted mineral-gray water, not a strong blue/green wash
-#define NL_WATER_STYLE_STRENGTH 0.42 // Give water a distinct, restrained material identity
+#define NL_WATER_STYLE_STRENGTH 0.38 // Give water a distinct, restrained material identity
 #define NL_WATER_DETAIL_REFLECTION_DISTANCE 18.0 // B0.4.0: limit extra aurora detail; base sky reflection stays active
-#define NL_WATER_FULL_REFLECTION_DISTANCE 42.0 // Full sky shading nearby; use a cheap sky-gradient reflection farther out
+#define NL_WATER_FULL_REFLECTION_DISTANCE 32.0 // Full sky shading nearby; use a cheap sky-gradient reflection farther out
 #define NL_GROUND_REFL 0.18         // Restrained terrain reflection; water keeps its own sky reflection
 #define NL_GROUND_REFL_DISTANCE 0.20 // B0.4.0: preserve nearby Always Reflection with less far-field work
 #define NL_GROUND_REFL_MAX_DISTANCE 22.0 // B0.4.0: terrain reflection remains active at closer ranges
@@ -249,7 +249,7 @@
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 12.0
   #undef NL_WATER_FULL_REFLECTION_DISTANCE
-  #define NL_WATER_FULL_REFLECTION_DISTANCE 24.0
+  #define NL_WATER_FULL_REFLECTION_DISTANCE 20.0
   #undef NL_SKY_HORIZON_GLOW
   #define NL_SKY_HORIZON_GLOW 0.10
   #undef NL_SKY_AMBIENT_STRENGTH
@@ -296,7 +296,7 @@
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 20.0
   #undef NL_WATER_FULL_REFLECTION_DISTANCE
-  #define NL_WATER_FULL_REFLECTION_DISTANCE 48.0
+  #define NL_WATER_FULL_REFLECTION_DISTANCE 38.0
   #undef NL_SKY_HORIZON_GLOW
   #define NL_SKY_HORIZON_GLOW 0.24
   #undef NL_SKY_AMBIENT_STRENGTH
@@ -319,8 +319,6 @@
   #define NL_DAY_EDGE_COL vec3(0.91,0.95,1.0)
   #undef NL_WEATHER_SPECK
   #define NL_WEATHER_SPECK 0.18
-  #undef NL_CLOUD2_STEPS
-  #define NL_CLOUD2_STEPS 2
 #endif
 
 #ifdef EXPERIMENTAL
@@ -329,7 +327,7 @@
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 14.0
   #undef NL_WATER_FULL_REFLECTION_DISTANCE
-  #define NL_WATER_FULL_REFLECTION_DISTANCE 32.0
+  #define NL_WATER_FULL_REFLECTION_DISTANCE 26.0
   #undef NL_GROUND_REFL_DISTANCE
   #define NL_GROUND_REFL_DISTANCE 0.18
   #undef NL_GROUND_REFL_MAX_DISTANCE
