@@ -30,6 +30,7 @@ The following major/minor/patch interpretation remains provisional:
 - **Patch:** narrow fix.
 - **Minor:** meaningful feature or optimization milestone within that dimension.
 - **Major:** substantial redesign of that dimension's work.
+- Use the short `O7` label when no patch-level suffix is needed; add a suffix only when a real subversion patch is required.
 
 ### Retrospective O-Series map
 
@@ -48,12 +49,13 @@ These labels are planning references for past milestones, not published releases
 | B0.2.9 | O0.4.0 |
 | B0.3.2 | O0.5.0 |
 | B0.3.6 | O0.6.0 |
+| B0.4.5 | O7 (proposed active Overworld milestone) |
 
 O0.6.0 is an unconfirmed retrospective baseline. N0.0.0, E0.0.0, and S0.0.0 are placeholders only; they do not indicate completed work.
 
 ## B-Series release identity
 
-- Current recorded development version: **B0.3.7**.
+- Previous recorded development version: **B0.3.7**; B0.4.5 is the current implementation branch milestone.
 - **B1** is the intended first full-release identity, once the project meets its release criteria. B1.0.0 is only needed if stable subversions prove useful.
 - Version progression follows actual update scope, not a calendar and not dimension counters.
 
