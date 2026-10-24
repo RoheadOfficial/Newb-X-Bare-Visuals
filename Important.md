@@ -55,7 +55,7 @@ O0.6.0 is an unconfirmed retrospective baseline. N0.0.0, E0.0.0, and S0.0.0 are 
 
 ## B-Series release identity
 
-- Previous recorded development version: **B0.3.7**; B0.4.5 is the current implementation branch milestone.
+- Last merged main version at B0.4.5 branch creation: **B0.4.1**; B0.4.5 is the current implementation branch milestone.
 - **B1** is the intended first full-release identity, once the project meets its release criteria. B1.0.0 is only needed if stable subversions prove useful.
 - Version progression follows actual update scope, not a calendar and not dimension counters.
 
