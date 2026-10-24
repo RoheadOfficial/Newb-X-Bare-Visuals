@@ -5,12 +5,12 @@ Newb X Bare Visuals is a community-made Newb Shader variant by RoheadOfficial. I
 ## Visual style
 
 - Natural block colors and balanced sunlight
-- Rounded clouds and a familiar Minecraft sky
+- Lightweight soft procedural clouds and a familiar Minecraft sky
 - Restrained fog, rain mist, and wet-ground effects
 - Lightweight rain and nighttime atmosphere
 - Water with a distinct, muted identity
 
-The look avoids oversaturation, godrays, water waves, waving vegetation, box clouds, and custom player or mob shadows.
+The look avoids oversaturation, godrays, water waves, waving vegetation, box clouds, and custom player or mob shadows. Rounded and realistic cloud presets are shelved while the lightweight Type 1 preset is evaluated.
 
 ## Profiles
 
@@ -18,7 +18,7 @@ The look avoids oversaturation, godrays, water waves, waving vegetation, box clo
 - **Pootaytoe:** performance-focused, with more conservative rendering choices.
 - **Bare Visuals:** the fullest cozy atmosphere while remaining mindful of performance.
 
-The profile order is Default, Pootaytoe, Bare Visuals.
+The profile order is Default, Pootaytoe, Bare Visuals, Experimental.
 
 ## Source and credits
 
