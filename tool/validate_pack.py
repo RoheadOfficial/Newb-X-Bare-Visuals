@@ -77,7 +77,7 @@ def main() -> int:
     require("default: 'Android'" in build, "manual build default must be Android")
     for name, workflow in (("build.yml",build),("build-check.yml",check)):
         require("tool/validate_pack.py" in workflow and "tool/versioning.py" in workflow and "tool/audit_duplicates.py" in workflow and "steps.version.outputs.full_version_slug" in workflow, f"{name} validation/artifact setup must remain")
-    require("default: '0'" in build and "-v 0 --no-zip" in check, "workflows must use manifest version 0")
+    require("default: '0'" in build and "-v 0" in check and "--no-zip" not in check and "path: ./build/*.mcpack" in check, "workflow must publish a directly installable B0.4.0 mcpack")
     require("b0.4.0-performance-fixes" in check and "multiplatform:" not in check and "android:" in check, "implementation checks must target Android on the B0.4.0 branch")
     print("B0.4.0 performance static regression checks passed.")
     return 0
