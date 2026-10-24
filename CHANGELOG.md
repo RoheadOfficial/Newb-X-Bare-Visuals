@@ -1,3 +1,20 @@
+## B0.4.5 / O7 — All-in-One Performance Overhaul
+
+**Status:** Implementation in progress on `b0.4.5-performance-overhaul`, branched from `main`. Static checks, Android packaging, and in-game comparison are pending. No FPS gain or runtime compatibility is claimed until tested.
+
+### Current implementation direction
+- Activate lightweight procedural Cloud Type 1; shelve rounded Type 2 and realistic Type 3 for this milestone.
+- Raise saturation from 1.04 to 1.06 as a small, natural-color test adjustment.
+- Continue optimizing dense terrain and review atmosphere, particles, weather, water reflection, and Actor Glint while retaining recognizable effects.
+- Preserve all four subpacks, no-waving behavior, terrain Always Reflection, water reflections, rain/wet ground, and the Android-first build target.
+- Update version validation, docs, manifest copy, and CI branch filters. Upstream README remains untouched.
+
+### Verification required
+- [ ] Static validator and duplicate audit pass.
+- [ ] Android build produces a directly installable `.mcpack` with all four profile materials.
+- [ ] Compare B0.4.1 and B0.4.5 on-device with matching scenes/settings; record FPS and stutters separately from chunk-loading hitches.
+- [ ] Confirm cloud appearance, water reflection, terrain reflection, rain, atmosphere, Actor Glint, and profile identity remain acceptable.
+
 ## B0.4.1 — Forest Performance Pass
 
 **Status:** Implementation on `b0.4.1-forest-performance`, based on B0.4.0. Build/static checks and on-device comparison are pending; no FPS gain is claimed before testing.
