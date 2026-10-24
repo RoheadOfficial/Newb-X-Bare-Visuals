@@ -2,9 +2,9 @@ name: build-check
 
 on:
   push:
-    branches: [main, 'b0.3.8-o6-performance-implementation*']
+    branches: [main, 'b0.3.8-o6-performance-implementation*', 'b0.4.0-performance-fixes*']
   pull_request:
-    branches: [main]
+    branches: [main, 'b0.3.8-o6-performance-implementation']
   workflow_dispatch:
 
 # Implementation checks build Android only. Multiplatform is reserved for release preparation.
@@ -29,8 +29,8 @@ jobs:
       run: python tool/versioning.py
     - run: |
         ./build.sh setup
-        ./build.sh pack -p android -v 8 --no-zip
+        ./build.sh pack -p android -v 0
     - uses: actions/upload-artifact@v4
       with:
         name: newb-x-bare-visuals-${{ steps.version.outputs.full_version_slug }}-android-implementation
-        path: ./build/pack-android
+        path: ./build/*.mcpack

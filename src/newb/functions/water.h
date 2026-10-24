@@ -42,7 +42,15 @@ vec4 nlWater(
   float cosR = dot(nrm, viewDir);
   viewDir = viewDir - 2.0*cosR*nrm ; // reflect(viewDir, nrm)
 
-  vec3 waterRefl = nlRenderSky(skycol, env, viewDir, t, false);
+  // B0.4.0: retain a sky reflection at every visible distance, but reserve the full
+  // sky shader for nearby water. Far water uses a cheap horizon-to-zenith gradient.
+  vec3 waterRefl;
+  if (camDist < NL_WATER_FULL_REFLECTION_DISTANCE) {
+    waterRefl = nlRenderSky(skycol, env, viewDir, t, false);
+  } else {
+    float reflectionHeight = smoothstep(-0.15, 0.65, viewDir.y);
+    waterRefl = mix(skycol.horizon, skycol.zenith, reflectionHeight);
+  }
 
   #if defined(NL_CLOUD_AURORA_REFLECTION)
     // Base sky reflection remains active at all visible water distances; extra aurora detail is bounded.
