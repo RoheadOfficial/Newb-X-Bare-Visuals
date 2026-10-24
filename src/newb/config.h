@@ -120,7 +120,7 @@
 //#define NL_WATER_REFL_MASK        // Keep sky reflections broad and natural
 #define NL_WATER_TINT vec3(0.90,0.94,0.93) // Muted mineral-gray water, not a strong blue/green wash
 #define NL_WATER_STYLE_STRENGTH 0.42 // Give water a distinct, restrained material identity
-#define NL_WATER_DETAIL_REFLECTION_DISTANCE 24.0 // Bounds extra aurora detail, not base sky reflection
+#define NL_WATER_DETAIL_REFLECTION_DISTANCE 18.0 // B0.4.0: limit extra aurora detail; base sky reflection stays active
 #define NL_GROUND_REFL 0.18         // Restrained terrain reflection; water keeps its own sky reflection
 #define NL_GROUND_REFL_DISTANCE 0.20 // B0.4.0: preserve nearby Always Reflection with less far-field work
 #define NL_GROUND_REFL_MAX_DISTANCE 22.0 // B0.4.0: terrain reflection remains active at closer ranges
@@ -275,7 +275,7 @@
   #undef NL_GROUND_REFL_MAX_DISTANCE
   #define NL_GROUND_REFL_MAX_DISTANCE 22.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
-  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 24.0
+  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 18.0
   #undef NL_SKY_HORIZON_GLOW
   #define NL_SKY_HORIZON_GLOW 0.16
   #undef NL_SKY_AMBIENT_STRENGTH
@@ -291,7 +291,7 @@
   #undef NL_GROUND_REFL_MAX_DISTANCE
   #define NL_GROUND_REFL_MAX_DISTANCE 22.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
-  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 28.0
+  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 20.0
   #undef NL_SKY_HORIZON_GLOW
   #define NL_SKY_HORIZON_GLOW 0.24
   #undef NL_SKY_AMBIENT_STRENGTH
@@ -322,7 +322,7 @@
   // Experimental only: reuse existing terrain vertex-lighting gradients for lightweight fake shading.
   // This does not create genuine tree-cast or entity shadows.
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
-  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 18.0
+  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 14.0
   #undef NL_GROUND_REFL_DISTANCE
   #define NL_GROUND_REFL_DISTANCE 0.18
   #undef NL_GROUND_REFL_MAX_DISTANCE
