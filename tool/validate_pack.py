@@ -57,6 +57,8 @@ def main() -> int:
         require(unused not in glow, f"unused glow sample remains: {unused}")
     water = read("src/newb/functions/water.h")
     require("camDist < NL_WATER_DETAIL_REFLECTION_DISTANCE" in water and "nlRenderSky(skycol, env, viewDir, t, false)" in water, "base water reflection and detail gate must remain")
+    require("NL_WATER_FULL_REFLECTION_DISTANCE" in water and "mix(skycol.horizon, skycol.zenith, reflectionHeight)" in water, "far water must retain a cheaper sky-gradient reflection")
+    require("#define NL_WATER_FULL_REFLECTION_DISTANCE 42.0" in cfg and "#define NL_WATER_FULL_REFLECTION_DISTANCE 24.0" in cfg and "#define NL_WATER_FULL_REFLECTION_DISTANCE 48.0" in cfg and "#define NL_WATER_FULL_REFLECTION_DISTANCE 32.0" in cfg, "all profiles must define the full water reflection range")
     ground = read("src/newb/functions/rain.h")
     require("camDist < NL_WATER_DETAIL_REFLECTION_DISTANCE" in ground, "ground aurora detail must be distance-gated")
     vertex = read("src/materials/RenderChunk/vertex.sc")
