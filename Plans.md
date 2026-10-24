@@ -12,7 +12,7 @@
 2. Avoid calculating unused sky fog colors for nearby clear-weather terrain.
 3. Reuse sun-light dawn/night factors instead of calculating them twice.
 4. Remove one redundant weather-texture sample per particle; particle spawn count remains engine-controlled.
-5. Use two rounded-cloud density steps in all profiles and bound extra aurora reflection separately from base water reflection.
+5. Use two rounded-cloud density steps in all profiles; keep a sky reflection on all visible water while simplifying far-water reflections to a horizon/zenith gradient, and separately bound extra aurora detail.
 6. Skip Actor Glint texture work only when the glint effect is transparent; preserve both layers for visible glint.
 7. Preserve the approved saturation, four profiles, rounded clouds, base water sky reflection, terrain Always Reflection, rain, wet ground, and nighttime aurora.
 
