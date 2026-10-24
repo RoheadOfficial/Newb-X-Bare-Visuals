@@ -1,18 +1,16 @@
 # Plans
 
-## Current project direction — BONES roadmap
+## Current direction — BONES roadmap
 
-**Official project name:** Newb X Bare Visuals.  
-**Informal series-family name:** BONES — B / O / N / E / S. This is a planning shorthand, not a rename of the shader pack.
+- **Project:** Newb X Bare Visuals.
+- **Source lineage:** Newb X Legacy / Newb X MCBE.
+- **Primary inspiration:** Newb X Future; Prizma references in older sections describe earlier planning.
+- **Visual target:** natural color, cozy cinematic atmosphere, recognizable vanilla Minecraft, and mobile-minded rendering. Preserve B0.3.6's accepted color balance unless testing identifies a specific regression.
+- **Priority:** Overworld performance and polish, especially tree-related lag and excessive nearby fog/haze.
+- **Dimension order:** Overworld → Nether → End → The Sift (conditional on availability and testability).
+- **Versioning:** B-Series versions reflect overall project scope; O/N/E/S-series counters are independent.
 
-- **Primary inspiration:** Newb X Future for visual ideas, shader techniques to investigate, atmospheric presentation, cloud design, and feature organization.
-- **Source lineage:** Newb X Legacy / Newb X MCBE remains the foundation of this remix. Inspiration does not mean replacing the source tree with Future or copying its compiled assets.
-- **Creative identity:** vanilla-recognizable Minecraft, natural and restrained color, cozy cinematic atmosphere, and mobile-minded performance. The creator approved B0.3.6's saturation; preserve it unless a tested regression gives a specific reason to change it.
-- **Development order:** Overworld first; Nether only after Overworld acceptance; End only after Nether acceptance; The Sift only if it becomes available and testable and the project has reached that phase.
-- **Current focus:** performance and polish, not another full visual redesign. Investigate tree-related lag and excessive nearby fog/haze before adding more effects.
-- **Release philosophy:** do not claim FPS gains, compatibility, or release readiness from source inspection or a successful compile alone. Record comparable on-device observations.
-
-The full project rules, version-family logic, profile roles, performance principles, licensing boundaries, and proposed retrospective mapping are recorded in [Important.md](Important.md). Historical sections below preserve what earlier versions aimed to do at the time; where they mention Prizma as inspiration, that is historical context and is superseded by the current Future-first direction.
+See [Important.md](Important.md) for the version conventions, proposed historical O-Series mapping, and repository-wide rules. Earlier release sections are historical plans; their original context is retained for traceability.
 
 ## B0.3.7 — Polish, Performance & Compatibility
 
@@ -26,7 +24,7 @@ The full project rules, version-family logic, profile roles, performance princip
 - Polish the existing B0.3.6 result rather than launch another full visual redesign.
 - Use Newb X Future as the primary visual/technical reference going forward, while retaining Newb X Legacy as the source-code lineage and keeping Bare Visuals original.
 - Treat Prizma Visuals as a historical mood reference from earlier planning, not the current primary inspiration.
-- Preserve the creator-approved B0.3.6 saturation exactly unless testing identifies a concrete regression.
+- Preserve the accepted B0.3.6 saturation unless testing identifies a concrete regression.
 - Prioritize the Overworld until the creator accepts its performance and visuals. Current reported problems are persistent lag (especially around trees/dense terrain) and fog/haze that is too noticeable even nearby.
 - Diagnose tree-related rendering cost and near fog independently; treat suspected bottlenecks as hypotheses until comparable in-game tests support them.
 - Reduce visual clutter by checking how sky, fog, terrain lighting, clouds, water, and weather interact; do not add effects merely to enlarge the changelog.
