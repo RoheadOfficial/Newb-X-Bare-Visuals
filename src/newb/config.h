@@ -122,8 +122,8 @@
 #define NL_WATER_STYLE_STRENGTH 0.42 // Give water a distinct, restrained material identity
 #define NL_WATER_DETAIL_REFLECTION_DISTANCE 24.0 // Bounds extra aurora detail, not base sky reflection
 #define NL_GROUND_REFL 0.18         // Restrained terrain reflection; water keeps its own sky reflection
-#define NL_GROUND_REFL_DISTANCE 0.22 // O6.0 follow-up: reduce distant terrain-reflection work
-#define NL_GROUND_REFL_MAX_DISTANCE 28.0 // O6.0 follow-up: retain nearby Always Reflection, trim far-field cost
+#define NL_GROUND_REFL_DISTANCE 0.20 // B0.4.0: preserve nearby Always Reflection with less far-field work
+#define NL_GROUND_REFL_MAX_DISTANCE 22.0 // B0.4.0: terrain reflection remains active at closer ranges
 #define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.016 // B0.3.6: restrained material separation without extra texture reads
 #define NL_CLOUD_AURORA_REFLECTION // Keep Newb's sky/aurora reflection detail, with distance/night gating
 
@@ -154,7 +154,7 @@
 /* Rounded cloud settings */
 #define NL_CLOUD2_THICKNESS 2.3            // B0.3.6: fuller rounded cloud bodies at the same sample count
 #define NL_CLOUD2_RAIN_THICKNESS 2.8       // Slightly fuller cloud cover in rain
-#define NL_CLOUD2_STEPS 3                  // O6.0: one fewer density sample per rounded-cloud fragment
+#define NL_CLOUD2_STEPS 2                  // B0.4.0: two density samples per rounded-cloud fragment
 #define NL_CLOUD2_SCALE vec2(0.033, 0.033) // 0.003 large ~ 0.3 tiny
 #define NL_CLOUD2_SHAPE vec2(0.44, 0.34)   // B0.3.6: rounder cloud edges without adding ray samples
 #define NL_CLOUD2_DENSITY 25.0             // 1.0 blurry ~ 100.0 sharp
@@ -216,7 +216,7 @@
 //#define NL_ENTITY_EDGE_HIGHLIGHT 0.41 // Disabled for a lighter mob-heavy rendering path
 
 /* Weather particles */
-#define NL_WEATHER_SPECK 0.28        // Reduce weather overlay intensity; particles remain enabled
+#define NL_WEATHER_SPECK 0.18        // B0.4.0: subtler analytic particle modulation; spawn count is engine-controlled
 #define NL_WEATHER_RAIN_SLANT 3.0    // Moderate rain slant
 #define NL_WEATHER_PARTICLE_SIZE 1.0 // 0.5 tiny ~ 4.0 large
 
@@ -271,9 +271,9 @@
 #ifdef DEFAULT
   // Default: preserve the full established effects with B0.2.9-style terrain optimizations.
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.22
+  #define NL_GROUND_REFL_DISTANCE 0.20
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 28.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 22.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 24.0
   #undef NL_SKY_HORIZON_GLOW
@@ -281,15 +281,15 @@
   #undef NL_SKY_AMBIENT_STRENGTH
   #define NL_SKY_AMBIENT_STRENGTH 0.90
   #undef NL_WEATHER_SPECK
-  #define NL_WEATHER_SPECK 0.28
+  #define NL_WEATHER_SPECK 0.18
 #endif
 
 #ifdef BARE_VISUALS
   // Bare Visuals: stronger cozy dawn/sunset identity, with a bounded reflection path and subtle highlights.
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.21
+  #define NL_GROUND_REFL_DISTANCE 0.19
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 26.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 22.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 28.0
   #undef NL_SKY_HORIZON_GLOW
@@ -313,9 +313,9 @@
   #undef NL_DAY_EDGE_COL
   #define NL_DAY_EDGE_COL vec3(0.91,0.95,1.0)
   #undef NL_WEATHER_SPECK
-  #define NL_WEATHER_SPECK 0.30
+  #define NL_WEATHER_SPECK 0.18
   #undef NL_CLOUD2_STEPS
-  #define NL_CLOUD2_STEPS 3
+  #define NL_CLOUD2_STEPS 2
 #endif
 
 #ifdef EXPERIMENTAL
@@ -324,13 +324,13 @@
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 18.0
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.20
+  #define NL_GROUND_REFL_DISTANCE 0.18
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 24.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 20.0
   #undef NL_CLOUD2_STEPS
-  #define NL_CLOUD2_STEPS 3
+  #define NL_CLOUD2_STEPS 2
   #undef NL_WEATHER_SPECK
-  #define NL_WEATHER_SPECK 0.28
+  #define NL_WEATHER_SPECK 0.18
   #define NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH 0.10
 #endif
 
