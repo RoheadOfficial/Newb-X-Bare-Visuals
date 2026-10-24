@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, 'b0.3.8-o6-performance-implementation*', 'b0.4.0-performance-fixes*']
   pull_request:
-    branches: [main]
+    branches: [main, 'b0.3.8-o6-performance-implementation']
   workflow_dispatch:
 
 # Implementation checks build Android only. Multiplatform is reserved for release preparation.
