@@ -78,7 +78,7 @@ The target belongs in `minecraft_target_version`. The manifest version remains a
 - **Pootaytoe:** performance-first profile.
 - **Bare Visuals:** fuller cozy atmosphere while remaining playable.
 
-The order is Default, Pootaytoe, Bare Visuals. Internal inspiration percentages are not player-facing metadata.
+The order is Default, Pootaytoe, Bare Visuals, Experimental. Internal inspiration percentages are not player-facing metadata.
 
 ## Performance and acceptance
 
