@@ -82,6 +82,11 @@ float nlGlowShimmer(vec3 cPos, float t) {
 vec4 nlGlint(vec4 light, vec4 layerUV, sampler2D glintTexture, vec4 glintColor, vec4 tileLightColor, vec4 albedo) {
   float d = fract(dot(albedo.rgb, vec3_splat(4.0)));
 
+  // Keep both animated glint layers, but skip their texture work when the effect is transparent.
+  if (glintColor.a <= 0.001) {
+    return light;
+  }
+
   vec4 tex1 = texture2D(glintTexture, fract(layerUV.xy+0.1*d)).rgbr;
   vec4 tex2 = texture2D(glintTexture, fract(layerUV.zw+0.1*d)).rgbr;
 

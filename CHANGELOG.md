@@ -1,3 +1,23 @@
+## B0.4.0 — Targeted Performance Fixes
+
+**Status:** Source implementation on `b0.4.0-performance-fixes`. Android build/static checks and in-game acceptance are pending; FPS gains are not claimed until measured on-device.
+
+### Implemented
+- Skip terrain Always Reflection calculations for alpha-tested foliage and billboards, whose fragments cannot display the horizontal terrain-reflection mask; keep reflection on opaque terrain with shorter profile-specific far-field limits.
+- Skip sky-color rendering for nearby terrain when clear-weather fog alpha is effectively zero; preserve sky-derived fog when fog can contribute or rain is active.
+- Reuse sun dawn/night factors in sunlight tinting rather than recalculating them per terrain/entity vertex.
+- Remove the second weather-texture lookup per particle and replace its overlay with cheaper analytic modulation. Minecraft's particle spawn count is unchanged.
+- Reduce rounded-cloud density steps to two in all profiles; retain a sky reflection across visible water but use a cheap horizon-to-zenith gradient beyond each profile's full-reflection range, while separately limiting extra aurora detail.
+- Guard transparent Actor Glint against unnecessary texture sampling; retain both glint layers when the effect is visible.
+- Preserve approved saturation, natural color, rain/wet ground, rounded clouds, nighttime aurora, and terrain Always Reflection. No waving, godrays, or player/mob shadow systems were added.
+
+### Verification required
+- [ ] Static validator and duplicate audit pass.
+- [ ] Android GitHub Actions build succeeds and artifact is a directly installable `.mcpack` containing all expected RenderChunk binaries.
+- [ ] On-device A/B test in a fixed world for dense trees, clear-weather terrain, heavy rain, large water, wide sky, and enchanted actors.
+- [ ] Check for reflection fade/pop-in, foliage wetness differences, cloud quality, rain appearance, and fog transitions in all four profiles.
+- [ ] Confirm Minecraft 26.52 / MB Loader 26.52 runtime behavior; target metadata alone is not proof of compatibility.
+
 ## B0.3.8 / O6.0 — Performance, Atmosphere & Water Refinement
 
 **Status:** Implementation on `b0.3.8-o6-performance-implementation`. Static checks and Android build are pending; no in-game FPS or visual acceptance is claimed.

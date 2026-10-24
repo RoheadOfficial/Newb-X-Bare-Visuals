@@ -54,10 +54,11 @@ void main() {
       g *= 0.9*gv.x;
     }
 
-    vec4 color = texture2D(s_WeatherTexture, UVOffsetAndScale.xy + 0.5*UVOffsetAndScale.zw);
-    color.a = g*g;
-
-    diffuse = mix(diffuse, color, NL_WEATHER_SPECK);
+    // B0.4.0: derive the subtle particle speck modulation from the existing texel.
+    // Avoid a second weather-texture fetch for every rain/snow particle.
+    float speck = g*g;
+    diffuse.rgb *= mix(0.92, 1.0, speck*NL_WEATHER_SPECK);
+    diffuse.a *= mix(0.96, 1.0, speck*NL_WEATHER_SPECK);
   #endif 
 
   vec3 light = texture2D(s_LightingTexture, lightingUV).rgb;
