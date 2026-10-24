@@ -60,6 +60,8 @@ def main() -> int:
     require("NL_VANILLA_WATER" not in vertex, "vanilla-water bypass must not disable reflection")
     terrain = read("src/materials/RenderChunk/fragment.sc")
     require("waterLuma * NL_WATER_TINT" in terrain and "diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);" in terrain, "water palette and fog blend must remain")
+    require("#elif defined(ALPHA_TEST) || defined(RENDER_AS_BILLBOARDS)" in terrain and "glowDetect(diffuse) * NL_GLOW_TEX" in terrain,
+            "alpha-tested foliage must skip extra halo taps but retain base emissive glow")
     packer = read("tool/pack.py")
     require("get_version_identity" in packer and "full_version_slug" in packer and "Keep the simple B0.x.y label aligned" in packer, "shared versioning must remain")
     build, check = read(".github/workflows/build.yml"), read(".github/workflows/build-check.yml")
