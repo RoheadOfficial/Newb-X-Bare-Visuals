@@ -9,7 +9,8 @@
 ### Implementation priorities
 - Reduce tree-heavy rendering cost without removing established shader systems; target a measurable 50% reduction in tree-related overhead, not an unverified FPS promise.
 - Reduce nearby haze and weather overlay; retain distance fog, rain, wet ground, and the existing sky pipeline.
-- Restore Newb's custom water reflection path and give water a muted mineral-gray identity; no water waves or displacement.
+- Preserve Newb X Legacy Always Reflection on terrain; retain its near-field strength while reducing far-field work with profile-specific range caps.
+- Keep water reflection separate: use the custom Newb water path and a muted mineral-gray identity, with no water waves or displacement.
 - Keep base sky reflection active while bounding more expensive aurora reflection detail by profile and distance.
 - Reduce rounded-cloud sampling and retain nighttime aurora with its daytime early-out.
 - Globally block vegetation, lantern, water, and underwater waving paths.
@@ -17,7 +18,8 @@
 
 ### Acceptance evidence
 - Static regression checks and Android build pass; inspect generated pack, manifest, profile order, and compiled materials.
-- Repository checks confirm wave paths are disabled and water reflection remains active.
+- Repository checks confirm terrain Always Reflection (`NL_GROUND_REFL`) and the separate base water reflection remain active, while profile-specific terrain reflection ranges are bounded.
+- Compare terrain reflection fade/cutoff and visual continuity in-game; the shorter range is an optimization trade-off, not a measured FPS claim.
 - A 50% runtime performance improvement, visual acceptance, and Minecraft/MB Loader compatibility remain unverified until comparable in-game testing is possible.
 - Keep `main` untouched until review and explicit merge approval.
 
