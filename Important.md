@@ -96,11 +96,10 @@ Performance claims require build evidence and comparable in-game observations. T
 
 ## Documentation boundaries
 
-- `README.md`: upstream Newb X Legacy documentation; preserve its original content.
+- `README.md`: upstream Newb X Legacy documentation; retain its original content.
 - `About.md`: concise player-facing overview and profile descriptions.
 - `Plans.md`: active priorities, test plan, and future roadmap.
-- `Important.md`: durable project-wide conventions recorded here.
-- `CHANGELOG.md`: actual changes and validation status by version.
-- `AIREADME.md`: concise maintenance context for automated coding/review tools, not a copy of the repository.
+- `Important.md`: durable project-wide conventions.
+- `CHANGELOG.md`: release history and the evidence/status associated with each version.
 
-Keep details in the file whose purpose they serve. Do not repeat release checklists across documents or list obvious project facts without a decision, constraint, or useful context.
+Release checklists belong in `Plans.md` while work is active. Once a result is verified, record the actual change and its validation status in `CHANGELOG.md`. Keep player-facing explanations out of internal planning documents, and do not duplicate entire feature lists or old implementation checklists across files.
