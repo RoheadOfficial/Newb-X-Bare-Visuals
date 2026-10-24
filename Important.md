@@ -1,99 +1,106 @@
 # Important
 
-This file defines project-wide versioning and planning conventions that are not tied to one release. Release-specific implementation details belong in `Plans.md`; shipped changes belong in `CHANGELOG.md`; player-facing project information belongs in `About.md`. AI maintenance context belongs in `AIREADME.md`.
+## Identity and direction
 
-## Project direction
-
-- **Project name:** Newb X Bare Visuals.
+- **Project:** Newb X Bare Visuals.
 - **Source lineage:** Newb X Legacy / Newb X MCBE.
-- **Primary inspiration:** Newb X Future. Use it as a reference for visual ideas and techniques to investigate, not as a reason to replace the existing source tree or copy assets blindly.
-- **Creative target:** recognizable vanilla Minecraft, natural color, cozy cinematic atmosphere, and mobile-minded rendering.
-- **Current priority:** Overworld performance and polish, especially tree-related lag and excessive nearby fog/haze. Preserve the accepted B0.3.6 color balance unless testing gives a concrete reason to change it.
-- **Dimension order:** Overworld → Nether → End → The Sift (only when available and testable).
+- **Primary inspiration:** Newb X Future.
+- **Earlier inspiration:** Prizma Visuals informed earlier planning; it is not the current primary reference.
+- **Internal family name:** BONES, for the B/O/N/E/S version series. It is not a pack rename.
+- **Visual target:** natural color, cozy cinematic atmosphere, recognizable vanilla Minecraft, and mobile-minded rendering.
+- **Accepted baseline:** B0.3.6's color balance and saturation, unless testing identifies a specific regression.
 
-Prizma Visuals was an earlier reference during development; Newb X Future is the current primary inspiration. The official project name remains Newb X Bare Visuals. “BONES” is an informal family name for the B/O/N/E/S series, not a pack rename.
-
-Inspiration does not grant permission to reuse another project's code, textures, compiled materials, or other assets. Review the exact license and notices before any direct reuse.
+Newb X Future is an inspiration source, not a source-tree replacement. Review the exact license and notices before reusing any code, textures, compiled materials, or other assets.
 
 ## BONES series
 
 | Prefix | Scope |
 |---|---|
-| **B** | Main Bare Visuals release series |
-| **O** | Overworld-specific work |
-| **N** | Nether-specific work |
-| **E** | End-specific work |
-| **S** | The Sift; future/conditional |
+| B | Overall Newb X Bare Visuals release |
+| O | Overworld-specific work |
+| N | Nether-specific work |
+| E | End-specific work |
+| S | The Sift, if available and testable |
 
-Dimension counters are independent of one another and of the B-Series. For example, O0.3.8 does not imply B0.3.8. Several dimension updates may occur without a B-Series bump. Choose the B-Series version according to the significance and scope of the overall project update; do not calculate it automatically from a dimension version.
+O/N/E/S counters are independent of each other and of B. An Overworld release such as O0.3.8 does not imply B0.3.8. A dimension may receive several updates without a B-Series bump. B-Series numbering reflects the scope of the overall project update, by deliberate release decision.
 
-## Version conventions
+### Dimension numbering proposal
 
-### Main B-Series
+The following major/minor/patch interpretation remains provisional:
+- **Patch:** narrow fix.
+- **Minor:** meaningful feature or optimization milestone within that dimension.
+- **Major:** substantial redesign of that dimension's work.
 
-- Current recorded development version: `B0.3.7`.
-- `B0` is the pre-full-release series.
-- `B1` is the intended first full-release identity, once the overall project meets its acceptance criteria. Prefer `B1`; use `B1.0.0` only if stable subversions become useful.
-- Version decisions follow the actual scope of the overall update, not a fixed calendar and not the dimension counters.
+### Retrospective O-Series map
 
-### Dimension-series numbering
+These labels are planning references for past milestones, not published releases or pack metadata.
 
-**Working proposal, not yet a final rule:** use independent major/minor/patch-style progression within each dimension series:
-- Patch: narrow correction or bug fix.
-- Minor: meaningful feature or optimization milestone.
-- Major: substantial redesign of that dimension's experience.
-
-The exact convention can be finalized separately. Regardless of the chosen convention, dimension versions must remain independent of the B-Series.
-
-### Historical O-Series mapping
-
-The following retrospective mapping was proposed to organize documented Overworld milestones. These labels were not published releases and must not be inserted into pack metadata as if they had shipped.
-
-| Historical milestone | Proposed label |
+| B-Series milestone | Proposed O-Series label |
 |---|---|
-| B0.1 foundation: sky, clouds, atmosphere | O0.1.0 |
-| B0.1.1 sky/time/weather/fog fixes | O0.1.1 |
-| B0.1.7 sky restoration/natural lighting | O0.2.0 |
-| B0.1.7 Deluxe lighting/mist/water/glow experiments | O0.2.1 |
-| B0.1.9 profile reorganization/atmospheric profiles | O0.2.2 |
-| B0.2.2 Overworld visual rework/terrain shading | O0.3.0 |
-| B0.2.5 refinement/performance/profile experiments | O0.3.1 |
-| B0.2.6 lighting/glow/effects | O0.3.2 |
-| B0.2.9 terrain performance/profile tuning | O0.4.0 |
-| B0.3.2 profiles/material highlights/night readability/ore textures | O0.5.0 |
-| B0.3.6 cozy Java-inspired lighting/atmosphere revamp | O0.6.0 |
+| B0.1 foundation | O0.1.0 |
+| B0.1.1 | O0.1.1 |
+| B0.1.7 | O0.2.0 |
+| B0.1.7 Deluxe | O0.2.1 |
+| B0.1.9 | O0.2.2 |
+| B0.2.2 | O0.3.0 |
+| B0.2.5 | O0.3.1 |
+| B0.2.6 | O0.3.2 |
+| B0.2.9 | O0.4.0 |
+| B0.3.2 | O0.5.0 |
+| B0.3.6 | O0.6.0 |
 
-`O0.6.0` is a proposed retrospective baseline only; it remains unconfirmed. `N0.0.0`, `E0.0.0`, and `S0.0.0` are placeholder labels for series without an established dedicated release history, not completion claims.
+O0.6.0 is an unconfirmed retrospective baseline. N0.0.0, E0.0.0, and S0.0.0 are placeholders only; they do not indicate completed work.
 
-## Minecraft target and pack identity
+## B-Series release identity
 
-The tooling derives a compact full identity from the B-Series display version and the declared Minecraft target:
+- Current recorded development version: **B0.3.7**.
+- **B1** is the intended first full-release identity, once the project meets its release criteria. B1.0.0 is only needed if stable subversions prove useful.
+- Version progression follows actual update scope, not a calendar and not dimension counters.
 
-- Display version: `B0.3.7`
-- Target label: `26.52`
-- Compact identity: `B0.3.7.2652`
+## Minecraft target suffix
 
-The target is metadata, not proof of compatibility. Minecraft and MB Loader support must be verified independently.
+The compact identity combines the simple B-Series version and the declared Minecraft target:
 
-- Store the target in `minecraft_target_version`.
-- Keep the manifest version as a valid numeric array, such as `[0, 3, 7]`.
-- Do not put the display string or target suffix in the manifest version array.
-- Generate artifact labels and full identities from the shared versioning helper rather than duplicating hard-coded strings.
+| Field | Example |
+|---|---|
+| Simple version | B0.3.7 |
+| Target label | 26.52 |
+| Compact identity | B0.3.7.2652 |
+| Manifest version | [0, 3, 7] |
+
+The target belongs in `minecraft_target_version`. The manifest version remains a valid numeric array. A suffix such as 2652 is a label derived from target 26.52, not evidence of compatibility. Minecraft and MB Loader support require separate verification. Shared versioning logic generates full identities and artifact labels; duplicated hard-coded labels are not canonical.
+
+## Profile roles
+
+- **Default:** balanced main profile.
+- **Pootaytoe:** performance-first profile.
+- **Bare Visuals:** fuller cozy atmosphere while remaining playable.
+
+The order is Default, Pootaytoe, Bare Visuals. Internal inspiration percentages are not player-facing metadata.
 
 ## Performance and acceptance
 
-Treat tree-related rendering cost and near fog/haze as separate investigations. Test comparable scenes and distinguish shader rendering from chunk loading or other game-side stutter. Static checks and successful compilation do not establish in-game performance or compatibility.
+Tree-heavy rendering and nearby fog/haze are separate investigations until evidence connects them. Compare equivalent scenes and distinguish shader rendering from chunk loading or world-generation stutter. Static validation and compilation do not prove runtime compatibility, visual quality, or FPS gains.
 
-A performance change is accepted only after the relevant build and runtime checks, visual regression review, and device observations. Do not promise a specific FPS result before measurement. Optimize the existing experience before adding costly effects or removing large portions of the shader's identity.
+Performance claims require build evidence and comparable in-game observations. The 50–60+ FPS target is aspirational, not guaranteed. Preserve the accepted color balance and the established visual identity while testing targeted optimizations.
 
-## Repository rules
+## Repository and release rules
 
-- Inspect the current source before planning implementation.
-- Keep main stable; use a dedicated branch for changes and merge only with explicit approval.
-- Do not change source code or pack metadata without explicit implementation authorization.
-- Do not report a build, CI run, compatibility test, duplicate audit, or device test as passing without evidence.
-- Review duplicate-file findings manually; identical files are not automatically safe to delete.
-- Keep Android as the development build target; reserve multiplatform validation for release preparation unless the scope is explicitly changed.
-- Keep licensing notices, attribution, pack identity, and patch warning consistent with the applicable Newb source and variant requirements.
+- Keep `main` stable; isolate work on a dedicated branch.
+- Source or pack-metadata changes require explicit implementation authorization.
+- Merge only with explicit approval.
+- Report builds, CI, audits, compatibility, and device tests only when supported by actual results.
+- Review duplicate-file findings manually; identical files can be intentional.
+- Android is the development build target. Multiplatform validation belongs to release preparation unless the scope changes.
+- Retain the required source attribution, copyright/license notices, pack identity, and patch warning for the applicable Newb source and variant.
 
-**In short:** Newb X Future informs the direction; Newb X Legacy remains the foundation; Bare Visuals owns the final implementation and release decisions.
+## Documentation boundaries
+
+- `README.md`: upstream Newb X Legacy documentation; preserve its original content.
+- `About.md`: concise player-facing overview and profile descriptions.
+- `Plans.md`: active priorities, test plan, and future roadmap.
+- `Important.md`: durable project-wide conventions recorded here.
+- `CHANGELOG.md`: actual changes and validation status by version.
+- `AIREADME.md`: concise maintenance context for automated coding/review tools, not a copy of the repository.
+
+Keep details in the file whose purpose they serve. Do not repeat release checklists across documents or list obvious project facts without a decision, constraint, or useful context.
