@@ -37,7 +37,7 @@ def main() -> int:
         require(not re.search(rf"(?m)^\s*#define\s+{macro}\b", cfg), f"{macro} must not be enabled")
     require("#define NL_CLOUD_AURORA_REFLECTION" in cfg, "Newb reflection detail must remain enabled")
     require("#define NL_GROUND_REFL 0.18" in cfg, "terrain Always Reflection must stay enabled")
-    require(" #define NL_GROUND_REFL_MAX_DISTANCE 22.0" in cfg, "base terrain reflection must retain a bounded range")
+    require("#define NL_GROUND_REFL_MAX_DISTANCE 22.0" in cfg, "base terrain reflection must retain a bounded range")
     require(" #define NL_GROUND_REFL_MAX_DISTANCE 16.0" in cfg and "#define NL_GROUND_REFL_MAX_DISTANCE 22.0" in cfg and "#define NL_GROUND_REFL_MAX_DISTANCE 20.0" in cfg, "profile-specific terrain reflection limits must remain tuned")
     for distance in ("18.0","12.0","20.0","14.0"): 
         require(f"#define NL_WATER_DETAIL_REFLECTION_DISTANCE {distance}" in cfg, "each profile must have a reflection detail range")
@@ -79,7 +79,7 @@ def main() -> int:
         require("tool/validate_pack.py" in workflow and "tool/versioning.py" in workflow and "tool/audit_duplicates.py" in workflow and "steps.version.outputs.full_version_slug" in workflow, f"{name} validation/artifact setup must remain")
     require("default: '0'" in build and "-v 0 --no-zip" in check, "workflows must use manifest version 0")
     require("b0.4.0-performance-fixes" in check and "multiplatform:" not in check and "android:" in check, "implementation checks must target Android on the B0.4.0 branch")
-    print("B0.4.0 / O6.0 static regression checks passed.")
+    print("B0.4.0 performance static regression checks passed.")
     return 0
 if __name__ == "__main__":
     try:
