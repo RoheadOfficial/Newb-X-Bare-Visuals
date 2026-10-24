@@ -56,8 +56,12 @@ vec4 nlRefl(
         wetRefl.rgb = nlRenderSky(skycol, env, viewDir, t, false);
 
         #ifdef NL_CLOUD_AURORA_REFLECTION
-          vec4 cloudRefl = nlCloudAuroraReflection(skycol, env, viewDir, wPos, CAMERA_POS, t);
-          wetRefl.rgb = mix(wetRefl.rgb, cloudRefl.rgb, cloudRefl.a);
+          // Bound extra aurora detail; base terrain reflection and wet-ground shading remain.
+          if (env.dayFactor < 0.15 && camDist < NL_WATER_DETAIL_REFLECTION_DISTANCE &&
+              abs(viewDir.y) > 0.05) {
+            vec4 cloudRefl = nlCloudAuroraReflection(skycol, env, viewDir, wPos, CAMERA_POS, t);
+            wetRefl.rgb = mix(wetRefl.rgb, cloudRefl.rgb, cloudRefl.a);
+          }
         #endif
 
         // torch light

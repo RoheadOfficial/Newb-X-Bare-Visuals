@@ -67,8 +67,14 @@ void main() {
   #endif
 
   #if defined(LITE) || defined(POOTAYTOE)
-    // Pootaytoe is the current performance profile define; it also skips the extra glow texture sample.
+    // Pootaytoe skips terrain glow work entirely for its performance-first profile.
     vec3 glow = vec3_splat(0.0);
+  #elif defined(ALPHA_TEST) || defined(RENDER_AS_BILLBOARDS)
+    // Dense foliage is heavily overdrawn. Keep the emissive texel glow but skip four extra halo taps.
+    vec3 glow = glowDetect(diffuse) * NL_GLOW_TEX;
+    #ifdef NL_GLOW_SHIMMER
+      glow *= v_extra.a;
+    #endif
   #else
     vec3 glow = nlGlow(s_MatTexture, v_texcoord0, v_extra.a);
   #endif
@@ -86,8 +92,14 @@ void main() {
 
   diffuse.rgb *= color.rgb;
 
-  // B0.3.7: soften excessive blue in water while retaining the existing vanilla-water path.
-  // The existing water flag is reused; no extra texture sample or rendering pass is added.
+  // O6.0: shift water toward muted mineral-gray/cool-glass instead of a strong blue/green wash.
+  // Reuse the already sampled color; no extra texture reads or render passes.
+  if (v_extra.b > 0.9) {
+    float waterLuma = dot(diffuse.rgb, vec3(0.2126, 0.7152, 0.0722));
+    diffuse.rgb = mix(diffuse.rgb, waterLuma * NL_WATER_TINT, NL_WATER_STYLE_STRENGTH);
+  }
+
+  // Keep a small blue-channel correction in addition to the broader water palette.
   if (v_extra.b > 0.9) {
     diffuse.b *= NL_WATER_BLUE_REDUCTION;
   }

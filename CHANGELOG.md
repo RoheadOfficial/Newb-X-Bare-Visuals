@@ -1,3 +1,28 @@
+## B0.3.8 / O6.0 — Performance, Atmosphere & Water Refinement
+
+**Status:** Implementation on `b0.3.8-o6-performance-implementation`. Static checks and Android build are pending; no in-game FPS or visual acceptance is claimed.
+
+### Implemented source changes
+- Add a near-midday tree-foliage lighting fast path that skips spatial sun attenuation when its dawn contribution is negligible.
+- Replace exponential mist with a lower-cost smooth curve, reduce mist and rain-mist strength, and disable the costly sinusoidal cloudy-fog overlay.
+- Restore the custom Newb water path and base sky reflections; use a muted mineral-gray/cool-glass water tint without extra textures or render passes.
+- Keep base water reflections active while limiting extra aurora reflection detail to night/twilight and profile-specific distances.
+- Reduce rounded-cloud sampling in Default, Bare Visuals, and Experimental; Pootaytoe retains its lower-cost two-sample setting.
+- Reduce weather-particle styling while keeping weather particles, rain atmosphere, wet ground, and auroras.
+- Skip four extra glow-halo texture taps on alpha-tested foliage while retaining the center emissive glow.
+- Add a global compile-time guard that blocks vegetation, lantern, water, and underwater waving.
+- Bump the development and numeric manifest version to B0.3.8 / `[0, 3, 8]`; keep Android as the implementation build target.
+
+### Verification still required
+- [ ] Static validator and duplicate audit pass.
+- [ ] Android GitHub Actions build succeeds; inspect generated manifest, profile order, and all compiled materials.
+- [ ] Confirm terrain Always Reflection remains clearly visible nearby and its shorter far-field cutoff avoids distracting pop-out.
+- [ ] Confirm custom water reflection compiles and is visible in-game without excessive cost.
+- [ ] Compare tree-heavy scenes against B0.3.7 to quantify the 50% overhead target.
+- [ ] Check fog, rain, water, cloud and aurora appearance across all four subpacks.
+- [ ] Confirm no waving paths are active in compiled profiles.
+- [ ] Verify Minecraft/MB Loader compatibility and visual quality in-game when storage permits.
+
 ## B0.3.7 — Polish, Performance & Compatibility
 
 **Status:** Implementation changes are on `b0.3.7-implementation`. Android build and in-game acceptance are pending. Multiplatform builds are deferred until release preparation.

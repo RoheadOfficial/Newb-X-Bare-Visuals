@@ -61,9 +61,13 @@ vec3 nlLighting(
     float nightIntensity = 1.0-(0.5+0.5*env.dayFactor);
     nightIntensity *= nightIntensity;
 
-    float sunLightAttenuation = clamp(0.5*(((2.0*step(TIME_OF_DAY, 0.5)-1.0)*(wPos.x*cos(NL_SUN_PATH_YAW)+wPos.y*sin(NL_SUN_PATH_YAW))/renderdistance) + 1.0), 0.0, 1.0);
-    sunLightAttenuation = mix(1.0, sunLightAttenuation*sunLightAttenuation, dawnFactor);
-    sunLightAttenuation *= 1.0-0.4*env.rainFactor;
+    float sunLightAttenuation = 1.0-0.4*env.rainFactor;
+    // O6.0 tree fast path: near midday, dawn attenuation is negligible; skip spatial sun math for leaves.
+    if (!isTree || dawnFactor >= 0.02) {
+      sunLightAttenuation = clamp(0.5*(((2.0*step(TIME_OF_DAY, 0.5)-1.0)*(wPos.x*cos(NL_SUN_PATH_YAW)+wPos.y*sin(NL_SUN_PATH_YAW))/renderdistance) + 1.0), 0.0, 1.0);
+      sunLightAttenuation = mix(1.0, sunLightAttenuation*sunLightAttenuation, dawnFactor);
+      sunLightAttenuation *= 1.0-0.4*env.rainFactor;
+    }
 
     // shadow cast by sun light
     float shadow = step(0.93, uv1.y);
@@ -126,7 +130,7 @@ void nlUnderwaterLighting(inout vec3 light, inout vec3 pos, vec2 lit, vec2 uv1, 
     light += NL_UNDERWATER_BRIGHTNESS + NL_CAUSTIC_INTENSITY*caustics*(0.15 + lit.y + lit.x*0.7);
   }
   light *= mix(normalize(horizonCol), vec3_splat(0.6), lit.y*0.6);
-  #ifdef NL_UNDERWATER_WAVE
+  #if defined(NL_UNDERWATER_WAVE) && !defined(NL_DISABLE_ALL_WAVING)
     pos.xy += NL_UNDERWATER_WAVE*min(0.05*pos.z,0.6)*sin(t*1.2 + dot(cPos,vec3_splat(PI_HALF)));
   #endif
 }

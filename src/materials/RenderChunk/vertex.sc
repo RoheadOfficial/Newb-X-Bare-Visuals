@@ -107,7 +107,7 @@ void main() {
   vec3 torchColor; // modified by nl_lighting
   vec3 light = nlLighting(s_LightMapTexture, skycol, env, worldPos, torchColor, a_color0.rgb, uv1, lit, isTree, shade, t, FogAndDistanceControl.z, TimeOfDay.x, CameraPosition.xyz);
 
-  #if defined(ALPHA_TEST) && (defined(NL_PLANTS_WAVE) || defined(NL_LANTERN_WAVE)) && !defined(RENDER_AS_BILLBOARDS)
+  #if !defined(NL_DISABLE_ALL_WAVING) && defined(ALPHA_TEST) && (defined(NL_PLANTS_WAVE) || defined(NL_LANTERN_WAVE)) && !defined(RENDER_AS_BILLBOARDS)
     nlWave(worldPos, light, env.rainFactor, uv1, lit, uv0, bPos, a_color0, cPos, tiledCpos, t, s_MatTexture, isColored, camDis, isTree);
   #endif
 
@@ -134,13 +134,9 @@ void main() {
   #if defined(TRANSPARENT) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS))
     if (a_color0.b > 0.3 && a_color0.a < 0.95) {
       water = 1.0;
-      #ifdef NL_VANILLA_WATER
-        // Keep vanilla water texture/color and skip custom water reflections and displacement.
-        refl = vec4(0.0,0.0,0.0,0.0);
-      #else
-        color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
-        refl = nlWater(color, worldPos, skycol, env, a_color0, viewDir, cPos, tiledCpos, gPos, CameraPosition.xyz, light, torchColor, lit, bPos.y, camDis, t);
-      #endif
+      // O6.0: retain Newb's always-on base sky reflection; only extra aurora detail is distance-gated.
+      color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
+      refl = nlWater(color, worldPos, skycol, env, a_color0, viewDir, cPos, tiledCpos, gPos, CameraPosition.xyz, light, torchColor, lit, bPos.y, camDis, t);
     } else {
       color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
       refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);

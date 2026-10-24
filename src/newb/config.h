@@ -61,9 +61,9 @@
 
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
-#define NL_MIST_DENSITY 0.18      // B0.3.6: preserve depth without washing out distant terrain
-#define NL_RAIN_MIST_OPACITY 0.12 // Keep rain mist restrained for mobile performance
-#define NL_CLOUDY_FOG 0.1         // [toggle] 0.0 subtle - 0.8 dense fog clouds
+#define NL_MIST_DENSITY 0.12      // O6.0: less nearby haze; distance fog remains active
+#define NL_RAIN_MIST_OPACITY 0.08 // O6.0: retain rain atmosphere with less screen haze
+// NL_CLOUDY_FOG disabled in O6.0: its per-vertex sine overlay added cost and near haze.
 
 /* Sky */
 #define NL_SKY_VOID_FACTOR     0.5
@@ -101,7 +101,8 @@
 #define NL_GLOW_SHIMMER_SPEED 0.9 // 0.5 slow - 2.0 fast
 //#define NL_GLOW_LEAK 0.6        // [toggle] 0.08 subtle ~ 1.0 100% brightness of NL_GLOW_TEX
 
-/* Waving — disabled in B0.2.6 for a still, lower-cost world */
+/* Waving — globally disabled; profile overrides cannot re-enable it. */
+#define NL_DISABLE_ALL_WAVING
 //#define NL_PLANTS_WAVE 0.030   // Shelved: vegetation waving disabled
 //#define NL_LANTERN_WAVE 0.080  // Shelved: lantern waving disabled
 #define NL_WAVE_SPEED 2.8      // 0.5 slow wave ~ 5.0 very fast wave
@@ -109,21 +110,22 @@
 #define NL_WAVE_RANGE 9.0      // Keep plant/lantern movement close to the player for dense-scene performance
 
 /* Water and Always Reflection */
-#define NL_VANILLA_WATER             // B0.2.6: bypass custom water reflection/tint path
-#define NL_WATER_TRANSPARENCY 0.90 // Retained for compatibility; custom water path is disabled
+// O6.0: custom Newb water and base sky reflection are active; no vanilla-water bypass.
+#define NL_WATER_TRANSPARENCY 0.92 // Keep the surface readable while preserving depth
 #define NL_WATER_BUMP 0.0           // Flat surface: no water-wave distortion
-#define NL_WATER_WAVE_SPEED  0.8    // Also used by underwater effects
+#define NL_WATER_WAVE_SPEED  0.8    // Retained for underwater caustic timing
 #define NL_WATER_TEX_OPACITY 0.3    // Retain recognizable vanilla water texture
-#define NL_WATER_BLUE_REDUCTION 0.92 // B0.3.7: gently soften excessive blue in the existing vanilla-water path
+#define NL_WATER_BLUE_REDUCTION 0.92 // Keep the existing restrained blue-channel correction
 //#define NL_WATER_WAVE             // No water displacement or animated waves
 //#define NL_WATER_REFL_MASK        // Keep sky reflections broad and natural
-#define NL_WATER_TINT vec3(0.72,0.88,0.96)
-#define NL_WATER_STYLE_STRENGTH 0.16
-#define NL_GROUND_REFL 0.18         // Restrained terrain-only reflection; water reflection is disabled
-#define NL_GROUND_REFL_DISTANCE 0.32 // Shorter range reduces distant-terrain shader cost
-#define NL_GROUND_REFL_MAX_DISTANCE 32.0 // B0.3.2: keep the shared terrain-reflection cap bounded for large views
+#define NL_WATER_TINT vec3(0.90,0.94,0.93) // Muted mineral-gray water, not a strong blue/green wash
+#define NL_WATER_STYLE_STRENGTH 0.42 // Give water a distinct, restrained material identity
+#define NL_WATER_DETAIL_REFLECTION_DISTANCE 24.0 // Bounds extra aurora detail, not base sky reflection
+#define NL_GROUND_REFL 0.18         // Restrained terrain reflection; water keeps its own sky reflection
+#define NL_GROUND_REFL_DISTANCE 0.22 // O6.0 follow-up: reduce distant terrain-reflection work
+#define NL_GROUND_REFL_MAX_DISTANCE 28.0 // O6.0 follow-up: retain nearby Always Reflection, trim far-field cost
 #define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.016 // B0.3.6: restrained material separation without extra texture reads
-//#define NL_CLOUD_AURORA_REFLECTION // B0.2.5: remove Always Reflection treatment from water
+#define NL_CLOUD_AURORA_REFLECTION // Keep Newb's sky/aurora reflection detail, with distance/night gating
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 0.8         // 0.0 dark ~ 3.0 bright
@@ -152,7 +154,7 @@
 /* Rounded cloud settings */
 #define NL_CLOUD2_THICKNESS 2.3            // B0.3.6: fuller rounded cloud bodies at the same sample count
 #define NL_CLOUD2_RAIN_THICKNESS 2.8       // Slightly fuller cloud cover in rain
-#define NL_CLOUD2_STEPS 4                  // Default keeps four samples for rounded-cloud quality
+#define NL_CLOUD2_STEPS 3                  // O6.0: one fewer density sample per rounded-cloud fragment
 #define NL_CLOUD2_SCALE vec2(0.033, 0.033) // 0.003 large ~ 0.3 tiny
 #define NL_CLOUD2_SHAPE vec2(0.44, 0.34)   // B0.3.6: rounder cloud edges without adding ray samples
 #define NL_CLOUD2_DENSITY 25.0             // 1.0 blurry ~ 100.0 sharp
@@ -214,7 +216,7 @@
 //#define NL_ENTITY_EDGE_HIGHLIGHT 0.41 // Disabled for a lighter mob-heavy rendering path
 
 /* Weather particles */
-#define NL_WEATHER_SPECK 0.35        // Lightweight rain-particle styling; particles remain enabled
+#define NL_WEATHER_SPECK 0.28        // Reduce weather overlay intensity; particles remain enabled
 #define NL_WEATHER_RAIN_SLANT 3.0    // Moderate rain slant
 #define NL_WEATHER_PARTICLE_SIZE 1.0 // 0.5 tiny ~ 4.0 large
 
@@ -240,9 +242,11 @@
   #undef NL_GROUND_REFL
   #define NL_GROUND_REFL 0.10
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.16
+  #define NL_GROUND_REFL_DISTANCE 0.13
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 20.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 16.0
+  #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
+  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 12.0
   #undef NL_CLOUD2_STEPS
   #define NL_CLOUD2_STEPS 2
   #undef NL_SKY_HORIZON_GLOW
@@ -255,9 +259,7 @@
   #undef NL_WEATHER_SPECK
   #undef NL_UNDERWATER_STREAKS
   #undef NL_RAIN_MIST_OPACITY
-  #define NL_RAIN_MIST_OPACITY 0.07
-  #undef NL_CLOUDY_FOG
-  #define NL_CLOUDY_FOG 0.05
+  #define NL_RAIN_MIST_OPACITY 0.06
   #undef NL_AURORA
   #define NL_AURORA 0.45
   #undef NL_MATERIAL_HIGHLIGHT_STRENGTH
@@ -269,23 +271,27 @@
 #ifdef DEFAULT
   // Default: preserve the full established effects with B0.2.9-style terrain optimizations.
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.26
+  #define NL_GROUND_REFL_DISTANCE 0.22
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 32.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 28.0
+  #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
+  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 24.0
   #undef NL_SKY_HORIZON_GLOW
   #define NL_SKY_HORIZON_GLOW 0.16
   #undef NL_SKY_AMBIENT_STRENGTH
   #define NL_SKY_AMBIENT_STRENGTH 0.90
   #undef NL_WEATHER_SPECK
-  #define NL_WEATHER_SPECK 0.3465
+  #define NL_WEATHER_SPECK 0.28
 #endif
 
 #ifdef BARE_VISUALS
   // Bare Visuals: stronger cozy dawn/sunset identity, with a bounded reflection path and subtle highlights.
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.25
+  #define NL_GROUND_REFL_DISTANCE 0.21
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 30.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 26.0
+  #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
+  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 28.0
   #undef NL_SKY_HORIZON_GLOW
   #define NL_SKY_HORIZON_GLOW 0.24
   #undef NL_SKY_AMBIENT_STRENGTH
@@ -307,14 +313,24 @@
   #undef NL_DAY_EDGE_COL
   #define NL_DAY_EDGE_COL vec3(0.91,0.95,1.0)
   #undef NL_WEATHER_SPECK
-  #define NL_WEATHER_SPECK 0.35
+  #define NL_WEATHER_SPECK 0.30
   #undef NL_CLOUD2_STEPS
-  #define NL_CLOUD2_STEPS 4
+  #define NL_CLOUD2_STEPS 3
 #endif
 
 #ifdef EXPERIMENTAL
   // Experimental only: reuse existing terrain vertex-lighting gradients for lightweight fake shading.
   // This does not create genuine tree-cast or entity shadows.
+  #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
+  #define NL_WATER_DETAIL_REFLECTION_DISTANCE 18.0
+  #undef NL_GROUND_REFL_DISTANCE
+  #define NL_GROUND_REFL_DISTANCE 0.20
+  #undef NL_GROUND_REFL_MAX_DISTANCE
+  #define NL_GROUND_REFL_MAX_DISTANCE 24.0
+  #undef NL_CLOUD2_STEPS
+  #define NL_CLOUD2_STEPS 3
+  #undef NL_WEATHER_SPECK
+  #define NL_WEATHER_SPECK 0.28
   #define NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH 0.10
 #endif
 

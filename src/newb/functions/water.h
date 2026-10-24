@@ -21,7 +21,7 @@ vec4 nlWater(
 ) {
 
   vec2 bump = vec2_splat(0.0);
-  #ifdef NL_WATER_WAVE
+  #if defined(NL_WATER_WAVE) && !defined(NL_DISABLE_ALL_WAVING)
     bump = vec2_splat(movingNoise2D(gPos.xz + gPos.yy, NL_WATER_WAVE_SPEED*t, 0.6));
   #endif
 
@@ -45,7 +45,9 @@ vec4 nlWater(
   vec3 waterRefl = nlRenderSky(skycol, env, viewDir, t, false);
 
   #if defined(NL_CLOUD_AURORA_REFLECTION)
-    if (viewDir.y < 0.0) {
+    // Base sky reflection remains active at all visible water distances; extra aurora detail is bounded.
+    if (viewDir.y < -0.05 && env.dayFactor < 0.15 &&
+        camDist < NL_WATER_DETAIL_REFLECTION_DISTANCE) {
       vec4 cloudRefl = nlCloudAuroraReflection(skycol, env, viewDir, wPos, CAMERA_POS, t);
       waterRefl = mix(waterRefl, cloudRefl.rgb, cloudRefl.a);
     }
@@ -72,7 +74,7 @@ vec4 nlWater(
   color.rgb *= 0.22*NL_WATER_TINT*(1.0-0.8*fresnel);
   color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 1.0, opacity*opacity);
 
-  #ifdef NL_WATER_WAVE
+  #if defined(NL_WATER_WAVE) && !defined(NL_DISABLE_ALL_WAVING)
     if (camDist < 14.0) {
       wPos.y -= 0.5*(bump.x+0.5)*NL_WATER_BUMP;
     }
