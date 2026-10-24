@@ -1,5 +1,31 @@
 # Plans
 
+## B0.4.1 — Forest Performance Pass
+
+**Version:** `B0.4.1.2652` (Minecraft target label `26.52`)  
+**Branch:** `b0.4.1-forest-performance`  
+**Base:** `b0.4.0-performance-fixes`  
+**Build scope:** Android during implementation; multiplatform during release preparation.
+
+### Targeted changes
+
+1. Add a foliage-specific fragment fast path: retain normal vertex lighting, but skip the generic opaque-terrain shade ramp for alpha-tested foliage and billboards.
+2. Skip the optional material-highlight approximation for alpha-tested foliage/billboards while retaining it on eligible opaque terrain.
+3. Skip optional per-vertex glow-shimmer calculations for alpha-tested foliage/billboards while preserving their base emissive texture glow.
+4. Preserve all four profiles, approved saturation, no-waving guard, rounded clouds, rain/wet ground, water reflection, and opaque-terrain Always Reflection.
+5. Diagnose static forest FPS drops separately from chunk-loading/movement stutters; shader changes alone cannot guarantee fixes to engine-side chunk generation.
+
+### Acceptance
+
+- [ ] Static validator and duplicate-file audit pass.
+- [ ] Android build succeeds and output is a directly installable `.mcpack` containing expected compiled materials for all profiles.
+- [ ] Compare B0.4.0 and B0.4.1 in identical dense-forest scenes, both stationary and moving.
+- [ ] Verify leaf lighting, glow, terrain reflection, rain, water, clouds, and all four profile identities in-game.
+- [ ] Measure performance on-device; do not claim an FPS improvement based on source inspection or compilation alone.
+- [ ] Keep `main` untouched until review and explicit merge approval.
+
+---
+
 ## B0.4.0 — Targeted Performance Fixes
 
 **Version:** `B0.4.0.2652` (Minecraft target label `26.52`)  
