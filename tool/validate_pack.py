@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static regression checks for Newb X Bare Visuals B0.4.1 forest performance / Overworld O6.0."""
+"""Static regression checks for Newb X Bare Visuals B0.4.5 / Overworld O7."""
 from pathlib import Path
 import re
 import sys
@@ -12,15 +12,15 @@ def require(condition: bool, message: str) -> None:
         raise AssertionError(message)
 def main() -> int:
     pack = tomllib.loads(read("src/newb/pack_config.toml"))
-    require(pack.get("version") == [0, 4, 1], "manifest version must be [0, 4, 1]")
-    require(pack.get("development_version") == "B0.4.1", "simple version must be B0.4.1")
+    require(pack.get("version") == [0, 4, 5], "manifest version must be [0, 4, 5]")
+    require(pack.get("development_version") == "B0.4.5", "simple version must be B0.4.5")
     require(pack.get("minecraft_target_version") == "26.52", "declared Minecraft target must remain 26.52")
     require("Newb X Bare Visuals" in pack.get("name", ""), "pack identity must remain Newb X Bare Visuals")
     require("%w" in pack.get("description", "") and "%v" in pack.get("description", ""), "patch warning/version placeholders must remain")
     sys.path.insert(0, str(ROOT / "tool"))
     from versioning import get_version_identity
     display, target, full = get_version_identity(pack)
-    require((display, target, full) == ("B0.4.1", "26.52", "B0.4.1.2652"), "canonical version identity must be correct")
+    require((display, target, full) == ("B0.4.5", "26.52", "B0.4.5.2652"), "canonical version identity must be correct")
     subpacks = pack.get("subpack", [])
     names = [item.get("define") for item in subpacks]
     require(names == ["DEFAULT", "POOTAYTOE", "BARE_VISUALS", "EXPERIMENTAL"], "profile order must remain stable")
@@ -31,17 +31,18 @@ def main() -> int:
         require(set(profiles[name].get("materials", [])) == base_materials, f"{name} must compile its own profile materials")
     require("fake terrain shadows" in profiles["EXPERIMENTAL"]["description"].lower(), "Experimental description must remain accurate")
     cfg = read("src/newb/config.h")
-    require("#define NL_TONEMAP_TYPE 4" in cfg and "#define NL_SATURATION 1.04" in cfg, "preserve approved color/tone mapping")
+    require("#define NL_TONEMAP_TYPE 4" in cfg and "#define NL_SATURATION 1.06" in cfg, "B0.4.5 tone mapping and gentle saturation lift must remain")
     require("#define NL_DISABLE_ALL_WAVING" in cfg, "global no-waving guard must be enabled")
     for macro in ("NL_WATER_WAVE","NL_PLANTS_WAVE","NL_LANTERN_WAVE","NL_EXTRA_PLANTS_WAVE","NL_UNDERWATER_WAVE","NL_CLOUD_SHADOW","NL_CLOUDY_FOG","NL_VANILLA_WATER"):
         require(not re.search(rf"(?m)^\s*#define\s+{macro}\b", cfg), f"{macro} must not be enabled")
     require("#define NL_CLOUD_AURORA_REFLECTION" in cfg, "Newb reflection detail must remain enabled")
+    require(re.search(r"(?m)^#define NL_CLOUD_TYPE 1\b", cfg) is not None, "Cloud Type 1 must be active for B0.4.5")
     require("#define NL_GROUND_REFL 0.18" in cfg, "terrain Always Reflection must stay enabled")
     require("#define NL_GROUND_REFL_MAX_DISTANCE 22.0" in cfg, "base terrain reflection must retain a bounded range")
     require(" #define NL_GROUND_REFL_MAX_DISTANCE 16.0" in cfg and "#define NL_GROUND_REFL_MAX_DISTANCE 22.0" in cfg and "#define NL_GROUND_REFL_MAX_DISTANCE 20.0" in cfg, "profile-specific terrain reflection limits must remain tuned")
     for distance in ("18.0","12.0","20.0","14.0"): 
         require(f"#define NL_WATER_DETAIL_REFLECTION_DISTANCE {distance}" in cfg, "each profile must have a reflection detail range")
-    for required in ("#define NL_MIST_DENSITY 0.12","#define NL_RAIN_MIST_OPACITY 0.08","#define NL_WEATHER_SPECK 0.18","#define NL_CLOUD2_STEPS 2","#define NL_WATER_TINT vec3(0.90,0.94,0.93)","#define NL_WATER_STYLE_STRENGTH 0.42","#define NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH 0.10"):
+    for required in ("#define NL_MIST_DENSITY 0.12","#define NL_RAIN_MIST_OPACITY 0.08","#define NL_WEATHER_SPECK 0.18","#define NL_CLOUD1_SCALE vec2(0.016, 0.022)","#define NL_WATER_TINT vec3(0.90,0.94,0.93)","#define NL_WATER_STYLE_STRENGTH 0.38","#define NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH 0.10"):
         require(required in cfg, f"missing O6.0 configuration: {required}")
     require(all(f"#ifdef {name}" in cfg for name in names), "all profile blocks must exist")
     fog = read("src/newb/functions/fog.h")
@@ -58,7 +59,7 @@ def main() -> int:
     water = read("src/newb/functions/water.h")
     require("camDist < NL_WATER_DETAIL_REFLECTION_DISTANCE" in water and "nlRenderSky(skycol, env, viewDir, t, false)" in water, "base water reflection and detail gate must remain")
     require("NL_WATER_FULL_REFLECTION_DISTANCE" in water and "mix(skycol.horizon, skycol.zenith, reflectionHeight)" in water, "far water must retain a cheaper sky-gradient reflection")
-    require("#define NL_WATER_FULL_REFLECTION_DISTANCE 42.0" in cfg and "#define NL_WATER_FULL_REFLECTION_DISTANCE 24.0" in cfg and "#define NL_WATER_FULL_REFLECTION_DISTANCE 48.0" in cfg and "#define NL_WATER_FULL_REFLECTION_DISTANCE 32.0" in cfg, "all profiles must define the full water reflection range")
+    require("#define NL_WATER_FULL_REFLECTION_DISTANCE 32.0" in cfg and "#define NL_WATER_FULL_REFLECTION_DISTANCE 20.0" in cfg and "#define NL_WATER_FULL_REFLECTION_DISTANCE 38.0" in cfg and "#define NL_WATER_FULL_REFLECTION_DISTANCE 26.0" in cfg, "all profiles must define the full water reflection range")
     ground = read("src/newb/functions/rain.h")
     require("camDist < NL_WATER_DETAIL_REFLECTION_DISTANCE" in ground, "ground aurora detail must be distance-gated")
     vertex = read("src/materials/RenderChunk/vertex.sc")
@@ -80,13 +81,13 @@ def main() -> int:
     require("default: 'Android'" in build, "manual build default must be Android")
     for name, workflow in (("build.yml",build),("build-check.yml",check)):
         require("tool/validate_pack.py" in workflow and "tool/versioning.py" in workflow and "tool/audit_duplicates.py" in workflow and "steps.version.outputs.full_version_slug" in workflow, f"{name} validation/artifact setup must remain")
-    require("default: '0'" in build and "-v 0" in check and "--no-zip" not in check and "path: ./build/*.mcpack" in check, "workflow must publish a directly installable B0.4.1 mcpack")
-    require("b0.4.1-forest-performance" in check and "b0.4.0-performance-fixes" in check and "multiplatform:" not in check and "android:" in check, "implementation checks must target Android on the B0.4.1 branch")
-    print("B0.4.1 forest performance static regression checks passed.")
+    require("default: '5'" in build and "-v 5" in check and "--no-zip" not in check and "path: ./build/*.mcpack" in check, "workflow must publish a directly installable B0.4.5 mcpack")
+    require("b0.4.5-performance-overhaul" in check and "b0.4.1-forest-performance" in check and "multiplatform:" not in check and "android:" in check, "implementation checks must target Android and include the B0.4.5 branch")
+    print("B0.4.5 / O7 static regression checks passed.")
     return 0
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (AssertionError, KeyError, StopIteration, tomllib.TOMLDecodeError, ValueError) as exc:
-        print(f"B0.4.0 validation failed: {exc}", file=sys.stderr)
+        print(f"B0.4.5 validation failed: {exc}", file=sys.stderr)
         raise SystemExit(1)
