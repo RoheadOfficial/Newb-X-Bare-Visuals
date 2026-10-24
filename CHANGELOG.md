@@ -16,6 +16,7 @@
 ### Verification still required
 - [ ] Static validator and duplicate audit pass.
 - [ ] Android GitHub Actions build succeeds; inspect generated manifest, profile order, and all compiled materials.
+- [ ] Confirm terrain Always Reflection remains clearly visible nearby and its shorter far-field cutoff avoids distracting pop-out.
 - [ ] Confirm custom water reflection compiles and is visible in-game without excessive cost.
 - [ ] Compare tree-heavy scenes against B0.3.7 to quantify the 50% overhead target.
 - [ ] Check fog, rain, water, cloud and aurora appearance across all four subpacks.
