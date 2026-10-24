@@ -121,6 +121,7 @@
 #define NL_WATER_TINT vec3(0.90,0.94,0.93) // Muted mineral-gray water, not a strong blue/green wash
 #define NL_WATER_STYLE_STRENGTH 0.42 // Give water a distinct, restrained material identity
 #define NL_WATER_DETAIL_REFLECTION_DISTANCE 18.0 // B0.4.0: limit extra aurora detail; base sky reflection stays active
+#define NL_WATER_FULL_REFLECTION_DISTANCE 42.0 // Full sky shading nearby; use a cheap sky-gradient reflection farther out
 #define NL_GROUND_REFL 0.18         // Restrained terrain reflection; water keeps its own sky reflection
 #define NL_GROUND_REFL_DISTANCE 0.20 // B0.4.0: preserve nearby Always Reflection with less far-field work
 #define NL_GROUND_REFL_MAX_DISTANCE 22.0 // B0.4.0: terrain reflection remains active at closer ranges
@@ -247,6 +248,8 @@
   #define NL_GROUND_REFL_MAX_DISTANCE 16.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 12.0
+  #undef NL_WATER_FULL_REFLECTION_DISTANCE
+  #define NL_WATER_FULL_REFLECTION_DISTANCE 24.0
   #undef NL_CLOUD2_STEPS
   #define NL_CLOUD2_STEPS 2
   #undef NL_SKY_HORIZON_GLOW
@@ -276,6 +279,8 @@
   #define NL_GROUND_REFL_MAX_DISTANCE 22.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 18.0
+  #undef NL_WATER_FULL_REFLECTION_DISTANCE
+  #define NL_WATER_FULL_REFLECTION_DISTANCE 42.0
   #undef NL_SKY_HORIZON_GLOW
   #define NL_SKY_HORIZON_GLOW 0.16
   #undef NL_SKY_AMBIENT_STRENGTH
@@ -292,6 +297,8 @@
   #define NL_GROUND_REFL_MAX_DISTANCE 22.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 20.0
+  #undef NL_WATER_FULL_REFLECTION_DISTANCE
+  #define NL_WATER_FULL_REFLECTION_DISTANCE 48.0
   #undef NL_SKY_HORIZON_GLOW
   #define NL_SKY_HORIZON_GLOW 0.24
   #undef NL_SKY_AMBIENT_STRENGTH
@@ -323,6 +330,8 @@
   // This does not create genuine tree-cast or entity shadows.
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 14.0
+  #undef NL_WATER_FULL_REFLECTION_DISTANCE
+  #define NL_WATER_FULL_REFLECTION_DISTANCE 32.0
   #undef NL_GROUND_REFL_DISTANCE
   #define NL_GROUND_REFL_DISTANCE 0.18
   #undef NL_GROUND_REFL_MAX_DISTANCE
