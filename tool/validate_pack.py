@@ -12,15 +12,15 @@ def require(condition: bool, message: str) -> None:
         raise AssertionError(message)
 def main() -> int:
     pack = tomllib.loads(read("src/newb/pack_config.toml"))
-    require(pack.get("version") == [0, 4, 0], "manifest version must be [0, 3, 8]")
-    require(pack.get("development_version") == "B0.3.8", "simple version must be B0.3.8")
+    require(pack.get("version") == [0, 4, 0], "manifest version must be [0, 4, 0]")
+    require(pack.get("development_version") == "B0.4.0", "simple version must be B0.4.0")
     require(pack.get("minecraft_target_version") == "26.52", "declared Minecraft target must remain 26.52")
     require("Newb X Bare Visuals" in pack.get("name", ""), "pack identity must remain Newb X Bare Visuals")
     require("%w" in pack.get("description", "") and "%v" in pack.get("description", ""), "patch warning/version placeholders must remain")
     sys.path.insert(0, str(ROOT / "tool"))
     from versioning import get_version_identity
     display, target, full = get_version_identity(pack)
-    require((display, target, full) == ("B0.3.8", "26.52", "B0.3.8.2652"), "canonical version identity must be correct")
+    require((display, target, full) == ("B0.4.0", "26.52", "B0.4.0.2652"), "canonical version identity must be correct")
     subpacks = pack.get("subpack", [])
     names = [item.get("define") for item in subpacks]
     require(names == ["DEFAULT", "POOTAYTOE", "BARE_VISUALS", "EXPERIMENTAL"], "profile order must remain stable")
@@ -77,13 +77,13 @@ def main() -> int:
     require("default: 'Android'" in build, "manual build default must be Android")
     for name, workflow in (("build.yml",build),("build-check.yml",check)):
         require("tool/validate_pack.py" in workflow and "tool/versioning.py" in workflow and "tool/audit_duplicates.py" in workflow and "steps.version.outputs.full_version_slug" in workflow, f"{name} validation/artifact setup must remain")
-    require("default: '0'" in build and "-v 0 --no-zip" in check, "workflows must use manifest version 8")
+    require("default: '0'" in build and "-v 0 --no-zip" in check, "workflows must use manifest version 0")
     require("b0.4.0-performance-fixes" in check and "multiplatform:" not in check and "android:" in check, "implementation checks must target Android on the B0.4.0 branch")
-    print("B0.3.8 / O6.0 static regression checks passed.")
+    print("B0.4.0 / O6.0 static regression checks passed.")
     return 0
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (AssertionError, KeyError, StopIteration, tomllib.TOMLDecodeError, ValueError) as exc:
-        print(f"B0.3.8 validation failed: {exc}", file=sys.stderr)
+        print(f"B0.4.0 validation failed: {exc}", file=sys.stderr)
         raise SystemExit(1)
