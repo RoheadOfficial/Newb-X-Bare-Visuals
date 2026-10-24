@@ -106,7 +106,9 @@ void main() {
 
   // Apply only to RenderChunk terrain; skip water and glass.
   // Smooth bounded shading avoids cumulative dark stripes from repeated g-thresholds.
-  #if !defined(TRANSPARENT) && !defined(SEASONS)
+  #if !defined(TRANSPARENT) && !defined(SEASONS) && !defined(ALPHA_TEST) && !defined(RENDER_AS_BILLBOARDS)
+    // B0.4.1: cutout foliage keeps its vertex lighting but skips the generic terrain-only shade ramp.
+    // This avoids extra per-fragment work in dense forests and avoids treating leaves as opaque terrain.
     diffuse.rgb *= nlBareTerrainShade(v_color1);
     #ifdef NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH
       diffuse.rgb *= nlExperimentalFakeShadow(v_color1);
@@ -118,7 +120,7 @@ void main() {
   // B0.3.6: refine the inexpensive material response for clearer terrain separation.
   // This is deliberately not a reflection pass: it uses no extra texture samples,
   // normals, ray marching, or environment rendering.
-  #if !defined(TRANSPARENT) && !defined(SEASONS) && defined(NL_MATERIAL_HIGHLIGHT_STRENGTH)
+  #if !defined(TRANSPARENT) && !defined(SEASONS) && !defined(ALPHA_TEST) && !defined(RENDER_AS_BILLBOARDS) && defined(NL_MATERIAL_HIGHLIGHT_STRENGTH)
     float materialLuma = dot(diffuse.rgb, vec3(0.2126, 0.7152, 0.0722));
     float materialMax = max(max(diffuse.r, diffuse.g), diffuse.b);
     float materialMin = min(min(diffuse.r, diffuse.g), diffuse.b);
