@@ -42,7 +42,7 @@ def main() -> int:
     require(" #define NL_GROUND_REFL_MAX_DISTANCE 16.0" in cfg and "#define NL_GROUND_REFL_MAX_DISTANCE 22.0" in cfg and "#define NL_GROUND_REFL_MAX_DISTANCE 20.0" in cfg, "profile-specific terrain reflection limits must remain tuned")
     for distance in ("18.0","12.0","20.0","14.0"): 
         require(f"#define NL_WATER_DETAIL_REFLECTION_DISTANCE {distance}" in cfg, "each profile must have a reflection detail range")
-    for required in ("#define NL_MIST_DENSITY 0.12","#define NL_RAIN_MIST_OPACITY 0.08","#define NL_WEATHER_SPECK 0.18","#define NL_CLOUD1_SCALE vec2(0.016, 0.022)","#define NL_WATER_TINT vec3(0.90,0.94,0.93)","#define NL_WATER_STYLE_STRENGTH 0.42","#define NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH 0.10"):
+    for required in ("#define NL_MIST_DENSITY 0.12","#define NL_RAIN_MIST_OPACITY 0.08","#define NL_WEATHER_SPECK 0.18","#define NL_CLOUD1_SCALE vec2(0.016, 0.022)","#define NL_WATER_TINT vec3(0.90,0.94,0.93)","#define NL_WATER_STYLE_STRENGTH 0.38","#define NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH 0.10"):
         require(required in cfg, f"missing O6.0 configuration: {required}")
     require(all(f"#ifdef {name}" in cfg for name in names), "all profile blocks must exist")
     fog = read("src/newb/functions/fog.h")
