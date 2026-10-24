@@ -31,7 +31,7 @@
 #define NL_TONEMAP_TYPE 4              // B0.3.6: ACES tone mapping for a more cinematic highlight roll-off
 #define NL_GAMMA 1.36                  // B0.3.6: keep midtones readable with the ACES curve
 //#define NL_EXPOSURE 1.3              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.04            // B0.3.6: restrained color after cinematic tone mapping
+#define NL_SATURATION 1.06            // B0.4.5: a small, natural saturation lift for a cozier palette
 //#define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.3,0.5,1.4) // color tint for dark tone
 #define NL_TINT_HIGH vec3(1.4,0.7,0.3) // color tint for light tone
@@ -136,8 +136,8 @@
 #define NL_UNDERWATER_TINT vec3(0.9,1.0,0.9) // fog tint color when underwater
 
 /* Cloud type */
-//#define BOX_CLOUDS             // Disabled in B0.2.5 so rounded clouds remain active
-#define NL_CLOUD_TYPE 2          // B0.2.5: rounded clouds
+//#define BOX_CLOUDS             // Disabled; keep custom clouds rather than vanilla/box clouds
+#define NL_CLOUD_TYPE 1          // B0.4.5: lightweight soft procedural clouds; Types 2 and 3 shelved
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
 #define NL_CLOUD0_THICKNESS 2.1      // 0.5 slim ~ 8.0 fat
@@ -239,7 +239,7 @@
 */
 
 #ifdef POOTAYTOE
-  // Pootaytoe: more aggressive savings while retaining rounded clouds, rain, wet ground, and the sky pipeline.
+  // Pootaytoe: performance-first settings; Cloud Type 1 is shared across all profiles.
   #undef NL_GROUND_REFL
   #define NL_GROUND_REFL 0.10
   #undef NL_GROUND_REFL_DISTANCE
@@ -250,8 +250,6 @@
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 12.0
   #undef NL_WATER_FULL_REFLECTION_DISTANCE
   #define NL_WATER_FULL_REFLECTION_DISTANCE 24.0
-  #undef NL_CLOUD2_STEPS
-  #define NL_CLOUD2_STEPS 2
   #undef NL_SKY_HORIZON_GLOW
   #define NL_SKY_HORIZON_GLOW 0.10
   #undef NL_SKY_AMBIENT_STRENGTH
