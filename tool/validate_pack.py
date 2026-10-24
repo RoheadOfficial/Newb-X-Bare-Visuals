@@ -65,7 +65,7 @@ def main() -> int:
     require("!defined(NL_DISABLE_ALL_WAVING)" in vertex and "refl = nlWater(color, worldPos" in vertex, "wave guard and custom water path must be active")
     require("NL_VANILLA_WATER" not in vertex, "vanilla-water bypass must not disable reflection")
     require("Alpha-tested foliage/billboards cannot display the horizontal terrain reflection mask" in vertex, "foliage must skip unused terrain-reflection work")
-    require("defined(ALPHA_TEST))" in vertex and "defined(ALPHA_TEST)" in vertex.split("float shimmer", 1)[0].split("#if defined(NL_GLOW_SHIMMER)", 1)[-1], "foliage must skip vertex glow-shimmer work")
+    require("#if defined(NL_GLOW_SHIMMER) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS) || defined(ALPHA_TEST))" in vertex, "foliage must skip vertex glow-shimmer work")
     require("fogColor.a > 0.001 || env.rainFactor > 0.0" in vertex, "nearby clear-weather terrain must skip unused sky fog calculations")
     terrain = read("src/materials/RenderChunk/fragment.sc")
     require("waterLuma * NL_WATER_TINT" in terrain and "diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);" in terrain, "water palette and fog blend must remain")
