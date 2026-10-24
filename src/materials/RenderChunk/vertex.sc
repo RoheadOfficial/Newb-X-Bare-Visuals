@@ -171,7 +171,7 @@ void main() {
 
   color.rgb *= light;
 
-  #if defined(NL_GLOW_SHIMMER) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS))
+  #if defined(NL_GLOW_SHIMMER) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS) || defined(ALPHA_TEST))
     float shimmer = nlGlowShimmer(cPos, t);
   #else
     float shimmer = 1.0;
