@@ -122,8 +122,8 @@
 #define NL_WATER_STYLE_STRENGTH 0.42 // Give water a distinct, restrained material identity
 #define NL_WATER_DETAIL_REFLECTION_DISTANCE 24.0 // Bounds extra aurora detail, not base sky reflection
 #define NL_GROUND_REFL 0.18         // Restrained terrain reflection; water keeps its own sky reflection
-#define NL_GROUND_REFL_DISTANCE 0.32 // Shorter range reduces distant-terrain shader cost
-#define NL_GROUND_REFL_MAX_DISTANCE 32.0 // B0.3.2: keep the shared terrain-reflection cap bounded for large views
+#define NL_GROUND_REFL_DISTANCE 0.22 // O6.0 follow-up: reduce distant terrain-reflection work
+#define NL_GROUND_REFL_MAX_DISTANCE 28.0 // O6.0 follow-up: retain nearby Always Reflection, trim far-field cost
 #define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.016 // B0.3.6: restrained material separation without extra texture reads
 #define NL_CLOUD_AURORA_REFLECTION // Keep Newb's sky/aurora reflection detail, with distance/night gating
 
@@ -242,9 +242,9 @@
   #undef NL_GROUND_REFL
   #define NL_GROUND_REFL 0.10
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.16
+  #define NL_GROUND_REFL_DISTANCE 0.13
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 20.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 16.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 12.0
   #undef NL_CLOUD2_STEPS
@@ -271,9 +271,9 @@
 #ifdef DEFAULT
   // Default: preserve the full established effects with B0.2.9-style terrain optimizations.
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.26
+  #define NL_GROUND_REFL_DISTANCE 0.22
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 32.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 28.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 24.0
   #undef NL_SKY_HORIZON_GLOW
@@ -287,9 +287,9 @@
 #ifdef BARE_VISUALS
   // Bare Visuals: stronger cozy dawn/sunset identity, with a bounded reflection path and subtle highlights.
   #undef NL_GROUND_REFL_DISTANCE
-  #define NL_GROUND_REFL_DISTANCE 0.25
+  #define NL_GROUND_REFL_DISTANCE 0.21
   #undef NL_GROUND_REFL_MAX_DISTANCE
-  #define NL_GROUND_REFL_MAX_DISTANCE 30.0
+  #define NL_GROUND_REFL_MAX_DISTANCE 26.0
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 28.0
   #undef NL_SKY_HORIZON_GLOW
@@ -323,6 +323,10 @@
   // This does not create genuine tree-cast or entity shadows.
   #undef NL_WATER_DETAIL_REFLECTION_DISTANCE
   #define NL_WATER_DETAIL_REFLECTION_DISTANCE 18.0
+  #undef NL_GROUND_REFL_DISTANCE
+  #define NL_GROUND_REFL_DISTANCE 0.20
+  #undef NL_GROUND_REFL_MAX_DISTANCE
+  #define NL_GROUND_REFL_MAX_DISTANCE 24.0
   #undef NL_CLOUD2_STEPS
   #define NL_CLOUD2_STEPS 3
   #undef NL_WEATHER_SPECK
