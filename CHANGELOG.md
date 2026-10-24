@@ -1,3 +1,21 @@
+## B0.4.1 — Forest Performance Pass
+
+**Status:** Implementation on `b0.4.1-forest-performance`, based on B0.4.0. Build/static checks and on-device comparison are pending; no FPS gain is claimed before testing.
+
+### Implemented source changes
+- Add a foliage-specific fast path in RenderChunk: alpha-tested foliage and billboards retain the regular vertex lighting but skip the generic opaque-terrain shade ramp, which was designed for opaque terrain and adds fragment work in dense forests.
+- Skip the optional material-highlight approximation on alpha-tested foliage/billboards; keep it on eligible opaque terrain.
+- Skip per-vertex glow-shimmer trigonometry for alpha-tested foliage and billboards. The center emissive texel glow remains enabled; only its shimmer modulation is omitted for these materials.
+- Preserve the four profiles, approved saturation/tone mapping, rounded clouds, rain and wet ground, terrain Always Reflection on opaque terrain, water reflections, and no-waving behavior.
+- Bump pack identity to B0.4.1 / manifest `[0, 4, 1]`; target label remains 26.52 and Android is the implementation build target.
+
+### Verification required
+- [ ] Static validator and duplicate audit pass; Android build completes and produces a directly installable `.mcpack` with compiled materials for all four profiles.
+- [ ] Compare B0.4.0 vs B0.4.1 in the same dense forest, stationary and moving, with matching settings.
+- [ ] Check leaf brightness/tint, emissive textures, reflection behavior, and terrain appearance; reject or revise any visible regression.
+- [ ] Test all four profiles separately and record FPS/stutter observations. Build success is not FPS proof.
+- [ ] Separate new-chunk loading stutters from the shader's scene-dependent rendering cost; the pack cannot directly optimize Minecraft's internal chunk generation.
+
 ## B0.4.0 — Targeted Performance Fixes
 
 **Status:** Source implementation on `b0.4.0-performance-fixes`. Android build/static checks and in-game acceptance are pending; FPS gains are not claimed until measured on-device.
