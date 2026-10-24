@@ -61,9 +61,13 @@ vec3 nlLighting(
     float nightIntensity = 1.0-(0.5+0.5*env.dayFactor);
     nightIntensity *= nightIntensity;
 
-    float sunLightAttenuation = clamp(0.5*(((2.0*step(TIME_OF_DAY, 0.5)-1.0)*(wPos.x*cos(NL_SUN_PATH_YAW)+wPos.y*sin(NL_SUN_PATH_YAW))/renderdistance) + 1.0), 0.0, 1.0);
-    sunLightAttenuation = mix(1.0, sunLightAttenuation*sunLightAttenuation, dawnFactor);
-    sunLightAttenuation *= 1.0-0.4*env.rainFactor;
+    float sunLightAttenuation = 1.0-0.4*env.rainFactor;
+    // O6.0 tree fast path: near midday, dawn attenuation is negligible; skip spatial sun math for leaves.
+    if (!isTree || dawnFactor >= 0.02) {
+      sunLightAttenuation = clamp(0.5*(((2.0*step(TIME_OF_DAY, 0.5)-1.0)*(wPos.x*cos(NL_SUN_PATH_YAW)+wPos.y*sin(NL_SUN_PATH_YAW))/renderdistance) + 1.0), 0.0, 1.0);
+      sunLightAttenuation = mix(1.0, sunLightAttenuation*sunLightAttenuation, dawnFactor);
+      sunLightAttenuation *= 1.0-0.4*env.rainFactor;
+    }
 
     // shadow cast by sun light
     float shadow = step(0.93, uv1.y);
