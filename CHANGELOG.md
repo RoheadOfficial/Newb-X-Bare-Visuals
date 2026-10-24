@@ -1,31 +1,37 @@
 ## B0.3.7 — Polish, Performance & Compatibility
 
-**Status:** Versioning, documentation, shared validation, and duplicate-audit tooling merged into `main` via PR #12. Build results, duplicate-audit findings, generated-artifact inspection, and on-device testing remain unconfirmed.
+**Status:** Implementation changes are on `b0.3.7-implementation`. Android build and in-game acceptance are pending. Multiplatform builds are deferred until release preparation.
 
 ### GAME
-- Refine the B0.3.6 visual result instead of performing another complete redesign.
-- Preserve the creator-approved saturation; avoid unnecessary color tuning.
-- Focus on visual coherence across sky, fog, terrain lighting, rounded clouds, water, rain, and wet ground.
-- Preserve the Default, Pootaytoe, and Bare Visuals identities and established order.
-- Prepare for the upcoming Minecraft drop without claiming compatibility before Minecraft and MB Loader testing.
+- Preserve the B0.3.6 visual foundation and creator-approved saturation.
+- Remove the aggressive sun-source brightness boost; retain the normal sky gradient and sun/moon disk.
+- Keep vanilla-water rendering and subtly reduce its blue channel by 8%, without adding water reflections or waves.
+- Preserve Default, Pootaytoe, and Bare Visuals, and add Experimental as profile four.
+- Experimental uses bounded fake terrain shading from existing vertex-lighting gradients. It is not a shadow map and does not create genuine tree-canopy, player, or mob shadows.
 
 ### DEVELOPER
-- Add canonical version logic: simple `B0.3.7`, advanced `B0.3.7.2652`, with Minecraft target `26.52` stored separately.
-- Generate advanced output filenames and GitHub Actions artifact labels from the shared versioning helper.
-- Keep numeric manifest versioning valid and independent of the display/full version.
-- Replace the active B0.3.6-only validator wiring with a current-source regression validator.
-- Add a review-first audit for byte-identical tracked files; do not automatically delete identical files that may be intentional.
-- Do not claim performance gains from source inspection alone. Benchmark comparable scenes before adjusting costly visual effects.
+- Fix Pootaytoe's terrain glow-sample shortcut to recognize `POOTAYTOE` as well as legacy `LITE`.
+- Add `NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH` only under Experimental.
+- Reuse existing terrain vertex-color data; add no texture reads, shadow maps, normal reconstruction, or render passes.
+- Update pack configuration, validator, docs, and CI for four profiles.
+- Make implementation build-check Android-only and set the manual build default to Android. Keep the manual workflow available for multiplatform release builds.
+- Preserve `B0.3.7`, `B0.3.7.2652`, target `26.52`, numeric manifest version `[0, 3, 7]`, attribution, patch warning, and licensing notices.
 
 ### Validation checklist
-- [ ] Shared version helper derives `B0.3.7.2652` from `B0.3.7` + target `26.52`.
-- [x] Android build passed; multiplatform run status was not confirmed in the final checkpoint.
-- [ ] Duplicate-audit report is reviewed and any confirmed redundant copies are removed safely.
-- [ ] Manifest version and all three subpacks are correct.
-- [ ] All three profiles import, activate, and render on the target Android setup.
-- [ ] Saturation and visual identity remain consistent with the approved B0.3.6 result.
-- [ ] Compare FPS/stutter in equivalent scenes; no performance claim before measurement.
-- [ ] Verify current Minecraft and MB Loader compatibility separately from the upcoming drop.
+- [x] Create clean implementation branch from current `main`.
+- [x] Add Experimental as profile four.
+- [x] Remove aggressive sky-source boost and add restrained water blue reduction.
+- [x] Fix Pootaytoe's glow shortcut define.
+- [x] Update static validation, docs, and Android-only workflow.
+- [x] Review duplicate-audit findings. The reported matches are shared material.json/config.json files across material definitions; retained these identical source templates because they appear intentional and removing them could break material compilation. No confirmed accidental duplicate was deleted.
+- [ ] Pass static validation and Android-only GitHub Actions build.
+- [ ] Inspect generated Android pack, manifest, profile order, and compiled materials.
+- [ ] Test all four profiles on Vivo Y22s and compare visuals/FPS in equivalent scenes.
+- [ ] Verify Minecraft and MB Loader compatibility independently.
+- [ ] Run multiplatform build during release preparation only.
+- [ ] Keep `main` untouched until creator acceptance.
+
+---
 
 ---
 

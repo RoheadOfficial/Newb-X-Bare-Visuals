@@ -114,6 +114,7 @@
 #define NL_WATER_BUMP 0.0           // Flat surface: no water-wave distortion
 #define NL_WATER_WAVE_SPEED  0.8    // Also used by underwater effects
 #define NL_WATER_TEX_OPACITY 0.3    // Retain recognizable vanilla water texture
+#define NL_WATER_BLUE_REDUCTION 0.92 // B0.3.7: gently soften excessive blue in the existing vanilla-water path
 //#define NL_WATER_WAVE             // No water displacement or animated waves
 //#define NL_WATER_REFL_MASK        // Keep sky reflections broad and natural
 #define NL_WATER_TINT vec3(0.72,0.88,0.96)
@@ -309,6 +310,12 @@
   #define NL_WEATHER_SPECK 0.35
   #undef NL_CLOUD2_STEPS
   #define NL_CLOUD2_STEPS 4
+#endif
+
+#ifdef EXPERIMENTAL
+  // Experimental only: reuse existing terrain vertex-lighting gradients for lightweight fake shading.
+  // This does not create genuine tree-cast or entity shadows.
+  #define NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH 0.10
 #endif
 
 #ifdef NO_WAVE_NO_FOG

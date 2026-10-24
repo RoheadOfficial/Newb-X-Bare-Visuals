@@ -32,7 +32,7 @@ Original Newb Shader source and upstream project: https://github.com/devendrn/ne
 Variant creator: RoheadOfficial
 '''
 
-# Required MCpack order: Default #1, Pootaytoe #2, Bare Visuals #3.
+# Required MCpack order: Default #1, Pootaytoe #2, Bare Visuals #3, Experimental #4.
 # The root material set is compiled with DEFAULT; Default inherits it without duplicating binaries.
 [[subpack]]
 define = "DEFAULT"
@@ -48,3 +48,8 @@ description = "Pootaytoe — Performance-focused, with the same core atmosphere"
 define = "BARE_VISUALS"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
 description = "Bare Visuals — The full cozy visual experience with richer atmosphere"
+
+[[subpack]]
+define = "EXPERIMENTAL"
+materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
+description = "Experimental — Lightweight fake terrain shadows; visual results may vary"
