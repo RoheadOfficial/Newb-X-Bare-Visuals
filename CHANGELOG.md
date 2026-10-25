@@ -7,6 +7,8 @@
 - Add a dedicated lower-cost foliage-lighting function and route detected tree/leaf vertices through it. This avoids the terrain spatial sun projection and optional cloud-shadow path for the highest-overdraw forest materials.
 - Keep the RenderChunk low-fog sky-evaluation fast path, foliage glow-tap reduction, and global no-waving guard.
 - This is a targeted shader-side forest optimization; only same-device A/B testing can confirm its actual FPS impact.
+- Third implementation pass: resolve fog alpha before sky-palette selection, reuse that fog result, and use a cheaper clear-weather ambient palette only for nearby foliage where sky fog is not visible. Rain, fog-visible foliage, underwater, Nether, and End keep the full palette.
+- Extend regression checks to enforce the foliage palette gate and the connected rain-detection, sky, fog, wet-ground/puddle, and particle paths.
 - Keep this a real shader-source update; build success alone is not evidence of FPS improvement.
 
 ### Sky, clouds, weather and visuals
