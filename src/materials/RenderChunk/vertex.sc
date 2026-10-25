@@ -86,7 +86,18 @@ void main() {
   #endif
 
   nl_environment env = nlDetectEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);
-  nl_skycolor skycol = nlSkyColors(env);
+
+  // Resolve fog contribution before selecting the lighting palette. In clear weather, nearby
+  // foliage does not use sky-derived fog color, so it can use the cheaper ambient palette.
+  float foliageRelativeDist = camDis / FogAndDistanceControl.z + RenderChunkFogAlpha.x;
+  float foliageFogAlpha = nlRenderFogFade(foliageRelativeDist, FogColor.rgb, FogAndDistanceControl.xy, env.rainFactor);
+  nl_skycolor skycol;
+  if (isTree && !env.end && !env.nether && !env.underwater &&
+      env.rainFactor <= 0.0 && foliageFogAlpha <= 0.20) {
+    skycol = nlFoliageSkyColors(env);
+  } else {
+    skycol = nlSkyColors(env);
+  }
 
   // time
   highp float t = ViewPositionAndTime.w;
@@ -122,7 +133,7 @@ void main() {
   relativeDist += RenderChunkFogAlpha.x;
 
   vec4 fogColor;
-  fogColor.a = nlRenderFogFade(relativeDist, FogColor.rgb, FogAndDistanceControl.xy, env.rainFactor);
+  fogColor.a = foliageFogAlpha;
   // The sky color is unused when fog alpha is zero. Avoid a full sky evaluation for nearby,
   // clear-weather terrain vertices; keep the sky-derived color whenever fog can contribute.
   if ((!isTree && fogColor.a > 0.001) || fogColor.a > 0.20 || env.rainFactor > 0.0) {
