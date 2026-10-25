@@ -111,7 +111,11 @@ void main() {
 
   nl_skycolor skycol;
   if (foliageFast) {
-    skycol = nlFoliageSkyColors(env);
+    // Clear, nearby foliage doesn't need the shader's custom sky palette for lighting or fog.
+    // The low-fog gate below keeps this placeholder unused; fog-visible scenes take the full path.
+    skycol.zenith = FogColor.rgb;
+    skycol.horizon = FogColor.rgb;
+    skycol.horizonEdge = FogColor.rgb;
   } else {
     skycol = nlSkyColors(env);
   }
