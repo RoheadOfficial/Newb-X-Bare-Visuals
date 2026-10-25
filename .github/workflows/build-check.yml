@@ -30,6 +30,7 @@ jobs:
     - run: |
         ./build.sh setup
         ./build.sh pack -p android -v 6
+        python tool/validate_artifact.py build
     - uses: actions/upload-artifact@v4
       with:
         name: newb-x-bare-visuals-${{ steps.version.outputs.full_version_slug }}-android-implementation
