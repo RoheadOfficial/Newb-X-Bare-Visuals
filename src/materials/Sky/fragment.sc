@@ -26,14 +26,22 @@ void main() {
 
     nl_skycolor skycol = nlOverworldSkyColors(env);
 
-    vec3 skyColor = nlRenderSky(skycol, env, -viewDir, v_underwaterRainTimeDay.z, true);
+    vec3 skyDir = vec3(-viewDir.x, viewDir.y, -viewDir.z);
+    vec3 skyColor = nlRenderSky(skycol, env, skyDir, v_underwaterRainTimeDay.z, true);
 
-    // O8: vanilla clouds are restored, so keep the established night aurora as a separate,
-    // night-gated sky overlay rather than tying it to the shelved procedural cloud layer.
+    // O8.4: cloud coordinates follow the sky ray, not screen pixels or a near-zero Y divisor.
+    #if NL_CLOUD_TYPE == 4
+      vec4 bslClouds = renderCloudsBsl(skyDir, skycol, v_underwaterRainTimeDay.z, env.rainFactor, env.dayFactor);
+      skyColor = mix(skyColor, bslClouds.rgb, bslClouds.a);
+    #endif
+
+    // O8.4: map aurora over the sky dome with bounded coordinates and a horizon-weighted fade.
+    // This removes the old 1/abs(viewDir.y) projection that stretched the aurora across the map.
     #ifdef NL_AURORA
-      vec3 auroraPos = vec3(viewDir.xz * (187.0 / max(abs(viewDir.y), 0.08)), 187.0);
+      vec3 auroraPos = vec3(skyDir.x * 187.0, skyDir.y * 96.0, skyDir.z * 187.0);
       vec4 aurora = renderAurora(auroraPos, v_underwaterRainTimeDay.z, env.rainFactor, env.dayFactor);
-      skyColor += aurora.rgb;
+      float auroraHorizonFade = 1.0 - smoothstep(0.18, 0.72, abs(skyDir.y));
+      skyColor += aurora.rgb * auroraHorizonFade;
     #endif
 
     #ifdef NL_SHOOTING_STAR
