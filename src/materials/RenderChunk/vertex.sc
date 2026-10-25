@@ -131,7 +131,7 @@ void main() {
   // O8: foliage uses a dedicated lower-cost lighting path. This avoids the terrain-only
   // spatial sun projection and cloud-shadow path on the most overdraw-heavy forest material.
   if (isTree) {
-    light = nlFoliageLighting(s_LightMapTexture, skycol, env, torchColor, a_color0.rgb, uv1, lit, shade);
+    light = nlFoliageLighting(s_LightMapTexture, skycol, env, torchColor, a_color0.rgb, uv1, lit, shade, t);
   } else {
     light = nlLighting(s_LightMapTexture, skycol, env, worldPos, torchColor, a_color0.rgb, uv1, lit, isTree, shade, t, FogAndDistanceControl.z, TimeOfDay.x, CameraPosition.xyz);
   }
