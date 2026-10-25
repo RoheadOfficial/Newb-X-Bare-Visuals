@@ -82,6 +82,8 @@ def main() -> int:
     require("smoothstep(0.0, 0.85" in fog and "exp(" not in fog and "rain*0.06" in fog, "low-cost restrained mist must remain")
     clouds = read("src/materials/Clouds/vertex.sc")
     require("#if NL_CLOUD_TYPE == 0" in clouds, "vanilla Minecraft cloud path must remain compiled")
+    sky_material = read("src/materials/Sky/fragment.sc")
+    require("renderAurora(auroraPos" in sky_material and "skyColor += aurora.rgb" in sky_material, "night aurora must remain after restoring vanilla clouds")
     weather = read("src/materials/Weather/fragment.sc")
     require("texture2D(s_WeatherTexture, UVOffsetAndScale.xy" not in weather and "B0.4.0: derive the subtle particle speck modulation" in weather,
             "weather particles must not restore the redundant texture fetch")
