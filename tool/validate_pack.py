@@ -54,6 +54,10 @@ def main() -> int:
     vertex = read("src/materials/RenderChunk/vertex.sc")
     require("if ((!isTree && fogColor.a > 0.001) || fogColor.a > 0.20 || env.rainFactor > 0.0)" in vertex,
             "foliage low-contribution sky-fog fast path must exist")
+    require("float foliageFogAlpha = nlRenderFogFade(" in vertex and "env.rainFactor <= 0.0 && foliageFogAlpha <= 0.20" in vertex,
+            "foliage must select the cheaper sky palette only in clear, low-fog scenes")
+    require("skycol = nlFoliageSkyColors(env);" in vertex and "skycol = nlSkyColors(env);" in vertex,
+            "full sky colors must remain for rain, fog, underwater, Nether, and End scenes")
     require("#if defined(NL_DISABLE_GROUND_REFLECTIONS)" in vertex, "terrain reflection calls must be gated off")
     require("Alpha-tested foliage/billboards cannot display the horizontal terrain reflection mask" in vertex,
             "existing foliage reflection avoidance must remain")
@@ -71,6 +75,8 @@ def main() -> int:
     require("nlRenderSky(skycol, env, viewDir, t, false)" in water, "disabled reflection path must preserve source behind compile-time fallback")
 
     sky = read("src/newb/functions/sky.h")
+    require("nl_skycolor nlFoliageSkyColors(nl_environment env)" in sky,
+            "low-cost clear-weather foliage ambient palette must exist")
     require("1.0 - smoothstep(-0.12, 0.12, env.dayFactor)" in sky, "sky day/night blend must be smooth")
     require("smoothstep(0.0, 1.0, env.rainFactor)" in sky, "sky weather blend must be smooth")
     require("horizonGlow" not in sky, "custom horizon glow must not override the vanilla-style sky gradient")
@@ -83,8 +89,18 @@ def main() -> int:
     require("NL_CLOUD_SHADOW" not in foliage and "sunAttenuation" in foliage, "foliage fast path must avoid cloud-shadow and spatial sun projection work")
     require("1.0 - smoothstep(-0.12, 0.12, env.dayFactor)" in lighting, "terrain/entity lighting must blend through twilight")
 
+    detection = read("src/newb/functions/detection.h")
+    require("float detectRain(" in detection and "val*val*(3.0 - 2.0*val)" in detection,
+            "rain detection must transition smoothly from clear to wet weather")
     fog = read("src/newb/functions/fog.h")
-    require("smoothstep(0.0, 0.85" in fog and "exp(" not in fog and "rain*0.06" in fog, "low-cost restrained mist must remain")
+    require("smoothstep(0.0, 0.85" in fog and "exp(" not in fog and "rain*0.06" in fog,
+            "low-cost restrained mist must remain")
+    rain = read("src/newb/functions/rain.h")
+    require("#ifdef NL_DISABLE_GROUND_REFLECTIONS" in rain and "NL_GROUND_RAIN_PUDDLES*fastRand" in rain and "color.rgb *= 1.0 - 0.4*wetness*env.rainFactor" in rain,
+            "wet-ground darkening and puddle variation must survive reflection removal")
+    weather_material = read("src/materials/Weather/fragment.sc")
+    require("B0.4.0: derive the subtle particle speck modulation from the existing texel" in weather_material,
+            "lightweight weather particle path must remain active")
     clouds = read("src/materials/Clouds/vertex.sc")
     require("#if NL_CLOUD_TYPE == 0" in clouds, "vanilla Minecraft cloud path must remain compiled")
     sky_material = read("src/materials/Sky/fragment.sc")
