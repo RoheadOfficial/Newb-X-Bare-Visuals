@@ -92,7 +92,7 @@ void main() {
 
   diffuse.rgb *= color.rgb;
 
-  // O6.0: shift water toward muted mineral-gray/cool-glass instead of a strong blue/green wash.
+  // O8.4: deepen the water tint and reduce the pale surface wash while keeping texture detail.
   // Reuse the already sampled color; no extra texture reads or render passes.
   if (v_extra.b > 0.9) {
     float waterLuma = dot(diffuse.rgb, vec3(0.2126, 0.7152, 0.0722));
