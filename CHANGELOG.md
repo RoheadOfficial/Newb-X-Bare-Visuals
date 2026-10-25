@@ -17,6 +17,7 @@
 - Shelve procedural Cloud Type 1 and restore the normal Minecraft cloud plane/texture path.
 - Preserve the established night aurora as a separate night-gated sky overlay, no longer tied to the shelved procedural cloud layer.
 - Remove the pack's custom clouds texture override so vanilla cloud texture can be used.
+- Match the vanilla cloud plane's baseline thickness and opacity; rain changes cloud tint rather than artificially inflating cloud thickness.
 - Remove the added horizon-glow band and keep a clean vanilla-rooted sky gradient.
 - Blend day/night sky colors and terrain/entity lighting smoothly through twilight.
 - Smooth rain-driven sky-color transitions while preserving rain particles, rain mist, and wet-ground response.
