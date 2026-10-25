@@ -46,6 +46,8 @@ def main() -> int:
     require("#define NL_DISABLE_WATER_REFLECTIONS" in cfg, "water reflection calculations must be compiled out")
     require("#define NL_DISABLE_GROUND_REFLECTIONS" in cfg, "Always Reflection terrain path must be disabled")
     require("#define BOX_CLOUDS" in cfg and "#define NL_CLOUD_TYPE 0" in cfg, "vanilla cloud rendering must be active")
+    require("#define NL_CLOUD0_THICKNESS 1.0" in cfg and "#define NL_CLOUD0_RAIN_THICKNESS 1.0" in cfg and "#define NL_CLOUD0_OPACITY 1.0" in cfg,
+            "vanilla cloud plane thickness and opacity must not be artificially inflated")
     require("#define NL_WATER_TINT vec3(0.62,0.78,0.92)" in cfg, "O8 water palette must be soft blue")
     require("#define NL_WATER_STYLE_STRENGTH 0.42" in cfg and "#define NL_WATER_TEX_OPACITY 0.08" in cfg and "#define NL_WATER_TRANSPARENCY 0.85" in cfg, "O8 water clarity and color styling must remain active")
     require("#define NL_SKY_HORIZON_GLOW 0.0" in cfg, "custom horizon glow must be disabled")
