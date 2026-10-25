@@ -24,7 +24,7 @@ def validate_pack_tree(pack_root: Path) -> None:
     config = tomllib.loads((ROOT / "src/newb/pack_config.toml").read_text(encoding="utf-8"))
     expected_materials = set(config.get("materials", []))
     require(header.get("name") == "Newb X Bare Visuals", "artifact name must remain Newb X Bare Visuals")
-    require(header.get("version") == [0, 4, 8], "artifact manifest version must be [0, 4, 6]")
+    require(header.get("version") == [0, 4, 8], "artifact manifest version must be [0, 4, 8]")
     require(header.get("uuid") == config.get("uuid"), "artifact UUID must match the pack source")
     require(header.get("min_engine_version") == [1, 26, 50], "artifact minimum engine version must remain compatible")
     profiles = manifest.get("subpacks", [])
