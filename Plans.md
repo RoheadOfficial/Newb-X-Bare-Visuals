@@ -1,3 +1,31 @@
+## B0.4.6 — O8 Performance & Visual Refinement
+
+**Version:** `B0.4.6.2652` (Minecraft target label `26.52`)  
+**Overworld milestone:** `O8`  
+**Branch:** `b0.4.6-o8-performance-overhaul`  
+**Base:** B0.4.5 implementation candidate, kept separate from `main`  
+**Build scope:** Android during implementation; multiplatform during release preparation.
+
+### Required implementation
+1. Compile out terrain Always Reflection and water sky/aurora/torch reflections. Preserve rain-darkened ground and puddle variation without running sky-reflection calculations.
+2. Add a reflection-free water path with clear transparency, low texture opacity, and a restrained soft-blue palette inspired by Newb X Future's water appearance. No waves or water reflections.
+3. Restore the vanilla Minecraft cloud path, shelve Cloud Type 1, and remove the pack's custom cloud texture override.
+4. Refine day/night and rain-driven sky transitions while keeping a clean vanilla-rooted sky gradient and the existing cozy, cinematic Bare Visuals identity.
+5. Implement a RenderChunk foliage fast path that skips full sky-color evaluation for tree vertices when fog contribution is negligible. Preserve deeper-fog and rainy-weather blending.
+6. Preserve the approved 1.06 saturation, lighting identity, lightweight rain, wet-ground response, no-waving rule, and each active profile's purpose.
+7. Keep only Default, Pootaytoe, and Bare Visuals selectable; Experimental is shelved, not erased from history.
+8. Update the validator, version metadata, changelog, docs, and Android workflow. Do not modify upstream README content.
+
+### Acceptance gate
+- [ ] Static validator passes and duplicate-file audit has no unexpected regression.
+- [ ] Android build succeeds and produces a directly installable `.mcpack`; inspect generated manifest, version `B0.4.6.2652`, three-profile order, and compiled material outputs.
+- [ ] Compare B0.4.5 with O8 on the same Vivo Y22s, world, render distance, and comparable conditions: dense forest while stationary, turning, and moving.
+- [ ] Test weather, wet ground, water, sky transitions, and all three active profiles for visual regressions.
+- [ ] Target 30–49 FPS, but record measured FPS and stutters rather than asserting an unmeasured result. A successful build does not prove runtime performance.
+- [ ] Keep `main` untouched until review and explicit merge approval.
+
+---
+
 # Plans
 
 ## B0.4.5 — All-in-One Performance Overhaul
