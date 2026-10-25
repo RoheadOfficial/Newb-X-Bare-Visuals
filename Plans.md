@@ -1,3 +1,33 @@
+## B0.4.8 — O8.4 Review Fixes
+
+**Status:** Implementation on b0.4.8-o8.4-review-fixes; Android build and on-device acceptance are pending.  
+**Version:** B0.4.8.2652 (Minecraft target label 26.52)  
+**Parent candidate:** O8 / B0.4.6 on b0.4.6-o8-performance-overhaul  
+**Build scope:** Android only during implementation; do not merge to main without explicit approval.
+
+### Review-driven implementation checklist
+- [x] Broaden the lightweight path to all alpha-tested foliage and billboarded plant geometry, including seasonal foliage, instead of relying on the previous narrow vertex-color heuristic.
+- [x] Bypass custom sun/shadow/torch lighting for that foliage and sample the engine lightmap directly; retain its texture/biome tint and normal scene fog.
+- [x] Skip custom foliage glow shimmer, emissive glow, underwater caustic lighting, terrain-only shade ramps, and reflection calculations. Vegetation waving remains globally disabled.
+- [x] Correct the aurora's sky projection: remove the near-zero vertical-direction divisor, use bounded sky-direction coordinates, and fade the effect toward the zenith to avoid an obvious stretched skybox band.
+- [x] Replace the water's pale wash with a deeper natural blue palette, stronger tint, more surface texture, and lower alpha opacity; water and terrain reflections remain disabled.
+- [x] Adapt the supplied Shader Editor cloud concept into a sky-direction procedural layer. It uses two 3D noise samples and a small warp rather than a screen-space singularity, external noise sampler, or ten-pass loop.
+- [x] Hide the vanilla cloud plane in this new cloud mode so the procedural layer does not double-render.
+- [x] Keep day/night visibility and rain-driven cloud density/tint connected to the existing sky/weather factors.
+- [x] Update manifest/version checks, static regression checks, Android build workflows, changelog, and plans for B0.4.8.
+
+### Scope note
+The engine's generic opaque RenderChunk material does not provide a reliable tree-species identifier for bark/trunks; classifying every opaque block as a tree would also bypass shading on ordinary stone and terrain. O8.4 therefore targets all cutout foliage and billboarded plants, where dense-leaf overdraw and custom foliage shader work are concentrated. Opaque logs/trunks keep the regular terrain path.
+
+### Acceptance checklist
+- [ ] Static regression validator passes.
+- [ ] Android shader compiler succeeds for every active profile and the MCpack artifact validator passes.
+- [ ] Inspect the packaged manifest for version [0, 4, 8], version label B0.4.8.2652, and the three active profiles in order.
+- [ ] On Vivo Y22s, compare the same dense forest while stationary, rotating, and moving; record FPS and stutter rather than assuming the target was met.
+- [ ] Inspect all tree/leaf variants, water in shallow/deep areas, aurora near the horizon and zenith, clouds, weather transitions, and all three profiles.
+- [ ] Confirm the procedural clouds do not show a seam, horizon stretch, or overlap with vanilla clouds.
+- [ ] Keep main untouched until explicit merge approval.
+
 ## B0.4.6 — O8 Performance & Visual Refinement
 
 **Version:** `B0.4.6.2652` (Minecraft target label `26.52`)  
