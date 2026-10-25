@@ -78,9 +78,11 @@ void main() {
   bool isColored = color.r != color.g || color.r != color.b;
   float shade = isColored ? color.g*1.5 : color.g;
 
-  // O8.4: treat all alpha-tested foliage and billboarded plants as shader-lightweight.
-  // This covers leaf variants across tree species/biomes and avoids the old color/vertex heuristic.
-  #if defined(ALPHA_TEST) || defined(RENDER_AS_BILLBOARDS)
+  // O8.4: classify biome-tinted/alpha-zero leaf geometry without the old corner-position test.
+  // Billboarded foliage and seasonal leaves are explicitly included; untinted cutouts keep their effects.
+  #if defined(ALPHA_TEST) && !defined(RENDER_AS_BILLBOARDS)
+    bool isTree = isColored || color.a == 0.0;
+  #elif defined(RENDER_AS_BILLBOARDS)
     bool isTree = true;
   #else
     bool isTree = false;
