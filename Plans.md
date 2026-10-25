@@ -14,7 +14,7 @@
 5. Implement coordinated RenderChunk foliage optimizations: route detected tree/leaf vertices through dedicated lower-cost lighting that omits terrain spatial sun projection/cloud-shadow work; use a foliage-only environment initializer without rotated sun/moon vectors for eligible nearby clear-weather leaves; resolve fog alpha once and reuse it; and select a cheaper ambient palette only when foliage fog is negligible. Fall back to full environment/sky evaluation for rain, visible fog, underwater, Nether, and End scenes.
 6. Preserve the approved 1.06 saturation, lighting identity, lightweight rain, wet-ground response, no-waving rule, and each active profile's purpose.
 7. Keep only Default, Pootaytoe, and Bare Visuals selectable; Experimental is shelved, not erased from history.
-8. Update the validator, version metadata, changelog, docs, and Android workflow. Do not modify upstream README content.
+8. Update source and artifact validators, version metadata, changelog, docs, and Android workflows. Verify the generated MCpack contains all expected compiled materials. Do not modify upstream README content.
 
 ### Acceptance gate
 - [ ] Static validator passes and duplicate-file audit has no unexpected regression.
