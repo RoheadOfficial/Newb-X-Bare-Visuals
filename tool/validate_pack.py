@@ -66,8 +66,8 @@ def main() -> int:
             "reflection removal must not bypass wet-ground darkening and puddle variation")
     require("Alpha-tested foliage/billboards cannot display the horizontal terrain reflection mask" in vertex,
             "existing foliage reflection avoidance must remain")
-    require("#if defined(NL_GLOW_SHIMMER) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS) || defined(ALPHA_TEST)" in vertex,
-            "foliage must skip vertex glow-shimmer work")
+    require("float shimmer = isTree ? 0.0 : 1.0;" in vertex and "v_extra.a > 0.5 ? glowDetect(diffuse)" in terrain,
+            "foliage must skip custom glow shimmer and emissive glow work")
     terrain = read("src/materials/RenderChunk/fragment.sc")
     require("diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);" in terrain, "terrain fog blend must remain")
     require("#if !defined(NL_DISABLE_WATER_REFLECTIONS) || !defined(NL_DISABLE_GROUND_REFLECTIONS)" in terrain,
@@ -91,8 +91,8 @@ def main() -> int:
     require("vec3 nlFoliageLighting(" in lighting and "return texture2D(tex, uv1).rgb;" in lighting, "foliage must bypass custom shader lighting and use the engine lightmap")
     require("if (isTree) {\n    light = nlFoliageLighting(" in vertex, "RenderChunk must route detected foliage through the dedicated fast path")
     foliage = lighting.split("vec3 nlFoliageLighting(", 1)[1].split("vec3 nlLighting(", 1)[0]
-    require("#ifdef NL_BLINKING_TORCH" in foliage and "noise1D(t*8.0)" in foliage,
-            "foliage lighting must preserve the optional blinking-torch behavior")
+    require("return texture2D(tex, uv1).rgb;" in foliage and "torchColor = vec3_splat(0.0);" in foliage,
+            "foliage must use the engine lightmap without shader-added torch lighting")
     require("NL_CLOUD_SHADOW" not in foliage and "sunAttenuation" not in foliage and "NL_SUNLIGHT_INTENSITY" not in foliage, "foliage fast path must avoid custom sun/shadow lighting work")
     require("1.0 - smoothstep(-0.12, 0.12, env.dayFactor)" in lighting, "terrain/entity lighting must blend through twilight")
     require("sunLightAttenuation *= 1.0-0.4*env.rainFactor;" in lighting,
