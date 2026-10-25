@@ -42,7 +42,7 @@ def main() -> int:
     for macro in ("NL_WATER_WAVE", "NL_PLANTS_WAVE", "NL_LANTERN_WAVE", "NL_EXTRA_PLANTS_WAVE",
                   "NL_UNDERWATER_WAVE", "NL_CLOUD_SHADOW", "NL_CLOUDY_FOG", "NL_GROUND_REFL",
                   "NL_CLOUD_AURORA_REFLECTION", "NL_EXPERIMENTAL_FAKE_SHADOW_STRENGTH"):
-        require(not re.search(rf"(?m)^\\s*#define\\s+{macro}\\b", cfg), f"{macro} must not be enabled")
+        require(not re.search(rf"(?m)^\s*#define\s+{macro}\b", cfg), f"{macro} must not be enabled")
     require("#define NL_DISABLE_WATER_REFLECTIONS" in cfg, "water reflection calculations must be compiled out")
     require("#define NL_DISABLE_GROUND_REFLECTIONS" in cfg, "Always Reflection terrain path must be disabled")
     require("#define BOX_CLOUDS" in cfg and "#define NL_CLOUD_TYPE 0" in cfg, "vanilla cloud rendering must be active")
