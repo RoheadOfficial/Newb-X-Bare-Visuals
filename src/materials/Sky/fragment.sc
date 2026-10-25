@@ -27,7 +27,7 @@ void main() {
     nl_skycolor skycol = nlOverworldSkyColors(env);
 
     vec3 skyDir = vec3(-viewDir.x, viewDir.y, -viewDir.z);
-    vec3 skyColor = nlRenderSky(skycol, env, skyDir, v_underwaterRainTimeDay.z, true);
+    vec3 skyColor = nlRenderSky(skycol, env, -viewDir, v_underwaterRainTimeDay.z, true);
 
     // O8.4: cloud coordinates follow the sky ray, not screen pixels or a near-zero Y divisor.
     #if NL_CLOUD_TYPE == 4
