@@ -10,6 +10,7 @@
 
 ### Sky, clouds, weather and visuals
 - Shelve procedural Cloud Type 1 and restore the normal Minecraft cloud plane/texture path.
+- Preserve the established night aurora as a separate night-gated sky overlay, no longer tied to the shelved procedural cloud layer.
 - Remove the pack's custom clouds texture override so vanilla cloud texture can be used.
 - Remove the added horizon-glow band and keep a clean vanilla-rooted sky gradient.
 - Blend day/night sky colors and terrain/entity lighting smoothly through twilight.
