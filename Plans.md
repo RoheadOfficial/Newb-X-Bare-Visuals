@@ -6,7 +6,7 @@
 **Build scope:** Android only during implementation; do not merge to main without explicit approval.
 
 ### Review-driven implementation checklist
-- [x] Broaden the lightweight path to all alpha-tested foliage and billboarded plant geometry, including seasonal foliage, instead of relying on the previous narrow vertex-color heuristic.
+- [x] Broaden the lightweight path to biome-tinted/alpha-zero cutout foliage and billboarded plant geometry, including seasonal foliage, without blanket-disabling unrelated untinted cutouts.
 - [x] Bypass custom sun/shadow/torch lighting for that foliage and sample the engine lightmap directly; retain its texture/biome tint and normal scene fog.
 - [x] Skip custom foliage glow shimmer, emissive glow, underwater caustic lighting, terrain-only shade ramps, and reflection calculations. Vegetation waving remains globally disabled.
 - [x] Correct the aurora's sky projection: remove the near-zero vertical-direction divisor, use bounded sky-direction coordinates, and fade the effect toward the zenith to avoid an obvious stretched skybox band.
