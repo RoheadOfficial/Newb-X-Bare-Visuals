@@ -140,7 +140,7 @@ void main() {
   #if defined(TRANSPARENT) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS))
     if (a_color0.b > 0.3 && a_color0.a < 0.95) {
       water = 1.0;
-      // O6.0: retain Newb's always-on base sky reflection; only extra aurora detail is distance-gated.
+      // O8: keep the custom water material but compile its reflection calculations out.
       color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
       refl = nlWater(color, worldPos, skycol, env, a_color0, viewDir, cPos, tiledCpos, gPos, CameraPosition.xyz, light, torchColor, lit, bPos.y, camDis, t);
     } else {
