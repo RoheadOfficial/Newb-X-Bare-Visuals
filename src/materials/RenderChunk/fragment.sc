@@ -132,17 +132,24 @@ void main() {
                    (NL_MATERIAL_HIGHLIGHT_STRENGTH * materialHighlight);
   #endif
 
-  if (v_extra.b > 0.9) {
-    diffuse.rgb += v_refl.rgb*v_refl.a;
-  } else if (v_refl.a > 0.0) {
-    // reflective effect - only on xz plane
-    float dy = abs(dFdy(v_extra.g));
-    if (dy < 0.0002) {
-      float mask = v_refl.a*(clamp(v_extra.r*10.0,8.2,8.8)-7.8);
-      diffuse.rgb *= 1.0 - 0.6*mask;
-      diffuse.rgb += v_refl.rgb*mask;
+  // O8: both water and terrain reflections are disabled; compile their fragment work out.
+  #if !defined(NL_DISABLE_WATER_REFLECTIONS) || !defined(NL_DISABLE_GROUND_REFLECTIONS)
+    if (v_extra.b > 0.9) {
+      #if !defined(NL_DISABLE_WATER_REFLECTIONS)
+        diffuse.rgb += v_refl.rgb*v_refl.a;
+      #endif
+    } else if (v_refl.a > 0.0) {
+      #if !defined(NL_DISABLE_GROUND_REFLECTIONS)
+        // reflective effect - only on xz plane
+        float dy = abs(dFdy(v_extra.g));
+        if (dy < 0.0002) {
+          float mask = v_refl.a*(clamp(v_extra.r*10.0,8.2,8.8)-7.8);
+          diffuse.rgb *= 1.0 - 0.6*mask;
+          diffuse.rgb += v_refl.rgb*mask;
+        }
+      #endif
     }
-  }
+  #endif
 
   diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);
 

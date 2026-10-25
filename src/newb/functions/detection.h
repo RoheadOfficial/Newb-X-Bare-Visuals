@@ -72,6 +72,22 @@ nl_environment calculateSunParams(nl_environment env, float TIME_OF_DAY) {
   return env;
 }
 
+// O8 pass 3: foliage-only environment detection. Tree lighting does not need rotated sun/moon
+// direction vectors when clear-weather fog is negligible, so avoid their per-vertex trig/rotation.
+nl_environment nlDetectFoliageEnvironment(float TIME_OF_DAY, vec3 FOG_COLOR, vec3 FOG_CONTROL) {
+  nl_environment env;
+  env.end = detectEnd(FOG_COLOR);
+  env.nether = detectNether(FOG_COLOR, FOG_CONTROL.xy);
+  env.underwater = detectUnderwater(FOG_COLOR, FOG_CONTROL.xy);
+  env.rainFactor = detectRain(FOG_CONTROL.xyz);
+  env.fogCol = FOG_COLOR;
+  env.dayFactor = cos(2.0 * PI * TIME_OF_DAY);
+  // Safe sentinels: this path is retained only when sky rendering/reflection code is skipped.
+  env.sunDir = vec3(0.0, 1.0, 0.0);
+  env.moonDir = vec3(0.0, -1.0, 0.0);
+  return env;
+}
+
 nl_environment nlDetectEnvironment(float TIME_OF_DAY, vec3 FOG_COLOR, vec3 FOG_CONTROL) {
   nl_environment env;
   env.end = detectEnd(FOG_COLOR);

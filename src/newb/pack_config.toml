@@ -1,11 +1,11 @@
 name = "Newb X Bare Visuals"
-version = [0, 4, 5]
-development_version = "B0.4.5"
+version = [0, 4, 6]
+development_version = "B0.4.6"
 minecraft_target_version = "26.52" # Target label only; compatibility must be verified in-game
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
-§7- A softer Overworld, tuned for cozy exploration and mobile play.
+§7- A cozy, vanilla-rooted Overworld with reflection-free water and focused mobile performance.
 §8[§2MOSS §8· §6COFFEE §8· §fSTONE§8] §rᴠᴀɴɪʟʟᴀ ᴍɪɴᴇᴄʀᴀғᴛ, ɴᴀᴛᴜʀᴀʟʟʏ ᴇɴʜᴀɴᴄᴇᴅ.
 %v
 §3https://github.com/RoheadOfficial/Newb-X-Bare-Visuals
@@ -31,12 +31,12 @@ Original Newb Shader source and upstream project: https://github.com/devendrn/ne
 Variant creator: RoheadOfficial
 '''
 
-# Required MCpack order: Default #1, Pootaytoe #2, Bare Visuals #3, Experimental #4.
+# Required MCpack order: Default #1, Pootaytoe #2, Bare Visuals #3. Experimental is shelved in O8.
 # The root material set is compiled with DEFAULT; Default inherits it without duplicating binaries.
 [[subpack]]
 define = "DEFAULT"
 materials = []
-description = "Default — Natural light, soft clouds, and balanced atmosphere"
+description = "Default — Natural light, vanilla clouds, and balanced atmosphere"
 
 [[subpack]]
 define = "POOTAYTOE"
@@ -46,9 +46,5 @@ description = "Pootaytoe — Lean rendering with the core atmosphere intact"
 [[subpack]]
 define = "BARE_VISUALS"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Bare Visuals — A richer, cozier atmosphere and material feel"
+description = "Bare Visuals — Cozy atmosphere and soft blue, reflection-free water"
 
-[[subpack]]
-define = "EXPERIMENTAL"
-materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Experimental — Lightweight fake terrain shadows; visual results may vary"

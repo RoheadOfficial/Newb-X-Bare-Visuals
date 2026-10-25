@@ -1,3 +1,39 @@
+## B0.4.6 — O8 Performance & Visual Refinement
+
+**Version:** `B0.4.6.2652` (Minecraft target label `26.52`)  
+**Overworld milestone:** `O8`  
+**Branch:** `b0.4.6-o8-performance-overhaul`  
+**Base:** B0.4.5 implementation candidate, kept separate from `main`  
+**Build scope:** Android during implementation; multiplatform during release preparation.
+
+### Required implementation
+1. Compile out terrain Always Reflection and water sky/aurora/torch reflections. Keep calling the compile-time reflection-free terrain path so rain-darkened ground and puddle variation still execute without sky-reflection calculations.
+2. Add a reflection-free water path with clear transparency, low texture opacity, and a restrained soft-blue palette inspired by Newb X Future's water appearance. No waves or water reflections.
+3. Restore the vanilla Minecraft cloud path, shelve Cloud Type 1, remove the pack's custom cloud texture override, and keep baseline cloud-plane thickness/opacity vanilla-like (rain changes tint rather than geometry).
+4. Refine day/night and rain-driven sky transitions while keeping a clean vanilla-rooted sky gradient and the existing cozy, cinematic Bare Visuals identity.
+5. Implement coordinated RenderChunk foliage optimizations: route detected tree/leaf vertices through dedicated lower-cost lighting that omits terrain spatial sun projection/cloud-shadow work; use a foliage-only environment initializer without rotated sun/moon vectors for eligible nearby clear-weather leaves; resolve fog alpha once and reuse it; and select a cheaper ambient palette only when foliage fog is negligible. Fall back to full environment/sky evaluation for rain, visible fog, underwater, Nether, and End scenes.
+6. Preserve the approved 1.06 saturation, lighting identity, lightweight rain, wet-ground response, no-waving rule, and each active profile's purpose.
+7. Keep only Default, Pootaytoe, and Bare Visuals selectable; Experimental is shelved, not erased from history.
+8. Update source and artifact validators, version metadata, changelog, docs, and Android workflows. Verify the generated MCpack contains all expected compiled materials. Do not modify upstream README content.
+
+### Acceptance gate
+- [ ] Static validator passes and duplicate-file audit has no unexpected regression.
+- [ ] Android build succeeds and produces a directly installable `.mcpack`; inspect generated manifest, version `B0.4.6.2652`, three-profile order, and compiled material outputs.
+- [ ] Compare B0.4.5 with O8 on the same Vivo Y22s, world, render distance, and comparable conditions: dense forest while stationary, turning, and moving.
+- [ ] Test weather, wet ground, water, sky transitions, and all three active profiles for visual regressions.
+- [ ] Target 30–49 FPS, but record measured FPS and stutters rather than asserting an unmeasured result. A successful build does not prove runtime performance.
+- [ ] Keep `main` untouched until review and explicit merge approval.
+
+### Repeatable Android A/B protocol
+1. Compare B0.4.5 and O8 on the same Vivo Y22s, Minecraft/MB Loader version, world, coordinates, render distance, graphics settings, and profile.
+2. Let chunks settle after loading; do not count the initial chunk-generation hitch as steady-state shader FPS.
+3. Record three passes: stationary in dense forest, slowly rotating the camera through the canopy, and moving along the same forest route.
+4. Repeat in clear weather and rain with matched time/weather conditions between versions.
+5. Record the measured FPS range/average and visible stutters for each pass. Repeat each pass at least twice and report observations, not the target.
+6. Test Default, Pootaytoe, and Bare Visuals separately so a performance gain does not come from flattening profile identities.
+
+---
+
 # Plans
 
 ## B0.4.5 — All-in-One Performance Overhaul

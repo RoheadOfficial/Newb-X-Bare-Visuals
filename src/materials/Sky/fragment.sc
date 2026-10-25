@@ -27,6 +27,15 @@ void main() {
     nl_skycolor skycol = nlOverworldSkyColors(env);
 
     vec3 skyColor = nlRenderSky(skycol, env, -viewDir, v_underwaterRainTimeDay.z, true);
+
+    // O8: vanilla clouds are restored, so keep the established night aurora as a separate,
+    // night-gated sky overlay rather than tying it to the shelved procedural cloud layer.
+    #ifdef NL_AURORA
+      vec3 auroraPos = vec3(viewDir.xz * (187.0 / max(abs(viewDir.y), 0.08)), 187.0);
+      vec4 aurora = renderAurora(auroraPos, v_underwaterRainTimeDay.z, env.rainFactor, env.dayFactor);
+      skyColor += aurora.rgb;
+    #endif
+
     #ifdef NL_SHOOTING_STAR
       skyColor += NL_SHOOTING_STAR*nlRenderShootingStar(viewDir, env.fogCol, v_underwaterRainTimeDay.z);
     #endif

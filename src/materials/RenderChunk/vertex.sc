@@ -85,8 +85,30 @@ void main() {
     bool isTree = false;
   #endif
 
-  nl_environment env = nlDetectEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);
-  nl_skycolor skycol = nlSkyColors(env);
+  // Resolve the candidate foliage path before building sun/moon direction vectors.
+  // The lightweight environment is retained only for clear, nearby Overworld foliage.
+  float foliageRelativeDist = camDis / FogAndDistanceControl.z + RenderChunkFogAlpha.x;
+  nl_environment env;
+  if (isTree) {
+    env = nlDetectFoliageEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);
+  } else {
+    env = nlDetectEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);
+  }
+
+  float foliageFogAlpha = nlRenderFogFade(foliageRelativeDist, FogColor.rgb, FogAndDistanceControl.xy, env.rainFactor);
+  bool foliageFast = isTree && !env.end && !env.nether && !env.underwater &&
+                     env.rainFactor <= 0.0 && foliageFogAlpha <= 0.20;
+  // Distant/fog-visible foliage needs the complete sun/moon vectors for the original sky renderer.
+  if (isTree && !foliageFast) {
+    env = nlDetectEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);
+  }
+
+  nl_skycolor skycol;
+  if (foliageFast) {
+    skycol = nlFoliageSkyColors(env);
+  } else {
+    skycol = nlSkyColors(env);
+  }
 
   // time
   highp float t = ViewPositionAndTime.w;
@@ -105,7 +127,14 @@ void main() {
   #endif
 
   vec3 torchColor; // modified by nl_lighting
-  vec3 light = nlLighting(s_LightMapTexture, skycol, env, worldPos, torchColor, a_color0.rgb, uv1, lit, isTree, shade, t, FogAndDistanceControl.z, TimeOfDay.x, CameraPosition.xyz);
+  vec3 light;
+  // O8: foliage uses a dedicated lower-cost lighting path. This avoids the terrain-only
+  // spatial sun projection and cloud-shadow path on the most overdraw-heavy forest material.
+  if (isTree) {
+    light = nlFoliageLighting(s_LightMapTexture, skycol, env, torchColor, a_color0.rgb, uv1, lit, shade, t);
+  } else {
+    light = nlLighting(s_LightMapTexture, skycol, env, worldPos, torchColor, a_color0.rgb, uv1, lit, isTree, shade, t, FogAndDistanceControl.z, TimeOfDay.x, CameraPosition.xyz);
+  }
 
   #if !defined(NL_DISABLE_ALL_WAVING) && defined(ALPHA_TEST) && (defined(NL_PLANTS_WAVE) || defined(NL_LANTERN_WAVE)) && !defined(RENDER_AS_BILLBOARDS)
     nlWave(worldPos, light, env.rainFactor, uv1, lit, uv0, bPos, a_color0, cPos, tiledCpos, t, s_MatTexture, isColored, camDis, isTree);
@@ -115,10 +144,10 @@ void main() {
   relativeDist += RenderChunkFogAlpha.x;
 
   vec4 fogColor;
-  fogColor.a = nlRenderFogFade(relativeDist, FogColor.rgb, FogAndDistanceControl.xy, env.rainFactor);
+  fogColor.a = foliageFogAlpha;
   // The sky color is unused when fog alpha is zero. Avoid a full sky evaluation for nearby,
   // clear-weather terrain vertices; keep the sky-derived color whenever fog can contribute.
-  if (fogColor.a > 0.001 || env.rainFactor > 0.0) {
+  if ((!isTree && fogColor.a > 0.001) || fogColor.a > 0.20 || env.rainFactor > 0.0) {
     fogColor.rgb = nlRenderSky(skycol, env, viewDir, t, true);
   } else {
     fogColor.rgb = FogColor.rgb;
@@ -140,11 +169,13 @@ void main() {
   #if defined(TRANSPARENT) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS))
     if (a_color0.b > 0.3 && a_color0.a < 0.95) {
       water = 1.0;
-      // O6.0: retain Newb's always-on base sky reflection; only extra aurora detail is distance-gated.
+      // O8: keep the custom water material but compile its reflection calculations out.
       color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
       refl = nlWater(color, worldPos, skycol, env, a_color0, viewDir, cPos, tiledCpos, gPos, CameraPosition.xyz, light, torchColor, lit, bPos.y, camDis, t);
     } else {
       color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
+      // Always run the reflection-free nlRefl branch so rain can still darken ground
+      // and vary puddle wetness. NL_DISABLE_GROUND_REFLECTIONS compiles out sky reflections.
       refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
     }
   #else
@@ -153,7 +184,11 @@ void main() {
     #if defined(ALPHA_TEST) || defined(RENDER_AS_BILLBOARDS)
       refl = vec4(0.0, 0.0, 0.0, 0.0);
     #else
-      refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
+      #if defined(NL_DISABLE_GROUND_REFLECTIONS)
+        refl = vec4(0.0, 0.0, 0.0, 0.0);
+      #else
+        refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
+      #endif
     #endif
   #endif
 

@@ -6,7 +6,7 @@ on:
       subversion:
         description: 'Numeric manifest patch component (B0.4.5 uses 5)'
         required: true
-        default: '5'
+        default: '6'
         type: string
       platform:
         description: 'Target platform to build for'
@@ -69,6 +69,7 @@ jobs:
     - run: |
         ./build.sh setup
         ./build.sh pack -p android -v ${{ inputs.subversion }} --no-zip
+        python tool/validate_artifact.py build/pack-android
     - uses: actions/upload-artifact@v4
       with:
         name: newb-x-bare-visuals-${{ steps.version.outputs.full_version_slug }}-android

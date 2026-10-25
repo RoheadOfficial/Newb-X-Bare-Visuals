@@ -20,6 +20,13 @@ vec4 nlWater(
   float fractCposY, float camDist, highp float t
 ) {
 
+  #ifdef NL_DISABLE_WATER_REFLECTIONS
+    // O8: keep the water surface readable without computing sky, aurora, Fresnel, or torch reflections.
+    // The fragment stage supplies the soft blue-glass palette; engine water transparency is preserved.
+    color.rgb = vec3_splat(1.0);
+    color.a = COLOR.a * NL_WATER_TRANSPARENCY;
+    return vec4(0.0, 0.0, 0.0, 0.0);
+  #else
   vec2 bump = vec2_splat(0.0);
   #if defined(NL_WATER_WAVE) && !defined(NL_DISABLE_ALL_WAVING)
     bump = vec2_splat(movingNoise2D(gPos.xz + gPos.yy, NL_WATER_WAVE_SPEED*t, 0.6));
@@ -89,6 +96,7 @@ vec4 nlWater(
   #endif
 
   return vec4(waterRefl, fresnel);
+  #endif
 }
 
 #endif
