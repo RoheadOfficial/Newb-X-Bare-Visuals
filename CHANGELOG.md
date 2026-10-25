@@ -4,8 +4,9 @@
 ### Rendering and performance
 - Compile out the Always Reflection terrain path and all water sky/aurora/torch reflection work.
 - Add a reflection-free water path that retains transparency and a soft blue water palette.
-- Add a RenderChunk foliage fast path: for tree vertices with very low fog contribution, skip the full sky evaluation used only to color that tiny fog blend.
-- Preserve the existing near-midday tree-lighting shortcut, foliage glow tap reduction, and no-waving guard.
+- Add a dedicated lower-cost foliage-lighting function and route detected tree/leaf vertices through it. This avoids the terrain spatial sun projection and optional cloud-shadow path for the highest-overdraw forest materials.
+- Keep the RenderChunk low-fog sky-evaluation fast path, foliage glow-tap reduction, and global no-waving guard.
+- This is a targeted shader-side forest optimization; only same-device A/B testing can confirm its actual FPS impact.
 - Keep this a real shader-source update; build success alone is not evidence of FPS improvement.
 
 ### Sky, clouds, weather and visuals
