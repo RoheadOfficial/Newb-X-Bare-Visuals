@@ -136,9 +136,9 @@
 #define NL_CLOUD_TYPE 0          // O8: restore vanilla Minecraft cloud rendering
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
-#define NL_CLOUD0_THICKNESS 2.1      // 0.5 slim ~ 8.0 fat
-#define NL_CLOUD0_RAIN_THICKNESS 4.0 // 0.5 slim ~ 8.0 fat
-#define NL_CLOUD0_OPACITY 0.9        // 0.0 invisible ~ 1.0 opaque
+#define NL_CLOUD0_THICKNESS 1.0      // O8 pass 3: preserve vanilla cloud-plane thickness
+#define NL_CLOUD0_RAIN_THICKNESS 1.0 // O8 pass 3: rain changes tint, not cloud-plane thickness
+#define NL_CLOUD0_OPACITY 1.0        // O8 pass 3: retain the vanilla cloud texture's full opacity
 #define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
 
 /* Soft cloud settings */
