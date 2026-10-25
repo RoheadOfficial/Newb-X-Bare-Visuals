@@ -118,7 +118,7 @@ void main() {
   fogColor.a = nlRenderFogFade(relativeDist, FogColor.rgb, FogAndDistanceControl.xy, env.rainFactor);
   // The sky color is unused when fog alpha is zero. Avoid a full sky evaluation for nearby,
   // clear-weather terrain vertices; keep the sky-derived color whenever fog can contribute.
-  if (fogColor.a > 0.001 || env.rainFactor > 0.0) {
+  if ((!isTree && fogColor.a > 0.001) || fogColor.a > 0.20 || env.rainFactor > 0.0) {
     fogColor.rgb = nlRenderSky(skycol, env, viewDir, t, true);
   } else {
     fogColor.rgb = FogColor.rgb;
@@ -145,7 +145,11 @@ void main() {
       refl = nlWater(color, worldPos, skycol, env, a_color0, viewDir, cPos, tiledCpos, gPos, CameraPosition.xyz, light, torchColor, lit, bPos.y, camDis, t);
     } else {
       color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
-      refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
+      #if defined(NL_DISABLE_GROUND_REFLECTIONS)
+        refl = vec4(0.0, 0.0, 0.0, 0.0);
+      #else
+        refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
+      #endif
     }
   #else
     // Alpha-tested foliage/billboards cannot display the horizontal terrain reflection mask.
@@ -153,7 +157,11 @@ void main() {
     #if defined(ALPHA_TEST) || defined(RENDER_AS_BILLBOARDS)
       refl = vec4(0.0, 0.0, 0.0, 0.0);
     #else
-      refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
+      #if defined(NL_DISABLE_GROUND_REFLECTIONS)
+        refl = vec4(0.0, 0.0, 0.0, 0.0);
+      #else
+        refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
+      #endif
     #endif
   #endif
 
