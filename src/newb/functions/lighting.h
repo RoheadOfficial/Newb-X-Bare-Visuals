@@ -51,7 +51,7 @@ vec3 nlLighting(
 
   } else {
     // overworld lighting
-    float nightFactor = step(env.dayFactor, 0.0);
+    float nightFactor = 1.0 - smoothstep(-0.12, 0.12, env.dayFactor);
     float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
     dawnFactor *= dawnFactor*dawnFactor;
     dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
