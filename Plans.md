@@ -11,7 +11,7 @@
 2. Add a reflection-free water path with clear transparency, low texture opacity, and a restrained soft-blue palette inspired by Newb X Future's water appearance. No waves or water reflections.
 3. Restore the vanilla Minecraft cloud path, shelve Cloud Type 1, and remove the pack's custom cloud texture override.
 4. Refine day/night and rain-driven sky transitions while keeping a clean vanilla-rooted sky gradient and the existing cozy, cinematic Bare Visuals identity.
-5. Implement a RenderChunk foliage fast path that skips full sky-color evaluation for tree vertices when fog contribution is negligible. Preserve deeper-fog and rainy-weather blending.
+5. Implement two RenderChunk foliage optimizations: route detected tree/leaf vertices through a dedicated lower-cost lighting function that omits terrain spatial sun projection and cloud-shadow work, and skip full sky-color evaluation for foliage when fog contribution is negligible. Preserve deeper-fog and rainy-weather blending.
 6. Preserve the approved 1.06 saturation, lighting identity, lightweight rain, wet-ground response, no-waving rule, and each active profile's purpose.
 7. Keep only Default, Pootaytoe, and Bare Visuals selectable; Experimental is shelved, not erased from history.
 8. Update the validator, version metadata, changelog, docs, and Android workflow. Do not modify upstream README content.
