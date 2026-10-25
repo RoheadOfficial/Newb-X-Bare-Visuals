@@ -13,7 +13,7 @@ Newb X Bare Visuals is a community-made Newb Shader variant intended for Minecra
 
 The selectable order is **Default**, **Pootaytoe**, **Bare Visuals**, **Experimental**.
 
-- **Default:** balanced main look, with natural lighting, atmospheric sky, rain, wet-ground response, rounded clouds, and restrained emissive glow.
+- **Default:** balanced main look, with natural lighting, atmospheric sky, rain, wet-ground response, soft procedural clouds, and restrained emissive glow.
 - **Pootaytoe:** performance-first. It preserves the core atmosphere while skipping the extra terrain glow texture sample.
 - **Bare Visuals:** fuller cozy atmosphere with warmer dawn/sunset colors and subtle material highlights.
 - **Experimental:** tests a lightweight fake-shadow approximation using existing terrain vertex-lighting data. It is not a true shadow map and cannot reliably cast tree-canopy shadows.
@@ -30,7 +30,7 @@ Report Minecraft version, MB Loader version, phone model, selected profile, loca
 
 - Shader compilation and successful import do not prove visual quality or compatibility.
 - Fake terrain shading is an approximation, not genuine dynamic shadows.
-- Water stays on the existing vanilla-water rendering path; a subtle blue-channel adjustment is used to reduce the overly electric-blue appearance.
-- No water waves, custom water reflections, godrays, waving vegetation, box clouds, or custom player/mob shadows are intended.
+- Water uses the custom Newb reflection path with a restrained mineral-gray palette; the surface remains wave-free to keep the look calm and the rendering cost controlled.
+- No water waves, godrays, waving vegetation, box clouds, or custom player/mob shadows are intended. Cloud Type 1 is the active lightweight preset; rounded Type 2 and realistic Type 3 are shelved for now.
 
 For project background and licensing/credits, see [About.md](About.md), [COPYRIGHT.txt](COPYRIGHT.txt), and [LICENSE](LICENSE).

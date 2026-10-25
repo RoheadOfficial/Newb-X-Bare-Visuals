@@ -1,5 +1,35 @@
 # Plans
 
+## B0.4.5 — All-in-One Performance Overhaul
+
+**Version:** `B0.4.5.2652` (Minecraft target label `26.52`)  
+**Overworld milestone:** `O7` (proposed; use a patch suffix only if a subversion patch is needed)  
+**Branch:** `b0.4.5-performance-overhaul`  
+**Base:** current `main` at branch creation  
+**Build scope:** Android during implementation; multiplatform during release preparation.
+
+### Scope
+
+1. Prioritize dense forests, foliage, mountains, and terrain rendering; preserve the B0.4.0/B0.4.1 fast paths and measure rather than promise FPS gains.
+2. Activate lightweight custom Cloud Type 1. Shelve rounded Type 2 and realistic Type 3; do not substitute vanilla clouds.
+3. Raise saturation from 1.04 to 1.06 as a restrained test value while retaining tone mapping and natural color.
+4. Keep the custom Newb water reflection path, water reflections, terrain Always Reflection, rain, wet ground, aurora, and the no-waving guard. No water waves.
+5. Audit atmosphere/horizon/fog, weather particles, and Actor Glint for additional redundant work without removing their recognizable effects.
+6. Preserve Default, Pootaytoe, Bare Visuals, and Experimental and their distinct purposes.
+7. Polish manifest descriptions; update validator, version metadata, docs, and Android build-check branch filters. Keep upstream `README.md` untouched.
+
+### Acceptance
+
+- [ ] Duplicate audit and updated static validator pass.
+- [ ] Android build succeeds and yields a directly installable `.mcpack` with all expected profile materials/binaries.
+- [ ] Inspect generated manifest, B0.4.5 version identity, profile order, and Cloud Type 1 selection.
+- [ ] Compare B0.4.1 and B0.4.5 under matching device/world/settings in dense forest, open terrain, weather, water, horizon, and Actor Glint scenes.
+- [ ] Confirm no regression to water/terrain reflections, rain/wet ground, natural colors, night atmosphere, or the four profile identities.
+- [ ] Record actual FPS/stutter observations; compilation and source inspection are not FPS proof.
+- [ ] Keep `main` untouched until review and explicit merge approval.
+
+---
+
 ## B0.4.1 — Forest Performance Pass
 
 **Version:** `B0.4.1.2652` (Minecraft target label `26.52`)  
