@@ -58,6 +58,8 @@ def main() -> int:
             "foliage low-contribution sky-fog fast path must exist")
     require("float foliageFogAlpha = nlRenderFogFade(" in vertex and "env.rainFactor <= 0.0 && foliageFogAlpha <= 0.20" in vertex,
             "foliage must select the cheaper sky palette only in clear, low-fog scenes")
+    require("isTree = isColored || color.a == 0.0;" in vertex and "#elif defined(RENDER_AS_BILLBOARDS)" in vertex,
+            "foliage classification must cover tinted leaves, alpha-zero leaves, billboards, and seasonal leaves")
     require("skycol = nlFoliageSkyColors(env);" in vertex and "skycol = nlSkyColors(env);" in vertex,
             "full sky colors must remain for rain, fog, underwater, Nether, and End scenes")
     require(vertex.count("refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);") == 2,
