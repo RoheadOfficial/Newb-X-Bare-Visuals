@@ -105,7 +105,14 @@ void main() {
   #endif
 
   vec3 torchColor; // modified by nl_lighting
-  vec3 light = nlLighting(s_LightMapTexture, skycol, env, worldPos, torchColor, a_color0.rgb, uv1, lit, isTree, shade, t, FogAndDistanceControl.z, TimeOfDay.x, CameraPosition.xyz);
+  vec3 light;
+  // O8: foliage uses a dedicated lower-cost lighting path. This avoids the terrain-only
+  // spatial sun projection and cloud-shadow path on the most overdraw-heavy forest material.
+  if (isTree) {
+    light = nlFoliageLighting(s_LightMapTexture, skycol, env, torchColor, a_color0.rgb, uv1, lit, shade);
+  } else {
+    light = nlLighting(s_LightMapTexture, skycol, env, worldPos, torchColor, a_color0.rgb, uv1, lit, shade, t, FogAndDistanceControl.z, TimeOfDay.x, CameraPosition.xyz);
+  }
 
   #if !defined(NL_DISABLE_ALL_WAVING) && defined(ALPHA_TEST) && (defined(NL_PLANTS_WAVE) || defined(NL_LANTERN_WAVE)) && !defined(RENDER_AS_BILLBOARDS)
     nlWave(worldPos, light, env.rainFactor, uv1, lit, uv0, bPos, a_color0, cPos, tiledCpos, t, s_MatTexture, isColored, camDis, isTree);
