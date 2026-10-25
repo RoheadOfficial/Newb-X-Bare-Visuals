@@ -95,6 +95,10 @@ def main() -> int:
     detection = read("src/newb/functions/detection.h")
     require("float detectRain(" in detection and "val*val*(3.0 - 2.0*val)" in detection,
             "rain detection must transition smoothly from clear to wet weather")
+    require("nl_environment nlDetectFoliageEnvironment(" in detection and "env.dayFactor = cos(2.0 * PI * TIME_OF_DAY);" in detection,
+            "foliage-only environment path must avoid full sun/moon vector rotations")
+    require("if (isTree && !foliageFast)" in vertex and "env = nlDetectEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);" in vertex,
+            "foliage must fall back to the full environment when sky rendering may be needed")
     fog = read("src/newb/functions/fog.h")
     require("smoothstep(0.0, 0.85" in fog and "exp(" not in fog and "rain*0.06" in fog,
             "low-cost restrained mist must remain")
