@@ -12,6 +12,7 @@
 - Extend regression checks to enforce the foliage palette gate and the connected rain-detection, sky, fog, wet-ground/puddle, and particle paths.
 - Critical audit fix: keep calling `nlRefl` for non-water terrain so its compile-time no-reflection branch still applies rain wetness and puddle variation; reflection removal must not bypass the weather response.
 - Keep this a real shader-source update; build success alone is not evidence of FPS improvement.
+- Add a post-build artifact validator to check manifest identity, profile order, expected compiled material binaries, ZIP integrity, and absence of the custom vanilla-cloud texture override.
 
 ### Sky, clouds, weather and visuals
 - Shelve procedural Cloud Type 1 and restore the normal Minecraft cloud plane/texture path.
