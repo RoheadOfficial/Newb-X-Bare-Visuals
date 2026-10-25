@@ -78,11 +78,15 @@ void main() {
   bool isColored = color.r != color.g || color.r != color.b;
   float shade = isColored ? color.g*1.5 : color.g;
 
-  // tree leaves detection
-  #if defined(ALPHA_TEST) && !defined(RENDER_AS_BILLBOARDS)
-    bool isTree = (isColored && (bPos.x+bPos.y+bPos.z < 0.001)) || color.a == 0.0;
+  // O8.4: treat all alpha-tested foliage and billboarded plants as shader-lightweight.
+  // This covers leaf variants across tree species/biomes and avoids the old color/vertex heuristic.
+  #if defined(ALPHA_TEST) || defined(RENDER_AS_BILLBOARDS)
+    bool isTree = true;
   #else
     bool isTree = false;
+  #endif
+  #ifdef SEASONS
+    isTree = true;
   #endif
 
   // Resolve the candidate foliage path before building sun/moon direction vectors.
@@ -128,10 +132,9 @@ void main() {
 
   vec3 torchColor; // modified by nl_lighting
   vec3 light;
-  // O8: foliage uses a dedicated lower-cost lighting path. This avoids the terrain-only
-  // spatial sun projection and cloud-shadow path on the most overdraw-heavy forest material.
+  // O8.4: foliage bypasses custom shader lighting and uses the engine lightmap directly.
   if (isTree) {
-    light = nlFoliageLighting(s_LightMapTexture, skycol, env, torchColor, a_color0.rgb, uv1, lit, shade, t);
+    light = nlFoliageLighting(s_LightMapTexture, torchColor, uv1);
   } else {
     light = nlLighting(s_LightMapTexture, skycol, env, worldPos, torchColor, a_color0.rgb, uv1, lit, isTree, shade, t, FogAndDistanceControl.z, TimeOfDay.x, CameraPosition.xyz);
   }
@@ -170,7 +173,7 @@ void main() {
     if (a_color0.b > 0.3 && a_color0.a < 0.95) {
       water = 1.0;
       // O8: keep the custom water material but compile its reflection calculations out.
-      color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
+      color.a = mix(color.a, NL_WATER_TRANSPARENCY, 0.12*clamp(relativeDist, 0.0, 1.0));
       refl = nlWater(color, worldPos, skycol, env, a_color0, viewDir, cPos, tiledCpos, gPos, CameraPosition.xyz, light, torchColor, lit, bPos.y, camDis, t);
     } else {
       color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
@@ -200,7 +203,7 @@ void main() {
     }
   #endif
 
-  if (env.underwater) {
+  if (env.underwater && !isTree) {
     nlUnderwaterLighting(light, pos.xyz, lit, uv1, tiledCpos, cPos, t, skycol.horizon);
   }
 
@@ -215,7 +218,7 @@ void main() {
   #ifdef NL_LAVA_NOISE
     bool isc = (a_color0.r+a_color0.g+a_color0.b) > 2.999;
     bool isb = bPos.y < 0.891 && bPos.y > 0.889;
-    if (isc && isb && (uv1.x > 0.81 && uv1.x < 0.876) && uv0.y > 0.5) {
+    if (!isTree && isc && isb && (uv1.x > 0.81 && uv1.x < 0.876) && uv0.y > 0.5) {
       vec4 lava = nlLavaNoise(gPos, t);
       #ifdef NL_LAVA_NOISE_BUMP
         worldPos.y += NL_LAVA_NOISE_BUMP*lava.a;
