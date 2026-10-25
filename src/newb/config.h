@@ -109,7 +109,7 @@
 //#define NL_EXTRA_PLANTS_WAVE // [toggle] !dont use! wave using texture coords (1.21.0 vanilla 2048x1024)
 #define NL_WAVE_RANGE 9.0      // Keep plant/lantern movement close to the player for dense-scene performance
 
-/* Water and Always Reflection */
+/* Water — O8 keeps the custom water material but disables all reflection paths */
 // O8: custom water uses a soft blue palette, but all water reflections are disabled.
 #define NL_WATER_TRANSPARENCY 0.85 // O8: clear surface with readable underwater depth
 #define NL_WATER_BUMP 0.0           // Flat surface: no water-wave distortion
