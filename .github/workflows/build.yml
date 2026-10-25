@@ -69,6 +69,7 @@ jobs:
     - run: |
         ./build.sh setup
         ./build.sh pack -p android -v ${{ inputs.subversion }} --no-zip
+        python tool/validate_artifact.py build/pack-android
     - uses: actions/upload-artifact@v4
       with:
         name: newb-x-bare-visuals-${{ steps.version.outputs.full_version_slug }}-android
