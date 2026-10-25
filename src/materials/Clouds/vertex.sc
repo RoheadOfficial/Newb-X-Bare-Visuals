@@ -22,6 +22,13 @@ float fog_fade(vec3 wPos) {
 }
 
 void main() {
+  #if NL_CLOUD_TYPE == 4
+    // The BSL-inspired layer is drawn in Sky/fragment.sc; suppress the engine cloud plane.
+    v_color0 = vec4(0.0, 0.0, 0.0, 0.0);
+    gl_Position = vec4(0.0, 0.0, 0.0, 0.0);
+    return;
+  #endif
+
   #ifdef INSTANCING
     mat4 model = mtxFromCols(i_data0, i_data1, i_data2, i_data3);
   #else
