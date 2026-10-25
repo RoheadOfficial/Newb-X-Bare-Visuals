@@ -20,9 +20,19 @@ vec4 nlRefl(
 ) {
   vec4 wetRefl = vec4(0.0,0.0,0.0,0.0);
 
-  #ifndef NL_GROUND_REFL
-  if (env.rainFactor > 0.0) {
-  #endif
+  #ifdef NL_DISABLE_GROUND_REFLECTIONS
+    // O8: keep rain-darkened ground and puddle variation, but compile out all sky-reflection work.
+    float wetness = lit.y*lit.y;
+    if (env.rainFactor > 0.0) {
+      float puddles = max(1.0 - NL_GROUND_RAIN_PUDDLES*fastRand(tiledCpos.xz), 0.0);
+      wetness *= puddles;
+      color.rgb *= 1.0 - 0.4*wetness*env.rainFactor;
+    }
+    return wetRefl;
+  #else
+    #ifndef NL_GROUND_REFL
+    if (env.rainFactor > 0.0) {
+    #endif
 
     float wetness = lit.y*lit.y;
 
@@ -75,11 +85,12 @@ vec4 nlRefl(
     // darken wet parts
     color.rgb *= 1.0 - 0.4*wetness*env.rainFactor;
 
-  #ifndef NL_GROUND_REFL
-  }
-  #endif
+    #ifndef NL_GROUND_REFL
+    }
+    #endif
 
-  return wetRefl;
+    return wetRefl;
+  #endif
 }
 
 #endif
