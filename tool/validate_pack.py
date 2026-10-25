@@ -60,8 +60,8 @@ def main() -> int:
             "foliage must select the cheaper sky palette only in clear, low-fog scenes")
     require("isTree = isColored || color.a == 0.0;" in vertex and "#elif defined(RENDER_AS_BILLBOARDS)" in vertex,
             "foliage classification must cover tinted leaves, alpha-zero leaves, billboards, and seasonal leaves")
-    require("skycol = nlFoliageSkyColors(env);" in vertex and "skycol = nlSkyColors(env);" in vertex,
-            "full sky colors must remain for rain, fog, underwater, Nether, and End scenes")
+    require("skycol.zenith = FogColor.rgb;" in vertex and "skycol = nlSkyColors(env);" in vertex,
+            "nearby foliage must skip the custom sky palette while fog/rain/special scenes retain the full sky path")
     require(vertex.count("refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);") == 2,
             "both non-water RenderChunk branches must call the reflection-free wet-ground path")
     require("Always run the reflection-free nlRefl branch so rain can still darken ground" in vertex,
