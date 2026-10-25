@@ -111,10 +111,10 @@
 
 /* Water and Always Reflection */
 // O8: custom water uses a soft blue palette, but all water reflections are disabled.
-#define NL_WATER_TRANSPARENCY 0.92 // Keep the surface readable while preserving depth
+#define NL_WATER_TRANSPARENCY 0.85 // O8: clear surface with readable underwater depth
 #define NL_WATER_BUMP 0.0           // Flat surface: no water-wave distortion
 #define NL_WATER_WAVE_SPEED  0.8    // Retained for underwater caustic timing
-#define NL_WATER_TEX_OPACITY 0.3    // Retain recognizable vanilla water texture
+#define NL_WATER_TEX_OPACITY 0.08   // O8: cleaner water surface, closer to Newb X Future's texture restraint
 #define NL_WATER_BLUE_REDUCTION 0.95 // Keep the existing restrained blue-channel correction
 //#define NL_WATER_WAVE             // No water displacement or animated waves
 //#define NL_WATER_REFL_MASK        // Keep sky reflections broad and natural
