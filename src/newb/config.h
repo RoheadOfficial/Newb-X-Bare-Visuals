@@ -111,15 +111,15 @@
 
 /* Water — O8 keeps the custom water material but disables all reflection paths */
 // O8: custom water uses a soft blue palette, but all water reflections are disabled.
-#define NL_WATER_TRANSPARENCY 0.85 // O8: clear surface with readable underwater depth
+#define NL_WATER_TRANSPARENCY 0.72 // O8.4: reduce the opaque, milky surface appearance
 #define NL_WATER_BUMP 0.0           // Flat surface: no water-wave distortion
 #define NL_WATER_WAVE_SPEED  0.8    // Retained for underwater caustic timing
-#define NL_WATER_TEX_OPACITY 0.08   // O8: cleaner water surface, closer to Newb X Future's texture restraint
+#define NL_WATER_TEX_OPACITY 0.18   // O8.4: retain a little more natural surface texture without whitening the water
 #define NL_WATER_BLUE_REDUCTION 0.95 // Keep the existing restrained blue-channel correction
 //#define NL_WATER_WAVE             // No water displacement or animated waves
 //#define NL_WATER_REFL_MASK        // Keep sky reflections broad and natural
-#define NL_WATER_TINT vec3(0.62,0.78,0.92) // O8: clear, soft blue water inspired by Newb X Future's water palette
-#define NL_WATER_STYLE_STRENGTH 0.42 // O8: give non-reflective water a readable blue-glass color
+#define NL_WATER_TINT vec3(0.28,0.52,0.78) // O8.4: deeper natural blue, avoiding pale milk-blue water
+#define NL_WATER_STYLE_STRENGTH 0.82 // O8.4: make the blue-glass tint dominant without adding reflections
 #define NL_DISABLE_WATER_REFLECTIONS // O8: compile out sky, aurora, and torch reflections from water
 #define NL_DISABLE_GROUND_REFLECTIONS // O8: disable the Always Reflection terrain path
 #define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.016 // B0.3.6: restrained material separation without extra texture reads
@@ -132,8 +132,9 @@
 #define NL_UNDERWATER_TINT vec3(0.9,1.0,0.9) // fog tint color when underwater
 
 /* Cloud type */
-#define BOX_CLOUDS              // O8: use Minecraft's normal cloud plane and cloud texture
-#define NL_CLOUD_TYPE 0          // O8: restore vanilla Minecraft cloud rendering
+// O8.4: procedural BSL-inspired cloud overlay is rendered in the sky shader.
+// The engine cloud plane is hidden for this mode to prevent duplicate cloud layers.
+#define NL_CLOUD_TYPE 4          // O8.4: low-sample, direction-mapped procedural clouds
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
 #define NL_CLOUD0_THICKNESS 1.0      // O8 pass 3: preserve vanilla cloud-plane thickness
