@@ -68,7 +68,7 @@ def main() -> int:
             "reflection removal must not bypass wet-ground darkening and puddle variation")
     require("Alpha-tested foliage/billboards cannot display the horizontal terrain reflection mask" in vertex,
             "existing foliage reflection avoidance must remain")
-    require("float shimmer = isTree ? 0.0 : 1.0;" in vertex and "v_extra.a > 0.5 ? glowDetect(diffuse)" in terrain,
+    require("float shimmer = isTree ? 0.0 : 1.0;" in vertex and "v_extra.a > 0.5 ? glowDetect(diffuse)" in read("src/materials/RenderChunk/fragment.sc"),
             "foliage must skip custom glow shimmer and emissive glow work")
     terrain = read("src/materials/RenderChunk/fragment.sc")
     require("diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);" in terrain, "terrain fog blend must remain")
