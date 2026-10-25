@@ -142,6 +142,36 @@ vec4 renderClouds(vec2 p, float t, float rain, vec3 horizonCol, vec3 zenithCol, 
   return col;
 }
 
+// O8.4: low-cost BSL-inspired clouds mapped to a normalized sky direction.
+// Two 3D noise samples avoid screen-space horizon singularities, texture uniforms,
+// and repeated 10-pass loops from the Shader Editor prototype.
+vec4 renderCloudsBsl(vec3 skyDir, nl_skycolor skycol, float t, float rain, float dayFactor) {
+  if (skyDir.y < -0.03) {
+    return vec4(0.0, 0.0, 0.0, 0.0);
+  }
+
+  vec3 p = skyDir * vec3(4.2, 6.4, 4.2);
+  p += vec3(t*0.0025, t*0.0011, -t*0.0020);
+  // A gentle vertical warp gives the cloud field the broken, layered BSL-like look.
+  p.y += 0.22*sin(1.6*p.x + 1.1*p.z + t*0.0015);
+
+  float broad = noise3D(p);
+  float detail = noise3D(p*2.05 + vec3(8.3, 3.1, 5.7));
+  float shape = 0.74*broad + 0.26*detail;
+  float threshold = mix(0.52, 0.44, rain);
+  float cloud = smoothstep(threshold, threshold + 0.13, shape);
+
+  float horizonFade = smoothstep(-0.02, 0.08, skyDir.y);
+  float zenithFade = 1.0 - 0.42*smoothstep(0.72, 0.98, skyDir.y);
+  float dayVisibility = mix(0.24, 1.0, smoothstep(-0.25, 0.12, dayFactor));
+  float alpha = cloud*horizonFade*zenithFade*dayVisibility*0.82;
+
+  vec3 cloudLight = mix(vec3(0.94, 0.96, 1.0), vec3(0.48, 0.54, 0.62), rain);
+  vec3 skyAmbient = mix(skycol.horizonEdge, skycol.zenith, smoothstep(0.08, 0.92, skyDir.y));
+  cloudLight = mix(cloudLight, skyAmbient, 0.16);
+  return vec4(cloudLight, alpha);
+}
+
 // aurora is rendered on clouds layer
 #ifdef NL_AURORA
 vec4 renderAurora(vec3 p, float t, float rain, float dayFactor) {

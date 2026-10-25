@@ -15,60 +15,12 @@ vec3 sunLightTint(float dayFactor, float rain, float dawnFactor, float nightFact
   return tint;
 }
 
-// O8 performance path: alpha-tested foliage is the dominant forest overdraw case.
-// Keep its directional/ambient/torch identity, but avoid the full terrain lighting branch,
-// spatial sun projection, and optional cloud-shadow work for leaf vertices.
-vec3 nlFoliageLighting(
-  sampler2D tex, nl_skycolor skycol, nl_environment env, out vec3 torchColor, vec3 COLOR,
-  vec2 uv1, vec2 lit, float shade, highp float t
-) {
-  if (env.underwater) {
-    torchColor = NL_UNDERWATER_TORCH_COL;
-  } else if (env.end) {
-    torchColor = NL_END_TORCH_COL;
-  } else if (env.nether) {
-    torchColor = NL_NETHER_TORCH_COL;
-  } else {
-    torchColor = NL_OVERWORLD_TORCH_COL;
-  }
-
-  float gameBrightness = texelFetch(tex, ivec2(0,0), 0).g;
-  float torchAttenuation = (NL_TORCHLIGHT_INTENSITY*uv1.x)/(0.5-0.45*lit.x);
-  #ifdef NL_BLINKING_TORCH
-    torchAttenuation *= 1.0 - 0.19*noise1D(t*8.0);
-  #endif
-  vec3 light;
-  float lum;
-
-  if (env.nether || env.end) {
-    light = (env.end ? NL_END_AMBIENT : NL_NETHER_AMBIENT)*gameBrightness;
-    lum = luminance(light);
-    light += skycol.horizon/(1.0+lum);
-  } else {
-    float nightFactor = 1.0 - smoothstep(-0.12, 0.12, env.dayFactor);
-    float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
-    dawnFactor *= dawnFactor*dawnFactor;
-    dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
-    float nightIntensity = 1.0-(0.5+0.5*env.dayFactor);
-    nightIntensity *= nightIntensity;
-    float sunAttenuation = mix(1.0, 0.82, dawnFactor);
-    sunAttenuation *= 1.0-0.4*env.rainFactor;
-    float shadow = step(0.93, uv1.y);
-    shadow = max(shadow, (1.0-NL_SHADOW_INTENSITY+(0.6*NL_SHADOW_INTENSITY*nightIntensity))*lit.y);
-    shadow *= shade > 0.8 ? 1.0 : 0.8;
-    light = (NL_SUNLIGHT_INTENSITY*shadow*sunAttenuation)*sunLightTint(env.dayFactor, env.rainFactor, dawnFactor, nightFactor);
-    lum = luminance(light);
-    light += (skycol.horizon+skycol.zenith)*(uv1.y/(1.0+lum))*NL_SKY_AMBIENT_STRENGTH;
-  }
-
-  lum = luminance(light);
-  light += (torchColor*torchAttenuation)/(1.0+lum);
-  if (!(env.nether || env.end)) {
-    lum = luminance(light);
-    light += vec3_splat(gameBrightness*(NL_MIN_LIGHTING_BOOST/(1.0+lum)));
-  }
-  light *= COLOR.g > 0.35 ? 1.0 : 0.8;
-  return light*1.25;
+// O8.4: trees and cutout foliage use the engine's lightmap directly.
+// This bypasses custom shader lighting, spatial sun projection, cloud shadows, and torch math
+// for foliage. Texture tint and the existing fog path remain, while opaque terrain keeps its shader.
+vec3 nlFoliageLighting(sampler2D tex, out vec3 torchColor, vec2 uv1) {
+  torchColor = vec3_splat(0.0);
+  return texture2D(tex, uv1).rgb;
 }
 
 vec3 nlLighting(
