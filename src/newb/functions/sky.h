@@ -40,7 +40,8 @@ nl_skycolor nlEndSkyColors(nl_environment env) {
 nl_skycolor nlOverworldSkyColors(nl_environment env) {
   nl_skycolor s;
   float f = 1.0 + 2.0*(1.0-max(-env.dayFactor, 0.0));
-  float nightFactor = step(env.dayFactor, 0.0);
+  // O8: blend day/night sky palettes across twilight instead of switching at one threshold.
+  float nightFactor = 1.0 - smoothstep(-0.12, 0.12, env.dayFactor);
   s.zenith = mix(NL_DAY_ZENITH_COL, NL_NIGHT_ZENITH_COL*f, nightFactor);
   s.horizon = mix(NL_DAY_HORIZON_COL, NL_NIGHT_HORIZON_COL*f, nightFactor);
   s.horizonEdge = mix(NL_DAY_EDGE_COL, NL_NIGHT_EDGE_COL*f, nightFactor);
@@ -54,10 +55,11 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
 
   float zh = dot(s.zenith, vec3_splat(0.33));
   float hh = dot(s.horizon, vec3_splat(0.33));
-  float rainMix = env.rainFactor*NL_SKY_RAIN_MIX_FACTOR;
+  // Weather color blends smoothly as precipitation builds or clears.
+  float rainMix = smoothstep(0.0, 1.0, env.rainFactor)*NL_SKY_RAIN_MIX_FACTOR;
   s.zenith = mix(s.zenith, NL_RAIN_ZENITH_COL*zh, rainMix);
   s.horizon = mix(s.horizon, NL_RAIN_HORIZON_COL*hh, rainMix);
-  s.horizonEdge = mix(s.horizonEdge, s.horizon, env.rainFactor);
+  s.horizonEdge = mix(s.horizonEdge, s.horizon, smoothstep(0.0, 1.0, env.rainFactor));
 
   if (env.underwater) {
     vec3 underwaterFog = env.fogCol*env.fogCol*NL_UNDERWATER_TINT;
@@ -108,11 +110,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   sky *= 0.5+0.5*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
-  // B0.3.6: a soft horizon band ties the zenith, horizon and distance atmosphere together.
-  // It reuses existing sky colors and adds no texture reads or secondary render pass.
-  float horizonBand = 1.0 - smoothstep(0.02, 0.30, abs(viewDir.y));
-  float horizonGlow = horizonBand * NL_SKY_HORIZON_GLOW * (1.0 - 0.55*env.rainFactor);
-  sky = mix(sky, skyCol.horizonEdge, clamp(horizonGlow, 0.0, 0.32));
+  // O8: keep the original Newb sky gradient clean and vanilla-like; no added horizon-glow band.
 
   // B0.3.7: remove the aggressive sun-source boost that created distracting glare.
   // Keep the normal sky gradient and SunMoon disk; no godray/ray-marching effect is added.
