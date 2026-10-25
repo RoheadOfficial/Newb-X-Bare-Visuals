@@ -23,7 +23,7 @@ vec4 nlWater(
   #ifdef NL_DISABLE_WATER_REFLECTIONS
     // O8: keep the water surface readable without computing sky, aurora, Fresnel, or torch reflections.
     // The fragment stage supplies the soft blue-glass palette; engine water transparency is preserved.
-    color.rgb = NL_WATER_TINT;
+    color.rgb = vec3_splat(1.0);
     color.a = COLOR.a * NL_WATER_TRANSPARENCY;
     return vec4(0.0, 0.0, 0.0, 0.0);
   #else
