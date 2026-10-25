@@ -67,6 +67,7 @@ def main() -> int:
     water = read("src/newb/functions/water.h")
     require("#ifdef NL_DISABLE_WATER_REFLECTIONS" in water and "return vec4(0.0, 0.0, 0.0, 0.0);" in water,
             "water reflection implementation must compile to a no-reflection fast path")
+    require("color.rgb = vec3_splat(1.0);" in water, "water tint must be applied once in the fragment material path")
     require("nlRenderSky(skycol, env, viewDir, t, false)" in water, "disabled reflection path must preserve source behind compile-time fallback")
 
     sky = read("src/newb/functions/sky.h")
