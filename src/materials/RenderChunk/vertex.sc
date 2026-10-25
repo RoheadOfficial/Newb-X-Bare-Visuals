@@ -163,11 +163,9 @@ void main() {
       refl = nlWater(color, worldPos, skycol, env, a_color0, viewDir, cPos, tiledCpos, gPos, CameraPosition.xyz, light, torchColor, lit, bPos.y, camDis, t);
     } else {
       color.a = mix(color.a, 1.0, 0.5*clamp(relativeDist, 0.0, 1.0));
-      #if defined(NL_DISABLE_GROUND_REFLECTIONS)
-        refl = vec4(0.0, 0.0, 0.0, 0.0);
-      #else
-        refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
-      #endif
+      // Always run the reflection-free nlRefl branch so rain can still darken ground
+      // and vary puddle wetness. NL_DISABLE_GROUND_REFLECTIONS compiles out sky reflections.
+      refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);
     }
   #else
     // Alpha-tested foliage/billboards cannot display the horizontal terrain reflection mask.
