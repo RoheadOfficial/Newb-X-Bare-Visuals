@@ -111,7 +111,7 @@ void main() {
   if (isTree) {
     light = nlFoliageLighting(s_LightMapTexture, skycol, env, torchColor, a_color0.rgb, uv1, lit, shade);
   } else {
-    light = nlLighting(s_LightMapTexture, skycol, env, worldPos, torchColor, a_color0.rgb, uv1, lit, shade, t, FogAndDistanceControl.z, TimeOfDay.x, CameraPosition.xyz);
+    light = nlLighting(s_LightMapTexture, skycol, env, worldPos, torchColor, a_color0.rgb, uv1, lit, isTree, shade, t, FogAndDistanceControl.z, TimeOfDay.x, CameraPosition.xyz);
   }
 
   #if !defined(NL_DISABLE_ALL_WAVING) && defined(ALPHA_TEST) && (defined(NL_PLANTS_WAVE) || defined(NL_LANTERN_WAVE)) && !defined(RENDER_AS_BILLBOARDS)
