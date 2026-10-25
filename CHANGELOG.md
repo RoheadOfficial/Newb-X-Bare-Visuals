@@ -8,6 +8,7 @@
 - Keep the RenderChunk low-fog sky-evaluation fast path, foliage glow-tap reduction, and global no-waving guard.
 - This is a targeted shader-side forest optimization; only same-device A/B testing can confirm its actual FPS impact.
 - Third implementation pass: resolve fog alpha before sky-palette selection, reuse that fog result, and use a cheaper clear-weather ambient palette only for nearby foliage where sky fog is not visible. Rain, fog-visible foliage, underwater, Nether, and End keep the full palette.
+- Further forest-path reduction: detected foliage now uses a lightweight environment initializer that computes the day/rain/dimension factors without building rotated sun/moon direction vectors. If rain, visible fog, or a special dimension requires the original sky renderer, it falls back to the full environment path.
 - Extend regression checks to enforce the foliage palette gate and the connected rain-detection, sky, fog, wet-ground/puddle, and particle paths.
 - Critical audit fix: keep calling `nlRefl` for non-water terrain so its compile-time no-reflection branch still applies rain wetness and puddle variation; reflection removal must not bypass the weather response.
 - Keep this a real shader-source update; build success alone is not evidence of FPS improvement.
