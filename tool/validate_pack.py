@@ -58,7 +58,10 @@ def main() -> int:
             "foliage must select the cheaper sky palette only in clear, low-fog scenes")
     require("skycol = nlFoliageSkyColors(env);" in vertex and "skycol = nlSkyColors(env);" in vertex,
             "full sky colors must remain for rain, fog, underwater, Nether, and End scenes")
-    require("#if defined(NL_DISABLE_GROUND_REFLECTIONS)" in vertex, "terrain reflection calls must be gated off")
+    require(vertex.count("refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos, CameraPosition.xyz, torchColor, lit, camDis, FogAndDistanceControl.z, t);") == 2,
+            "both non-water RenderChunk branches must call the reflection-free wet-ground path")
+    require("Always run the reflection-free nlRefl branch so rain can still darken ground" in vertex,
+            "reflection removal must not bypass wet-ground darkening and puddle variation")
     require("Alpha-tested foliage/billboards cannot display the horizontal terrain reflection mask" in vertex,
             "existing foliage reflection avoidance must remain")
     require("#if defined(NL_GLOW_SHIMMER) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS) || defined(ALPHA_TEST)" in vertex,
@@ -98,6 +101,8 @@ def main() -> int:
     rain = read("src/newb/functions/rain.h")
     require("#ifdef NL_DISABLE_GROUND_REFLECTIONS" in rain and "NL_GROUND_RAIN_PUDDLES*fastRand" in rain and "color.rgb *= 1.0 - 0.4*wetness*env.rainFactor" in rain,
             "wet-ground darkening and puddle variation must survive reflection removal")
+    require("refl = nlRefl(color, skycol, env, viewDir, worldPos, tiledCpos" in vertex,
+            "the reflection-free wet-ground path must actually be invoked from RenderChunk")
     weather_material = read("src/materials/Weather/fragment.sc")
     require("B0.4.0: derive the subtle particle speck modulation from the existing texel" in weather_material,
             "lightweight weather particle path must remain active")
