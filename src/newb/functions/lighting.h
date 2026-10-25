@@ -20,7 +20,7 @@ vec3 sunLightTint(float dayFactor, float rain, float dawnFactor, float nightFact
 // spatial sun projection, and optional cloud-shadow work for leaf vertices.
 vec3 nlFoliageLighting(
   sampler2D tex, nl_skycolor skycol, nl_environment env, out vec3 torchColor, vec3 COLOR,
-  vec2 uv1, vec2 lit, float shade
+  vec2 uv1, vec2 lit, float shade, highp float t
 ) {
   if (env.underwater) {
     torchColor = NL_UNDERWATER_TORCH_COL;
@@ -34,6 +34,9 @@ vec3 nlFoliageLighting(
 
   float gameBrightness = texelFetch(tex, ivec2(0,0), 0).g;
   float torchAttenuation = (NL_TORCHLIGHT_INTENSITY*uv1.x)/(0.5-0.45*lit.x);
+  #ifdef NL_BLINKING_TORCH
+    torchAttenuation *= 1.0 - 0.19*noise1D(t*8.0);
+  #endif
   vec3 light;
   float lum;
 
