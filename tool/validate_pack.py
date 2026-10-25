@@ -76,6 +76,10 @@ def main() -> int:
 
     lighting = read("src/newb/functions/lighting.h")
     require("if (!isTree || dawnFactor >= 0.02)" in lighting, "existing tree lighting fast path must remain")
+    require("vec3 nlFoliageLighting(" in lighting, "dedicated lower-cost foliage lighting function must exist")
+    require("if (isTree) {\n    light = nlFoliageLighting(" in vertex, "RenderChunk must route detected foliage through the dedicated fast path")
+    foliage = lighting.split("vec3 nlFoliageLighting(", 1)[1].split("vec3 nlLighting(", 1)[0]
+    require("NL_CLOUD_SHADOW" not in foliage and "sunAttenuation" in foliage, "foliage fast path must avoid cloud-shadow and spatial sun projection work")
     require("1.0 - smoothstep(-0.12, 0.12, env.dayFactor)" in lighting, "terrain/entity lighting must blend through twilight")
 
     fog = read("src/newb/functions/fog.h")
