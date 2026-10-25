@@ -1,11 +1,11 @@
 name = "Newb X Bare Visuals"
-version = [0, 4, 6]
-development_version = "B0.4.6"
+version = [0, 4, 8]
+development_version = "B0.4.8"
 minecraft_target_version = "26.52" # Target label only; compatibility must be verified in-game
 min_supported_mc_version = [1, 26, 50]
 description = '''
 §c%w
-§7- A cozy, vanilla-rooted Overworld with reflection-free water and focused mobile performance.
+§7- A cozy, vanilla-rooted Overworld with reflection-free water, lightweight foliage, and procedural clouds.
 §8[§2MOSS §8· §6COFFEE §8· §fSTONE§8] §rᴠᴀɴɪʟʟᴀ ᴍɪɴᴇᴄʀᴀғᴛ, ɴᴀᴛᴜʀᴀʟʟʏ ᴇɴʜᴀɴᴄᴇᴅ.
 %v
 §3https://github.com/RoheadOfficial/Newb-X-Bare-Visuals
@@ -31,20 +31,20 @@ Original Newb Shader source and upstream project: https://github.com/devendrn/ne
 Variant creator: RoheadOfficial
 '''
 
-# Required MCpack order: Default #1, Pootaytoe #2, Bare Visuals #3. Experimental is shelved in O8.
+# Required MCpack order: Default #1, Pootaytoe #2, Bare Visuals #3. Experimental remains shelved in O8.4.
 # The root material set is compiled with DEFAULT; Default inherits it without duplicating binaries.
 [[subpack]]
 define = "DEFAULT"
 materials = []
-description = "Default — Natural light, vanilla clouds, and balanced atmosphere"
+description = "Default — Natural light, BSL-inspired clouds, and balanced atmosphere"
 
 [[subpack]]
 define = "POOTAYTOE"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Pootaytoe — Lean rendering with the core atmosphere intact"
+description = "Pootaytoe — Lean rendering with procedural clouds and lightweight foliage"
 
 [[subpack]]
 define = "BARE_VISUALS"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk", "Sky", "Stars", "SunMoon", "Weather"]
-description = "Bare Visuals — Cozy atmosphere and soft blue, reflection-free water"
+description = "Bare Visuals — Cozy atmosphere, natural blue water, and BSL-inspired clouds"
 
