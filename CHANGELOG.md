@@ -1,3 +1,15 @@
+## B0.4.8 / O8.4 — Forest, Aurora, Water & BSL-Style Clouds
+
+**Status:** Source changes are committed to b0.4.8-o8.4-review-fixes. Android CI and on-device acceptance are pending; no FPS improvement is claimed before testing.
+
+- Broadened the shader-lightweight path to alpha-tested foliage, seasonal foliage, and billboarded plants, replacing custom lighting with the engine lightmap and skipping foliage glow, shimmer, underwater caustic additions, and terrain-only reflection/shading work.
+- Corrected the aurora projection to use bounded sky-direction coordinates instead of dividing by the vertical view direction; added a horizon-weighted fade to reduce stretched bands and visible skybox edges.
+- Rebalanced reflection-free water toward a deeper blue, stronger tint, more recognizable surface texture, and lower opacity to address the milky appearance.
+- Added a low-sample procedural cloud layer inspired by the supplied Shader Editor snippet. The adaptation uses two 3D noise samples, a subtle warp, weather-aware density, and sky-direction mapping; it does not depend on the editor-only noise sampler or screen-space coordinates.
+- Suppressed the engine cloud plane in the new mode to avoid duplicate clouds.
+- Updated B0.4.8 manifest/version validation, cloud/aurora/foliage regression checks, Android CI workflow selection, and the artifact version validator.
+- Device acceptance remains required: compare forest FPS/stutters on the Vivo Y22s and inspect water, cloud seams, aurora, weather transitions, and all three profiles.
+
 ## B0.4.6 / O8 — Performance & Visual Refinement
 **Status:** Implementation in progress on `b0.4.6-o8-performance-overhaul`, branched from the B0.4.5 implementation candidate. Build and on-device FPS acceptance are not yet verified.
 
