@@ -122,8 +122,6 @@
 #define NL_WATER_STYLE_STRENGTH 0.42 // O8: give non-reflective water a readable blue-glass color
 #define NL_DISABLE_WATER_REFLECTIONS // O8: compile out sky, aurora, and torch reflections from water
 #define NL_DISABLE_GROUND_REFLECTIONS // O8: disable the Always Reflection terrain path
-#define NL_DISABLE_WATER_REFLECTIONS // O8: compile out sky, aurora, and torch reflections from water
-#define NL_DISABLE_GROUND_REFLECTIONS // O8: disable the Always Reflection terrain path
 #define NL_MATERIAL_HIGHLIGHT_STRENGTH 0.016 // B0.3.6: restrained material separation without extra texture reads
 
 /* Underwater */
