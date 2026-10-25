@@ -9,7 +9,7 @@
 ### Required implementation
 1. Compile out terrain Always Reflection and water sky/aurora/torch reflections. Keep calling the compile-time reflection-free terrain path so rain-darkened ground and puddle variation still execute without sky-reflection calculations.
 2. Add a reflection-free water path with clear transparency, low texture opacity, and a restrained soft-blue palette inspired by Newb X Future's water appearance. No waves or water reflections.
-3. Restore the vanilla Minecraft cloud path, shelve Cloud Type 1, and remove the pack's custom cloud texture override.
+3. Restore the vanilla Minecraft cloud path, shelve Cloud Type 1, remove the pack's custom cloud texture override, and keep baseline cloud-plane thickness/opacity vanilla-like (rain changes tint rather than geometry).
 4. Refine day/night and rain-driven sky transitions while keeping a clean vanilla-rooted sky gradient and the existing cozy, cinematic Bare Visuals identity.
 5. Implement coordinated RenderChunk foliage optimizations: route detected tree/leaf vertices through dedicated lower-cost lighting that omits terrain spatial sun projection/cloud-shadow work; use a foliage-only environment initializer without rotated sun/moon vectors for eligible nearby clear-weather leaves; resolve fog alpha once and reuse it; and select a cheaper ambient palette only when foliage fog is negligible. Fall back to full environment/sky evaluation for rain, visible fog, underwater, Nether, and End scenes.
 6. Preserve the approved 1.06 saturation, lighting identity, lightweight rain, wet-ground response, no-waving rule, and each active profile's purpose.
