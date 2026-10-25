@@ -47,7 +47,7 @@ def main() -> int:
     require("#define NL_DISABLE_GROUND_REFLECTIONS" in cfg, "Always Reflection terrain path must be disabled")
     require("#define BOX_CLOUDS" in cfg and "#define NL_CLOUD_TYPE 0" in cfg, "vanilla cloud rendering must be active")
     require("#define NL_WATER_TINT vec3(0.62,0.78,0.92)" in cfg, "O8 water palette must be soft blue")
-    require("#define NL_WATER_STYLE_STRENGTH 0.42" in cfg, "O8 water color styling must remain active")
+    require("#define NL_WATER_STYLE_STRENGTH 0.42" in cfg and "#define NL_WATER_TEX_OPACITY 0.08" in cfg and "#define NL_WATER_TRANSPARENCY 0.85" in cfg, "O8 water clarity and color styling must remain active")
     require("#define NL_SKY_HORIZON_GLOW 0.0" in cfg, "custom horizon glow must be disabled")
     require(all(f"#ifdef {name}" in cfg for name in names), "all active profile blocks must exist")
 
@@ -61,6 +61,8 @@ def main() -> int:
             "foliage must skip vertex glow-shimmer work")
     terrain = read("src/materials/RenderChunk/fragment.sc")
     require("diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);" in terrain, "terrain fog blend must remain")
+    require("#if !defined(NL_DISABLE_WATER_REFLECTIONS) || !defined(NL_DISABLE_GROUND_REFLECTIONS)" in terrain,
+            "reflection fragment work must compile out when both reflection systems are disabled")
 
     water = read("src/newb/functions/water.h")
     require("#ifdef NL_DISABLE_WATER_REFLECTIONS" in water and "return vec4(0.0, 0.0, 0.0, 0.0);" in water,
