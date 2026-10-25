@@ -12,6 +12,12 @@ uniform vec4 CameraPosition;
 #define NL_CLOUD_PARAMS(x) NL_CLOUD2##x##STEPS, NL_CLOUD2##x##THICKNESS, NL_CLOUD2##x##RAIN_THICKNESS, NL_CLOUD2##x##VELOCITY, NL_CLOUD2##x##SCALE, NL_CLOUD2##x##DENSITY, NL_CLOUD2##x##SHAPE
 
 void main() {
+  #if NL_CLOUD_TYPE == 4
+    // All clouds for this mode are composited into the Sky material.
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+    return;
+  #endif
+
   vec4 color = v_color0;
 
   #if NL_CLOUD_TYPE >= 2
