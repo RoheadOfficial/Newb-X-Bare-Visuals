@@ -115,7 +115,7 @@
 #define NL_WATER_BUMP 0.0           // Flat surface: no water-wave distortion
 #define NL_WATER_WAVE_SPEED  0.8    // Retained for underwater caustic timing
 #define NL_WATER_TEX_OPACITY 0.18   // O8.4: retain a little more natural surface texture without whitening the water
-#define NL_WATER_BLUE_REDUCTION 0.95 // Keep the existing restrained blue-channel correction
+#define NL_WATER_BLUE_REDUCTION 1.0 // O8.4: preserve the revised natural blue tint
 //#define NL_WATER_WAVE             // No water displacement or animated waves
 //#define NL_WATER_REFL_MASK        // Keep sky reflections broad and natural
 #define NL_WATER_TINT vec3(0.28,0.52,0.78) // O8.4: deeper natural blue, avoiding pale milk-blue water
