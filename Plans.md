@@ -7,7 +7,7 @@
 **Build scope:** Android during implementation; multiplatform during release preparation.
 
 ### Required implementation
-1. Compile out terrain Always Reflection and water sky/aurora/torch reflections. Preserve rain-darkened ground and puddle variation without running sky-reflection calculations.
+1. Compile out terrain Always Reflection and water sky/aurora/torch reflections. Keep calling the compile-time reflection-free terrain path so rain-darkened ground and puddle variation still execute without sky-reflection calculations.
 2. Add a reflection-free water path with clear transparency, low texture opacity, and a restrained soft-blue palette inspired by Newb X Future's water appearance. No waves or water reflections.
 3. Restore the vanilla Minecraft cloud path, shelve Cloud Type 1, and remove the pack's custom cloud texture override.
 4. Refine day/night and rain-driven sky transitions while keeping a clean vanilla-rooted sky gradient and the existing cozy, cinematic Bare Visuals identity.
