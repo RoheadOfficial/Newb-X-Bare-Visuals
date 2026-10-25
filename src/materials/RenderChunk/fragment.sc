@@ -71,7 +71,7 @@ void main() {
     vec3 glow = vec3_splat(0.0);
   #elif defined(ALPHA_TEST) || defined(RENDER_AS_BILLBOARDS)
     // Dense foliage is heavily overdrawn. Keep the emissive texel glow but skip four extra halo taps.
-    vec3 glow = glowDetect(diffuse) * NL_GLOW_TEX;
+    vec3 glow = v_extra.a > 0.5 ? glowDetect(diffuse) * NL_GLOW_TEX : vec3_splat(0.0);
     #ifdef NL_GLOW_SHIMMER
       glow *= v_extra.a;
     #endif
