@@ -1,3 +1,29 @@
+## B0.4.6 / O8 — Performance & Visual Refinement
+**Status:** Implementation in progress on `b0.4.6-o8-performance-overhaul`, branched from the B0.4.5 implementation candidate. Build and on-device FPS acceptance are not yet verified.
+
+### Rendering and performance
+- Compile out the Always Reflection terrain path and all water sky/aurora/torch reflection work.
+- Add a reflection-free water path that retains transparency and a soft blue water palette.
+- Add a RenderChunk foliage fast path: for tree vertices with very low fog contribution, skip the full sky evaluation used only to color that tiny fog blend.
+- Preserve the existing near-midday tree-lighting shortcut, foliage glow tap reduction, and no-waving guard.
+- Keep this a real shader-source update; build success alone is not evidence of FPS improvement.
+
+### Sky, clouds, weather and visuals
+- Shelve procedural Cloud Type 1 and restore the normal Minecraft cloud plane/texture path.
+- Remove the pack's custom clouds texture override so vanilla cloud texture can be used.
+- Remove the added horizon-glow band and keep a clean vanilla-rooted sky gradient.
+- Blend day/night sky colors and terrain/entity lighting smoothly through twilight.
+- Smooth rain-driven sky-color transitions while preserving rain particles, rain mist, and wet-ground response.
+- Keep the original cozy, cinematic Bare Visuals palette, including the creator-approved 1.06 saturation; use soft blue water inspired by Newb X Future without copying unrelated implementation code.
+
+### Profiles, versioning and verification
+- Version B0.4.6 / manifest `[0, 4, 6]`; Minecraft target label remains 26.52, yielding B0.4.6.2652.
+- Keep Default, Pootaytoe, and Bare Visuals in their established order and purposes.
+- Shelve Experimental from the selectable O8 pack; retain its history in Git.
+- Update static checks and Android CI for O8.
+- Required device tests: same forest scene while stationary, turning, and moving; compare B0.4.5 vs O8; then check rain, sky transitions, water, and all three active profiles.
+- FPS goal remains 30–49 on the Vivo Y22s; no measured gain is claimed until the creator tests the artifact on-device.
+
 ## B0.4.5 / O7 — All-in-One Performance Overhaul
 
 **Status:** Source implementation and Android CI build completed on `b0.4.5-performance-overhaul`, branched from `main`. Static validation, duplicate audit, and Android packaging passed; in-game comparison remains pending. No FPS gain or runtime compatibility is claimed until tested.
