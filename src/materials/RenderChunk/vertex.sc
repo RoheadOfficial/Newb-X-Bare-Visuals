@@ -212,7 +212,8 @@ void main() {
   #if defined(NL_GLOW_SHIMMER) && !(defined(RENDER_AS_BILLBOARDS) || defined(SEASONS) || defined(ALPHA_TEST))
     float shimmer = nlGlowShimmer(cPos, t);
   #else
-    float shimmer = 1.0;
+    // O8.4: zero the foliage shimmer channel so the fragment shader can skip custom glow.
+    float shimmer = isTree ? 0.0 : 1.0;
   #endif
 
   #ifdef NL_LAVA_NOISE
