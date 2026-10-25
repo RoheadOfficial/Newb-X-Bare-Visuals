@@ -114,6 +114,8 @@ def main() -> int:
             "lightweight weather particle path must remain active")
     clouds = read("src/materials/Clouds/vertex.sc")
     require("#if NL_CLOUD_TYPE == 0" in clouds, "vanilla Minecraft cloud path must remain compiled")
+    require(not (ROOT / "assets/textures/environment/clouds.png").exists(),
+            "vanilla cloud texture must not be overridden by a pack-bundled clouds.png")
     sky_material = read("src/materials/Sky/fragment.sc")
     require("renderAurora(auroraPos" in sky_material and "skyColor += aurora.rgb" in sky_material, "night aurora must remain after restoring vanilla clouds")
     weather = read("src/materials/Weather/fragment.sc")
