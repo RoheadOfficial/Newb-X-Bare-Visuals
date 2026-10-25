@@ -85,15 +85,26 @@ void main() {
     bool isTree = false;
   #endif
 
-  nl_environment env = nlDetectEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);
-
-  // Resolve fog contribution before selecting the lighting palette. In clear weather, nearby
-  // foliage does not use sky-derived fog color, so it can use the cheaper ambient palette.
+  // Resolve the candidate foliage path before building sun/moon direction vectors.
+  // The lightweight environment is retained only for clear, nearby Overworld foliage.
   float foliageRelativeDist = camDis / FogAndDistanceControl.z + RenderChunkFogAlpha.x;
+  nl_environment env;
+  if (isTree) {
+    env = nlDetectFoliageEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);
+  } else {
+    env = nlDetectEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);
+  }
+
   float foliageFogAlpha = nlRenderFogFade(foliageRelativeDist, FogColor.rgb, FogAndDistanceControl.xy, env.rainFactor);
+  bool foliageFast = isTree && !env.end && !env.nether && !env.underwater &&
+                     env.rainFactor <= 0.0 && foliageFogAlpha <= 0.20;
+  // Distant/fog-visible foliage needs the complete sun/moon vectors for the original sky renderer.
+  if (isTree && !foliageFast) {
+    env = nlDetectEnvironment(TimeOfDay.x, FogColor.rgb, FogAndDistanceControl.xyz);
+  }
+
   nl_skycolor skycol;
-  if (isTree && !env.end && !env.nether && !env.underwater &&
-      env.rainFactor <= 0.0 && foliageFogAlpha <= 0.20) {
+  if (foliageFast) {
     skycol = nlFoliageSkyColors(env);
   } else {
     skycol = nlSkyColors(env);
