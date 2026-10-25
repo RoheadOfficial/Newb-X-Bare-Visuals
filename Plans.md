@@ -7,7 +7,7 @@
 
 ### Review-driven implementation checklist
 - [x] Broaden the lightweight path to biome-tinted/alpha-zero cutout foliage and billboarded plant geometry, including seasonal foliage, without blanket-disabling unrelated untinted cutouts.
-- [x] Bypass custom sun/shadow/torch lighting for that foliage and sample the engine lightmap directly; retain its texture/biome tint and normal scene fog.
+- [x] Bypass custom sun/shadow/torch lighting and custom sky-palette work for that foliage, sample the engine lightmap directly, and retain its texture/biome tint plus normal scene fog.
 - [x] Skip custom foliage glow shimmer, emissive glow, underwater caustic lighting, terrain-only shade ramps, and reflection calculations. Vegetation waving remains globally disabled.
 - [x] Correct the aurora's sky projection: remove the near-zero vertical-direction divisor, use bounded sky-direction coordinates, and fade the effect toward the zenith to avoid an obvious stretched skybox band.
 - [x] Replace the water's pale wash with a deeper natural blue palette, stronger tint, more surface texture, and lower alpha opacity; water and terrain reflections remain disabled.
