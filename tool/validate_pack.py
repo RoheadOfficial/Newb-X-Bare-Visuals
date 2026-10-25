@@ -93,6 +93,8 @@ def main() -> int:
     foliage = lighting.split("vec3 nlFoliageLighting(", 1)[1].split("vec3 nlLighting(", 1)[0]
     require("NL_CLOUD_SHADOW" not in foliage and "sunAttenuation" in foliage, "foliage fast path must avoid cloud-shadow and spatial sun projection work")
     require("1.0 - smoothstep(-0.12, 0.12, env.dayFactor)" in lighting, "terrain/entity lighting must blend through twilight")
+    require("sunLightAttenuation *= 1.0-0.4*env.rainFactor;" in lighting,
+            "directional lighting must respond to weather intensity")
 
     detection = read("src/newb/functions/detection.h")
     require("float detectRain(" in detection and "val*val*(3.0 - 2.0*val)" in detection,
@@ -114,6 +116,8 @@ def main() -> int:
             "lightweight weather particle path must remain active")
     clouds = read("src/materials/Clouds/vertex.sc")
     require("#if NL_CLOUD_TYPE == 0" in clouds, "vanilla Minecraft cloud path must remain compiled")
+    require("color.rgb *= 1.0 - 0.8*rain;" in clouds,
+            "vanilla cloud tint must respond to rain without changing cloud geometry")
     require(not (ROOT / "assets/textures/environment/clouds.png").exists(),
             "vanilla cloud texture must not be overridden by a pack-bundled clouds.png")
     sky_material = read("src/materials/Sky/fragment.sc")
