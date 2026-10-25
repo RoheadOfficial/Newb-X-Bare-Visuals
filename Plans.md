@@ -24,6 +24,14 @@
 - [ ] Target 30–49 FPS, but record measured FPS and stutters rather than asserting an unmeasured result. A successful build does not prove runtime performance.
 - [ ] Keep `main` untouched until review and explicit merge approval.
 
+### Repeatable Android A/B protocol
+1. Compare B0.4.5 and O8 on the same Vivo Y22s, Minecraft/MB Loader version, world, coordinates, render distance, graphics settings, and profile.
+2. Let chunks settle after loading; do not count the initial chunk-generation hitch as steady-state shader FPS.
+3. Record three passes: stationary in dense forest, slowly rotating the camera through the canopy, and moving along the same forest route.
+4. Repeat in clear weather and rain with matched time/weather conditions between versions.
+5. Record the measured FPS range/average and visible stutters for each pass. Repeat each pass at least twice and report observations, not the target.
+6. Test Default, Pootaytoe, and Bare Visuals separately so a performance gain does not come from flattening profile identities.
+
 ---
 
 # Plans
