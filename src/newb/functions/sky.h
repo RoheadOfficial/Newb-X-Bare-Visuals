@@ -71,6 +71,26 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
   return s;
 }
 
+// O8 re-implementation pass 3: cheap clear-weather foliage ambient colors.
+// Selected only when foliage fog is negligible and weather is clear; the full sky palette
+// remains in use for rain, underwater/end scenes, and fog-visible foliage.
+nl_skycolor nlFoliageSkyColors(nl_environment env) {
+  nl_skycolor s;
+  float nightFactor = 1.0 - smoothstep(-0.12, 0.12, env.dayFactor);
+  float nightScale = 1.0 + 2.0*(1.0-max(-env.dayFactor, 0.0));
+  float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
+  dawnFactor *= dawnFactor*dawnFactor;
+  dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
+
+  s.zenith = mix(NL_DAY_ZENITH_COL, NL_NIGHT_ZENITH_COL*nightScale, nightFactor);
+  s.horizon = mix(NL_DAY_HORIZON_COL, NL_NIGHT_HORIZON_COL*nightScale, nightFactor);
+  s.zenith = mix(s.zenith, NL_DAWN_ZENITH_COL, dawnFactor);
+  s.horizon = mix(s.horizon, NL_DAWN_HORIZON_COL, dawnFactor);
+  // Foliage vertex lighting only consumes zenith and horizon; fog uses the full palette.
+  s.horizonEdge = s.horizon;
+  return s;
+}
+
 nl_skycolor nlSkyColors(nl_environment env) {
   if (env.end) {
     return nlEndSkyColors(env);
